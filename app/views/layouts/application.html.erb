@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Patient Information Management System</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="#">Hospital Company Name</a>
+	  <div class="collapse navbar-collapse">
+	    <form class="form-inline my-2 my-lg-0">
+	      <p class="nav_data_para lead"></p>
+	    </form>
+	  </div>
+	</nav>
+    
+    
+    <%= yield %>
+  </body>
+</html>
