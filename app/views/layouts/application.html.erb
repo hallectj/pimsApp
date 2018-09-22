@@ -9,27 +9,33 @@
   </head>
 
   <body>
-    <div id="flash_warnings">
-      <% unless flash.empty? %>
-           <script type="text/javascript">
-                <% flash.each do |f| %>
-                <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
-                   toastr['<%= type %>']('<%= f[1] %>');
-             <% end %>
-           </script>
-      <% end %>
-    </div>
-    
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="#">Hospital Company Name</a>
+    <nav class="navbar navbar-expand-lg navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to "Hospital Home", root_path, class: "navbar-brand"%>
+        </div>
 	  <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          
+          <% if !user_signed_in? || current_user.nil? %>
+            <li><%= link_to "Log in", new_user_session_path, class: 'login-button' %></li>
+          <% else %>
+            <li><%= link_to "Log Out", destroy_user_session_path, class: 'login-button', method: :delete %></li>
+          <% end %>
+	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <p class="nav_data_para lead"></p>
 	    </form>
+        </div>
 	  </div>
 	</nav>
     
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
     
     <%= yield %>
   </body>

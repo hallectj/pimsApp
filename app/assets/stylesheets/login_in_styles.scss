@@ -1,3 +1,5 @@
+
+
 .login_wrapper{
 	position: relative;
 	display: flex;
@@ -6,11 +8,13 @@
 	flex-direction: column;
 	height: 100vh;
 	z-index: 2;
+    color: #fff;
+    margin-bottom: 20px;
 }
 
 .login_wrapper::after{
 	content: "";
-	background: #ccc url("../imgs/login_background.jpg");
+	/*background: #ccc url("../imgs/login_background.jpg"); */
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -34,7 +38,14 @@
 	overflow: hidden;
 	background: rgba(42, 53, 58, 0.6);
 	font-family: 'Inconsolata', monospace;
-	color: #fff;
+}
+
+input[type=password], input[type=email]{
+  color: #000;
+  width: 100%;
+  line-height: 1.4em;
+  height: 30px;
+  box-sizing:border-box;
 }
 
 .login a{
