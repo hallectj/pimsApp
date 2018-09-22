@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  root 'pages#patientSearchPage'
+  root 'pages#index'
   resources :pages
   
   #resources :pages do 

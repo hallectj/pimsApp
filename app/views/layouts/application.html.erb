@@ -9,6 +9,18 @@
   </head>
 
   <body>
+    <div id="flash_warnings">
+      <% unless flash.empty? %>
+           <script type="text/javascript">
+                <% flash.each do |f| %>
+                <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+                   toastr['<%= type %>']('<%= f[1] %>');
+             <% end %>
+           </script>
+      <% end %>
+    </div>
+    
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <a class="navbar-brand" href="#">Hospital Company Name</a>
 	  <div class="collapse navbar-collapse">
