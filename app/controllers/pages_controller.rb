@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+    #load_and_authorize_resource :class => PagesController
+  
     def index
     end
     def show
@@ -7,7 +9,9 @@ class PagesController < ApplicationController
     def new
     end
     def patientSearchPage
-        
+        #if user.volunteer_role?
+          
+        #end
     end
     def edit
     end

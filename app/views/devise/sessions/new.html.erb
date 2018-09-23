@@ -23,10 +23,9 @@
             
             <% if !user_signed_in? %>
               <%= link_to new_user_session_path, class: 'login-button' do %>Sign in<% end %>
-            <% else %>
-              <!--  TODO access logic doctors, med staff, volunteers, office to patient search view  -->
-	          <%= link_to root_path, class: 'login-button' do %>Go to App<% end %>
             <% end %>
+            
+            
             
             
           </div>

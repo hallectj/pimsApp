@@ -1,10 +1,23 @@
-	
+   <% accessVar = "" %>
+   <% if current_user.doctor_role %>
+     <% accessVar = "doctor" %>
+   <% end %>
+   <% if current_user.medical_role %>
+     <% accessVar = "medical" %>
+   <% end %>
+   <% if current_user.office_role %>
+     <% accessVar = "office" %>
+   <% end %>
+   <% if current_user.volunteer_role %>
+     <% accessVar = "volunteer" %>
+   <% end %>
+
 	<div class="container" id="wrapper">
 		<div class="info_boxes" id="info_box1">
 			<h1>Patient Search Screen</h1>
 			<div class="welcome_box">
-				<p>Welcome Dr. Lawrence</p>
-				<p>Access Rights: <span id="access_rights">Doctor </span></p>
+				<p> <%= current_user.email %> </p>
+				<p>Access Rights: <span id="access_rights"> <%= accessVar %> </span></p>
 			</div>
 		</div>
 		
@@ -32,7 +45,7 @@
 				</form>
 			</div>
 			<div class="image_box">
-				<img src="imgs/holding_xray.jpeg">
+				<!-- <img src="imgs/holding_xray.jpeg"> -->
 			</div>
 		</div>
 
