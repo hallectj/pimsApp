@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
   get 'pages/patient_search' => 'pages#patientSearchPage'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   #devise_for :users
@@ -7,29 +9,15 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   
+  #let the pass controller do the necessary route directing
   root :to => 'pass#index'
   resources :pages
-  
-  #authenticated :user do
-      #root :to => 'pages#patientSearchPage', as: :authenticated_root
-      #root :to => 'pages#index', as: :admin_root
-  #end
-  #root :to => 'pages#index'
-  
-  
-  
-  
-  
-  
-  
+  resources :patients
+    
   #resources :pages do 
     #get 'pages/patient_search', to: 'pages#patientSearchPage', as: :patient_search
   #end
   
- 
-
-  
-
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  #If a route isn't recognized then let error controller handle it, this needs to be on the last line
+  get '*path' => 'error_routes#routing'
 end

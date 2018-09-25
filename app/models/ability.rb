@@ -2,17 +2,21 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    
+    user ||= User.new
     
     if user.superadmin_role?
       can :manage, :all
-      can :access, :rails_admin       # only allow admin users to access Rails Admin
-      can :dashboard                  # allow access to dashboard
+      can :access, :rails_admin
+      can :dashboard 
+    elsif user.doctor_role?
+      cannot :create, Patient
+      cannot :delete, Patient
+      
+      #can :manage, :all
+      #can :access, :rails_admin       # only allow admin users to access Rails Admin
     end
     
-    if user.volunteer_role?
-      can :patientSearchPage, PagesController
-    end
+   
     
     # Define abilities for the passed in user here. For example:
     #

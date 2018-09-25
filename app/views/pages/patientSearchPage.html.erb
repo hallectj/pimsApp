@@ -49,12 +49,32 @@
 			</div>
 		</div>
 
-
-
 		<div class="info_boxes" id="info_box3">			
 			<div class="form-group search_button_div">
-				<button type="submit" class="btn btn-default" id="patientSearchBtn">Find Patient</button>
+                <% if !current_user.superadmin_role? %>
+                  <!-- delete the immediate line below once decided on what approach to take -->
+                  <a class="btn btn-small btn-success" href="#">Find Patient</a>
+              
+                  <!--  Using approach #1 creating a patient controller have seperate actions for each user  
+                        def doctorView, def officeView, etc. -->
+                  <%-# link_to "Find Patients", {controller: "patients", action: "index"}, class: "btn btn-small btn-success" %>
+                  <!--  Using approach #2 create 4 seperate controllers, doctor controller, volunteer controller etc and
+                        have the pass controller route to the right controller once button is clicked -->
+                  <%-# link_to "Find Patients", {controller: "pass", action: "index"}, class: "btn btn-small btn-success" %>
+                <% end %>
+                
+                <% if accessVar == "office"%>
+                  <div class="office_worker_message">
+                    <p>If you need to add a new patient instead, click the link below</p>
+                    <div class="form-group">
+                        <!-- delete the immediate line below once decided on what approach to take -->
+                        <a class="" href="#">Go to Add Patient Page</a>
+                    </div>
+                  </div>
+                <% end %>
+              
 			</div>
+            
 		</div>
 	</div>
 

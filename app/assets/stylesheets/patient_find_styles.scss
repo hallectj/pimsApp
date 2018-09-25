@@ -78,6 +78,24 @@ img{
 #info_box3 .search_button_div{
 	padding: 10px;
 	background-color: var(--find-background-color);
+    width: 50%;
+}
+
+.office_worker_message{
+  clear: both;
+  margin-top: 20px;
+  width: 70%;
+  color: #fff;
+  font-family: arial;
+  font-size: 1.2em;
+  
+  a{
+    color: gold;
+    
+    &:hover{
+      color: aqua;
+    }
+  }
 }
 
 /* Media Queries, move welcome box, remove image */

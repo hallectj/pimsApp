@@ -2,6 +2,8 @@ RailsAdmin.config do |config|
 
   ### Popular gems integration
 
+  #config.parent_controller = 'ApplicationController'
+  config.parent_controller = '::ApplicationController'
   ## == Devise ==
    config.authenticate_with do
      warden.authenticate! scope: :user
@@ -11,6 +13,9 @@ RailsAdmin.config do |config|
   ## == Cancan ==
    config.authorize_with :cancan
 
+  
+  config.included_models = %w[ User ]
+  
   ## == Pundit ==
   # config.authorize_with :pundit
 
