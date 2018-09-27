@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount_paid: 9.99
+  amount_owed: 9.99
+  amount_insurance: 9.99
+
+two:
+  amount_paid: 9.99
+  amount_owed: 9.99
+  amount_insurance: 9.99

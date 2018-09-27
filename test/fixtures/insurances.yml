@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  policy_num: MyString
+  policy_name: MyString
+  group_num: MyString
+
+two:
+  policy_num: MyString
+  policy_name: MyString
+  group_num: MyString
