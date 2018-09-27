@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
   get 'pages/patient_search' => 'pages#patientSearchPage'
+  
+  get 'pages/doctor' => 'pages#doctorView'
+  get 'pages/medical' => 'pages#medicalView'
+  get 'pages/office' => 'pages#officeView'
+  get 'pages/volunteer' => 'pages#volunteerView'
+  
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   #devise_for :users
   
