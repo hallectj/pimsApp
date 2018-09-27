@@ -1,15 +1,20 @@
    <% accessVar = "" %>
+   <% imagePath = '' %>
    <% if current_user.doctor_role %>
      <% accessVar = "doctor" %>
+     <% imagePath = 'doctor_dummy.png' %>
    <% end %>
    <% if current_user.medical_role %>
      <% accessVar = "medical" %>
+     <% imagePath = 'medical_dummy.png' %>
    <% end %>
    <% if current_user.office_role %>
      <% accessVar = "office" %>
+     <% imagePath = 'office_dummy.png' %>
    <% end %>
    <% if current_user.volunteer_role %>
      <% accessVar = "volunteer" %>
+     <% imagePath = 'volunteer_dummy.png' %>
    <% end %>
 
 	<div class="container" id="wrapper">
@@ -45,6 +50,7 @@
 				</form>
 			</div>
 			<div class="image_box">
+                <%= image_tag(imagePath) %>
 				<!-- <img src="imgs/holding_xray.jpeg"> -->
 			</div>
 		</div>
@@ -77,22 +83,3 @@
             
 		</div>
 	</div>
-
-
-	<script type="text/javascript">
-		$(document).ready(function(){
-			todayDate();
-		})
-
-		function todayDate(){
-			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-			var days = ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday"];
-			var theDate = new Date();
-			var year = theDate.getFullYear(), month = months[theDate.getMonth()], date = theDate.getDate();
-			var day = days[theDate.getDay()];
-			var fullDate = "Today's date is " + day + ", " + month + " " + date + ", " + year;
-			document.getElementsByClassName("nav_data_para")[0].innerHTML = fullDate;
-		}
-
-		
-	</script>

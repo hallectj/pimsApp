@@ -1,5 +1,6 @@
-	
-<div class="login_wrapper">
+
+
+<div class="login_wrapper">  
   <div id="login_screen" class="login">
     <h3>Hospital Login System</h3>
       <p>Plese enter your username and password</p>
@@ -20,10 +21,10 @@
           <div class="form-actions">
             <%= f.button :submit, "Log in", :class => 'btn btn-lg btn-success' %>
             
-            
-            <% if !user_signed_in? %>
-              <%= link_to new_user_session_path, class: 'login-button' do %>Sign in<% end %>
-            <% end %>
+            <!-- I don't think I need this, but I will leave it here just in case -->   
+            <%# if !user_signed_in? %>
+              <%#= link_to "sign in man", new_user_session_path, class: 'login-button' %>
+            <%# end %>
             
           </div>
         <% end %>
