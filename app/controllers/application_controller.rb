@@ -19,6 +19,15 @@ rescue_from CanCan::AccessDenied do |exception|
   end
 end
 
+unless Rails.application.config.consider_all_requests_local
+  rescue_from AbstractController::ActionNotFound, with: :handle_error
+end
+
+unless Rails.application.config.consider_all_requests_local
+  rescue_from ActionController::UnknownFormat, with: :raise_not_found
+end
+
+
   #def after_sign_in_path_for(resource)
     #redirect_to :authenticated_root
   #end
@@ -37,6 +46,15 @@ private
         redirect_to '/'
       end
     end
+  end
+
+protected
+  def handle_error
+    redirect_to :back
+  end
+
+  def raise_not_found
+    render(text: 'Not Found', status: 404)
   end
 
 end

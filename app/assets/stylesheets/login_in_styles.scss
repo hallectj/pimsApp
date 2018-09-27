@@ -14,7 +14,8 @@
 
 .login_wrapper::after{
 	content: "";
-	/*background: #ccc url("../imgs/login_background.jpg"); */
+    background-color: darkolivegreen;
+    background-image: url("../assets/login_background.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
