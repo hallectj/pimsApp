@@ -1,1 +1,31 @@
 <h1>Welcome to Doctor Page</h1>
+
+<div class="container">
+    <h2>Patient Listing</h2>
+    <table class="table table-striped">
+<thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Middlename</th>
+        <th>Treatment</th>
+        <th>Family Physician</th>
+        <th>Faciliity</th>  
+        <th>Room</th> 
+      </tr>
+    </thead>
+    <tbody>
+<% @patients.each do |patient|%>
+    <tr>
+        <td><%= patient.last_name %></td>
+        <td><%= patient.first_name %></td>
+        <td><%= patient.middle_name %></td>
+        <td><%= @treatment.name %></td>
+        <td><%= @physician.family_physician%></td>
+        <td><%= @location.facility %></td>
+        <td><%= @location.room %></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
