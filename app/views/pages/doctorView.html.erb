@@ -1,1 +1,13 @@
 <h1>Welcome to Doctor Page</h1>
+<% @patients.each do |patient|%>
+<tr>
+  <td><%= patient.last_name %></td>
+  <td><%= patient.first_name %></td>
+  <td><%= patient.middle_name %></td>
+  <td><%= @treatment.name %></td>
+  <td><%= @physician.family_physician%></td>
+  <td><%= @physician.physician_phone %></td>
+  <td><%= @physician.physician_phone %></td>
+  <td><%= @location.facility %></td>
+  
+</tr>
