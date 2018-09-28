@@ -9,6 +9,7 @@ class PagesController < ApplicationController
     before_action :look_contacts, only: [:show, :edit, :update, :destroy]
     before_action :look_locations, only: [:show, :edit, :update, :destroy]
     before_action :look_admittances, only: [:show, :edit, :update, :destroy]
+    before_action :look_insurances, only: [:show, :edit, :update, :destroy]
     def index
     end
     def show
