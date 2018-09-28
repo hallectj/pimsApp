@@ -8,9 +8,9 @@ class Ability
       can :manage, :all
       can :access, :rails_admin
       can :dashboard 
-    elsif user.doctor_role?
-      cannot :create, Patient
-      cannot :delete, Patient
+    # elsif user.doctor_role?
+    #   cannot :create, Patient
+    #   cannot :delete, Patient
       
       #can :manage, :all
       #can :access, :rails_admin       # only allow admin users to access Rails Admin

@@ -1,0 +1,30 @@
+<%= simple_form_for @patient do |f| %>
+<%if current_user.office_role%>
+    <%= f.input :first_name, label: "First Name" %>
+    <%= f.input :last_name, label: "Last Name" %>
+    <%= f.input :middle_name, label: "Middle Name" %>
+
+    <%= f.input :@contact.home_phone, label: "Home Telephone"%>
+    <%= f.input :@contact.work_phone, label: "Work Telephone"%>
+    <%= f.input :@contact.mobile_phone, label: "Mobile Telephone"%>
+    <%= f.input :@contact.street, label: "Street Address"%>
+    <%= f.input :@contact.city, label: "City"%>
+    <%= f.input :@contact.state, label: "State"%>
+    <%= f.input :@contact.zip, label: "ZIP"%>
+
+    <%= f.input :@admittance.reason, label: "Reason for Visit"%>
+
+    <%= f.input :@insurance.policy_num, label: "Insurance Policy Number"%>
+    <%= f.input :@insurance.policy_name, label: "Insurance Policy Name"%>
+    <%= f.input :@insurance.group_num, label: "Insurance Policy Group Number"%>
+
+    <%= f.input :@location.facility, label: "Facility"%>
+    <%= f.input :@location.room, label: "Room"%>
+    <%= f.input :@location.bed, label: "Bed"%>
+    <%= f.input :@location.visitor_limit, label: "Visitor Limit"%>
+    <%= f.input :@location.approved_visitors, label: "Approved Visitors"%>
+    <%= f.input :@location.facility, label: "Facility"%>
+<%end%>
+
+
+<%end%>
