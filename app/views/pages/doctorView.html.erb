@@ -1,21 +1,5 @@
 <h1>Welcome to Doctor Page</h1>
 
-<<<<<<< HEAD
-<p>
-  <strong>First Name:</strong>
-  <%= @patient.first_name %>
-</p>
- 
-<p>
-  <strong>Middle name:</strong>
-  <%= @patient.middle_name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @patient.last_name %>
-</p>
-=======
 <div class="container">
     <h2>Patient Listing</h2>
     <table class="table table-striped">
@@ -24,10 +8,12 @@
         <th>Firstname</th>
         <th>Lastname</th>
         <th>Middlename</th>
+        <th>Admittance</th>        
         <th>Treatment</th>
         <th>Family Physician</th>
         <th>Faciliity</th>  
         <th>Room</th> 
+        <th>Discharge</th>
       </tr>
     </thead>
     <tbody>
@@ -36,13 +22,15 @@
         <td><%= patient.last_name %></td>
         <td><%= patient.first_name %></td>
         <td><%= patient.middle_name %></td>
-        <td><%= @treatment.name %></td>
-        <td><%= @physician.family_physician%></td>
-        <td><%= @location.facility %></td>
-        <td><%= @location.room %></td>
+        <td><%= patient.admittance.date %></td>
+        <td><%= patient.treatment.name %></td>
+        <td><%= patient.physician.family_physician%></td>
+        <td><%= patient.location.facility %></td>
+        <td><%= patient.location.room %></td>
+        <td><%= patient.discharge.date %></td>
     </tr>
     </tbody>
   </table>
+<%end%>
 </div>
 
->>>>>>> d92f284916a7369cb6365a7c4ac267f09bb23a14
