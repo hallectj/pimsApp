@@ -83,42 +83,42 @@ private
     end
     
     def look_physicians
-        @physician = Physician.find(params[:id])
+        @physician = Physician.find_by(patient_id: params[:patient_id])
     end
     def physician_params
         params.require(:physician).permit(:family_physician, :physician_phone)
     end
     
     def look_emergency_contacts
-        @emergency_contact = Emergency_contact.find(params[:id])
+        @emergency_contact = EmergencyContact.find_by(patient_id: params[:patient_id])
     end
     def emergency_contact_params
         params.require(:emergency_contact).permit(:e1_name, :e2_name, :e2_name, :e2_phone)
     end
     
     def look_contacts
-        @contact = Contact.find(params[:id])
+        @contact = Contact.find_by(patient_id: params[:patient_id])
     end
     def contact_params
         params.require(:contact).permit(:home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
     end
     
     def look_locations
-        @location = Location.find(params[:id])
+        @location = Location.find_by(patient_id: params[:patient_id])
     end
     def location_params
         params.require(:location).permit(:facility, :room, :bed, :visitor_limit, :approved_visitors)
     end
     
     def look_admittances
-        @admittance = Admittance.find(params[:id])
+        @admittance = Admittance.find_by(patient_id: params[:patient_id])
     end
     def admittance_params
         params.require(:admittance).permit(:date, :time, :reason)
     end
     
     def look_insurances
-        @insurance = Insurance.find(params[:id])
+        @insurance = Insurance.find_by(patient_id: params[:patient_id])
     end
     def insurance_params
         params.require(:insurance).permit(:policy_num, :policy_name, :group_num)
