@@ -47,7 +47,7 @@ class PagesController < ApplicationController
   
     #create my 4 custom actions here for each role
     def doctorView  
-        @patients = Patient.all.order("created at DESC")
+        @patients = Patient.all
     end
   
     def officeView

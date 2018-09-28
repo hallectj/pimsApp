@@ -22,14 +22,15 @@
         <td><%= patient.last_name %></td>
         <td><%= patient.first_name %></td>
         <td><%= patient.middle_name %></td>
-        <td><%= @admittance.date %></td>
-        <td><%= @treatment.name %></td>
-        <td><%= @physician.family_physician%></td>
-        <td><%= @location.facility %></td>
-        <td><%= @location.room %></td>
-        <td><%= @discharge.date %></td>
+        <td><%= patient.admittance.date %></td>
+        <td><%= patient.treatment.name %></td>
+        <td><%= patient.physician.family_physician%></td>
+        <td><%= patient.location.facility %></td>
+        <td><%= patient.location.room %></td>
+        <td><%= patient.discharge.date %></td>
     </tr>
     </tbody>
   </table>
+<%end%>
 </div>
 
