@@ -7,4 +7,6 @@ class Patient < ApplicationRecord
     has_one :discharge, dependent: :destroy
     has_one :insurance, dependent: :destroy
     has_one :treatment, dependent: :destroy
+    accepts_nested_attributes_for :treatment
+    accepts_nested_attributes_for :discharge
 end
