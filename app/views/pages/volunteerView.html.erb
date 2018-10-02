@@ -1,5 +1,4 @@
-<h1>Welcome to Medical Page</h1>
-
+<h1>Welcome to Volunteer Page</h1>
 <div class="container">
     <h2>Patient Listing</h2>
     <table class="table table-striped">
@@ -8,12 +7,8 @@
         <th>Firstname</th>
         <th>Lastname</th>
         <th>Middlename</th>
-        <th>Admittance</th>        
-        <th>Treatment</th>
-        <th>Family Physician</th>
         <th>Faciliity</th>  
         <th>Room</th> 
-        <th>Discharge</th>
       </tr>
     </thead>
     <tbody>
@@ -22,14 +17,9 @@
         <td><%= patient.last_name %></td>
         <td><%= patient.first_name %></td>
         <td><%= patient.middle_name %></td>
-        <td><%= @admittance.date %></td>
-        <td><%= @treatment.name %></td>
-        <td><%= @physician.family_physician%></td>
         <td><%= @location.facility %></td>
         <td><%= @location.room %></td>
-        <td><%= @discharge.date %></td>
     </tr>
     </tbody>
   </table>
 </div>
-
