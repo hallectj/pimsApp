@@ -2,48 +2,48 @@
 <div id = "patient_wrapper">
 <div class = "boxes admit">
 <h2>Admittance</h2>
-<p class = "date_para"> date: <%= @patient.admittance.date%> </p>
-<p class = "time_para"> time: <%= @patient.admittance.time%> </p>
-<p class = "reason_para"> reason: <%= @patient.admittance.reason%> </p>
+<p class = "date_para"> Admittance Date: <%= @patient.admittance.date%> </p>
+<p class = "time_para"> Admittance Time: <%= @patient.admittance.time%> </p>
+<p class = "reason_para"> Admittance Reason: <%= @patient.admittance.reason%> </p>
 <h2>Discharge</h2>
-<p class = "date_dis_para"> date: <%= @patient.discharge.date%> </p>
-<p class = "time_dis_para"> time: <%= @patient.discharge.time%> </p>
+<p class = "date_dis_para"> Discharge Date: <%= @patient.discharge.date%> </p>
+<p class = "time_dis_para"> Discharge Time: <%= @patient.discharge.time%> </p>
 </div>
 
 <div class = "boxes contact">
 <h2>Contact Information</h2>
-<p class = "home"> date: <%= @patient.contact.home_phone%> </p>
-<p class = "work"> time: <%= @patient.contact.work_phone%> </p>
-<p class = "mobile"> reason: <%= @patient.contact.mobile_phone%> </p>
-<p class = "street"> date: <%= @patient.contact.street%> </p>
-<p class = "city"> time: <%= @patient.contact.city%> </p>
-<p class = "state"> time: <%= @patient.contact.state%> </p>
-<p class = "zip"> time: <%= @patient.contact.zip%> </p>
+<p class = "home"> Home Number: <%= @patient.contact.home_phone%> </p>
+<p class = "work"> Work Number: <%= @patient.contact.work_phone%> </p>
+<p class = "mobile"> Mobile Number: <%= @patient.contact.mobile_phone%> </p>
+<p class = "street"> Street Address: <%= @patient.contact.street%> </p>
+<p class = "city"> City: <%= @patient.contact.city%> </p>
+<p class = "state"> State: <%= @patient.contact.state%> </p>
+<p class = "zip"> ZIP: <%= @patient.contact.zip%> </p>
 </div>
 
 <div class = "boxes phy">
 <h2>Physician</h2>
-<p class = "physician"> date: <%= @patient.physician.family_physician%> </p>
-<p class = "physician_num"> time: <%= @patient.physician.physician_phone%> </p>
+<p class = "physician"> Primary Care Physician: <%= @patient.physician.family_physician%> </p>
+<p class = "physician_num"> Primary Care Number: <%= @patient.physician.physician_phone%> </p>
 </div>
 
 <div class = "boxes patient">
 <h2>General</h2>
-<p class = "first_name"> date: <%= @patient.first_name%> </p>
-<p class = "last_name"> time: <%= @patient.last_name%> </p>
-<p class = "middle_name"> reason: <%= @patient.middle_name%> </p>
+<p class = "first_name"> First Name: <%= @patient.first_name%> </p>
+<p class = "last_name"> Last Name: <%= @patient.last_name%> </p>
+<p class = "middle_name"> Middle Name: <%= @patient.middle_name%> </p>
 </div>
 
 <div class = "boxes location">
 <h2>Location</h2>
-<p class = "facility_para"> date: <%= @patient.location.facility%> </p>
-<p class = "room_para"> time: <%= @patient.location.room%> </p>
-<p class = "bed_para"> time: <%= @patient.location.bed%> </p>
+<p class = "facility_para"> Facility: <%= @patient.location.facility%> </p>
+<p class = "room_para"> Room: <%= @patient.location.room%> </p>
+<p class = "bed_para"> Bed: <%= @patient.location.bed%> </p>
 </div>
 
 <div class = "boxes treatment">
 <h2>Treatment</h2>
-<p class = "treat_para"> date: <%= @patient.treatment.name%> </p>
+<p class = "treat_para"> Treatment: <%= @patient.treatment.name%> </p>
 <p class = "med_para"> medication </p>
 <p class = "sched_para"> schedule </p>
 <p class = "sched_para"> notes </p>
