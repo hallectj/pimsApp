@@ -200,4 +200,85 @@ module HelperDisplay
             return a
         end
     end
+
+    def self.p_numtry(input)
+        if (input != nil)
+            return input.policy_num
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.p_nametry(input)
+        if (input != nil)
+            return input.policy_name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.grouptry(input)
+        if (input != nil)
+            return input.group_num
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.e1_try(input)
+        if (input != nil)
+            return input.e1_name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.e2_try(input)
+        if (input != nil)
+            return input.e2_name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.e1p_try(input)
+        if (input != nil)
+            return input.e1_phone
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.e2p_try(input)
+        if (input != nil)
+            return input.e2_phone
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.vlimittry(input)
+        if (input != nil)
+            return input.visitor_limit
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.vapprovedtry(input)
+        if (input != nil)
+            return input.approved_visitors
+        else
+            a = String.new("None")
+            return a
+        end
+    end
 end
