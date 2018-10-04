@@ -9,9 +9,12 @@
 <p class = "first_name"> First Name: <%= HelperDisplay.firsttry(@patient) %> </p>
 <p class = "last_name"> Last Name: <%= HelperDisplay.lasttry(@patient) %> </p>
 <p class = "middle_name"> Middle Name: <%= HelperDisplay.middletry(@patient) %> </p>
+<% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
 <p class = "birthday"> Birthdate: <%= HelperDisplay.birthdaytry(@patient) %> </p>
+<%end%>
 </div>
 
+<% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
 <h2>Admittance</h2>
 <p class = "date_para"> Admittance Date: <%= HelperDisplay.datetry(@patient.admittance)%> </p>
 <p class = "time_para"> Admittance Time: <%= HelperDisplay.timetry(@patient.admittance)%> </p>
@@ -20,7 +23,9 @@
 <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
 <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
 </div>
+<%end%>
 
+<% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
 <div class = "boxes contact">
 <h2>Contact Information</h2>
 <p class = "home"> Home Number: <%= HelperDisplay.hometry(@patient.contact) %> </p>
@@ -31,12 +36,15 @@
 <p class = "state"> State: <%= HelperDisplay.statetry(@patient.contact) %> </p>
 <p class = "zip"> ZIP: <%= HelperDisplay.ziptry(@patient.contact) %> </p>
 </div>
+<%end%>
 
+<% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
 <div class = "boxes phy">
 <h2>Physician</h2>
 <p class = "physician"> Primary Care Physician: <%= HelperDisplay.fphysiciantry(@patient.physician) %> </p>
 <p class = "physician_num"> Primary Care Number: <%= HelperDisplay.fp_phonetry(@patient.physician) %> </p>
 </div>
+<%end%>
 
 <div class = "boxes location">
 <h2>Location</h2>
@@ -48,6 +56,7 @@
 <p class = "vapprove_para"> Approved Visitors: <%= HelperDisplay.vapprovedtry(@patient.location) %> </p>
 </div>
 
+<% if current_user.doctor_role || current_user.medical_role %>
 <div class = "boxes treatment">
 <h2>Treatment</h2>
 <p class = "treat_para"> Treatment: <%= HelperDisplay.treatmenttry(@patient.treatment) %> </p>
@@ -55,14 +64,18 @@
 <p class = "sched_para"> schedule </p>
 <p class = "sched_para"> notes </p>
 </div>
+<%end%>
 
+<% if current_user.office_role %>
 <div class = "boxes insurance">
 <h2>Insurance</h2>
 <p class = "policynum_para"> Policy Number: <%= HelperDisplay.p_numtry(@patient.insurance) %> </p>
 <p class = "policy_para"> Policy Name: <%= HelperDisplay.p_nametry(@patient.insurance) %>  </p>
 <p class = "group_para"> Group Number: <%= HelperDisplay.grouptry(@patient.insurance) %>  </p>
 </div>
+<%end%>
 
+<% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
 <div class = "boxes emergency">
 <h2>Emergency Contacts</h2>
 <h5><b>Contact 1</b></h5>
@@ -72,6 +85,7 @@
 <p class = "e2_para"> Name: <%= HelperDisplay.e2_try(@patient.emergency_contact) %>  </p>
 <p class = "e2num_para"> Number: <%= HelperDisplay.e2p_try(@patient.emergency_contact) %>  </p>
 </div>
+<%end%>
 
 </div>
 </div>
