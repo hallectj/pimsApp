@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20180927174155) do
     t.string "last_name"
     t.string "first_name"
     t.string "middle_name"
+    t.date "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
