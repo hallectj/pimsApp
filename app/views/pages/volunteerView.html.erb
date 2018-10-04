@@ -17,8 +17,8 @@
         <td><%= patient.last_name %></td>
         <td><%= patient.first_name %></td>
         <td><%= patient.middle_name %></td>
-        <td><%= @location.facility %></td>
-        <td><%= @location.room %></td>
+        <td><%= patient.location.facility %></td>
+        <td><%= patient.location.room %></td>
     </tr>
 <%end%>     
     </tbody>
