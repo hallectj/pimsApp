@@ -16,4 +16,6 @@ class Patient < ApplicationRecord
     accepts_nested_attributes_for :insurance
     accepts_nested_attributes_for :discharge
     accepts_nested_attributes_for :treatment
-end
+end    
+
+

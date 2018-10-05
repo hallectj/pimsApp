@@ -27,6 +27,7 @@ gem 'rails_admin', '~> 1.4', '>= 1.4.1'
 gem 'cancancan'
 gem 'load_and_authorize_resource'
 gem 'simple_form', '~> 4.0', '>= 4.0.1'
+gem 'rails-observers'
 
 
 group :development, :test do
