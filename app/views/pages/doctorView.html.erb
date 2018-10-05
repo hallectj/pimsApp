@@ -1,3 +1,6 @@
+<% require_relative('./HelperDisplayFunctions') 
+%>
+
 <h1>Welcome to Doctor Page</h1>
 
 <div class="container">
@@ -5,8 +8,8 @@
     <table class="table table-striped">
 <thead>
       <tr>
-        <th>Firstname</th>
         <th>Lastname</th>
+        <th>Firstname</th>
         <th>Middlename</th>
         <th>Admittance</th>        
         <th>Treatment</th>
@@ -15,22 +18,28 @@
         <th>Room</th> 
         <th>Discharge</th>
       </tr>
-    </thead>
-    <tbody>
-<% @patients.each do |patient|%>
-    <tr>
-        <td><%= patient.last_name %></td>
-        <td><%= patient.first_name %></td>
-        <td><%= patient.middle_name %></td>
-        <td><%= patient.admittance.date %></td>
-        <td><%= patient.treatment.name %></td>
-        <td><%= patient.physician.family_physician%></td>
-        <td><%= patient.location.facility %></td>
-        <td><%= patient.location.room %></td>
-        <td><%= patient.discharge.date %></td>
-    </tr>
+</thead>
+    <tbody> 
+        
+    
+<% @patients.each do |patient| %>
+<tr> 
+
+        <td><%= HelperDisplay.nametry(patient.last_name) %></td>
+        <td><%= HelperDisplay.nametry(patient.first_name) %></td>
+        <td><%= HelperDisplay.nametry(patient.middle_name) %></td>
+        <td><%= HelperDisplay.datetry(patient.admittance) %></td>
+        <td><%= HelperDisplay.treatmenttry(patient.treatment) %></td>
+        <td><%= HelperDisplay.fphysiciantry(patient.physician) %></td>
+        <td><%= HelperDisplay.facilitytry(patient.location) %></td>
+        <td><%= HelperDisplay.roomtry(patient.location) %></td>
+        <td><%= HelperDisplay.datetry(patient.discharge) %></td>
+        <td><%= link_to "View", page_path(patient) %></td>
+</tr>        
+<%end%>        
+    
     </tbody>
   </table>
-<%end%>
+
 </div>
 
