@@ -13,6 +13,7 @@ class PagesController < ApplicationController
     def index
     end
     def show
+        @patient = Patient.find(params[:id])
     end
     def new
         @patient = Patient.new
@@ -43,11 +44,20 @@ class PagesController < ApplicationController
     end
   
     def patientSearchPage
+
     end
   
     #create my 4 custom actions here for each role
-    def doctorView  
-        @patients = Patient.all
+    def doctorView
+      @patients = Patient.all
+    end
+    
+    def pagesPatientResults
+       #@patients = Patient.all
+       @patients = Patient.where("last_name like ?", "%#{params[:search]}")
+       #@patient = Patient.where(last_name: params[:search])
+       #@patients = Patient.search(params[:search])
+       #@patient = @patients.search(params[:search]).ids
     end
   
     def officeView
@@ -63,23 +73,22 @@ private
     def determineRollCustomAction
       path = ""
       if current_user.doctor_role
-        path = pages_doctor_path
+        path = doctor_path
       elsif current_user.office_role
-        path = pages_office_path
+        path = office_path
       elsif current_user.medical_role
-        path = pages_medical_path
+        path = medical_path
       elsif current_user.volunteer_role
-        path = pages_volunteer_path
+        path = volunteer_path
       end
       redirect_to path
     end
-    
     
     def look_patients
       @patient = Patient.find(params[:id])
     end    
     def patient_params
-      params.require(:patient).permit(:first_name, :middle_name, :last_name, treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
+      params.require(:patient).permit(:first_name, :middle_name, :last_name, :search, treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
     end
     
     def look_physicians
