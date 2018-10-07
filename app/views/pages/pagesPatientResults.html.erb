@@ -1,9 +1,7 @@
 <% require_relative('./HelperDisplayFunctions') %>
-<%#= provide :stylesheets do %>
-  <%#= stylesheet_link_tag "results" %>
-<%# end %>
 
 <h2 class="text-center">Patients that matched your search criteria</h2>
+<p class="go_back"> <%= link_to "Back", :back %></p>
 
 <% @patients.first(10).each do |patient| %>
   <div class="patient-card">
