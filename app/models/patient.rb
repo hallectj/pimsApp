@@ -1,4 +1,5 @@
 class Patient < ApplicationRecord
+    
     has_one :physician, dependent: :destroy
     has_one :emergency_contact, dependent: :destroy
     has_one :contact, dependent: :destroy
@@ -16,6 +17,14 @@ class Patient < ApplicationRecord
     accepts_nested_attributes_for :insurance
     accepts_nested_attributes_for :discharge
     accepts_nested_attributes_for :treatment
-end    
-
-
+    
+    def self.search(search)
+      if search
+        where('last_name LIKE ?', "%#{search}%").order('id DESC')
+      else
+        order('id DESC') 
+      end
+    end
+    
+    
+end
