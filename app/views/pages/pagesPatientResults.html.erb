@@ -1,0 +1,24 @@
+<% require_relative('./HelperDisplayFunctions') %>
+<%#= provide :stylesheets do %>
+  <%#= stylesheet_link_tag "results" %>
+<%# end %>
+
+<h2 class="text-center">Patients that matched your search criteria</h2>
+
+<% @patients.first(10).each do |patient| %>
+  <div class="patient-card">
+    <h3><%= patient.first_name + ", " + patient.last_name %></h3>
+    <div>
+      <p>Basic Info</p>
+      <div class="patient-info-div">
+        <p>facility: <%= HelperDisplay.facilitytry(patient.location) %></p>
+        <p>room: <%= HelperDisplay.roomtry(patient.location) %></p>
+        <p>bed: <%= HelperDisplay.roomtry(patient.location) %></p> <br>
+      </div>
+      <p>View Complete Profile</p>
+      <p class="view-more"><%= link_to "View More", page_path(patient) %></p>
+    </div>
+  </div>
+<% end %>
+
+

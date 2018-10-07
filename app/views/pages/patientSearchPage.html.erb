@@ -2,19 +2,19 @@
    <% imagePath = '' %>
    <% if current_user.doctor_role %>
      <% accessVar = "doctor" %>
-     <% imagePath = 'doctor_dummy.png' %>
+     <% imagePath = 'doctorStaff.jpg' %>
    <% end %>
    <% if current_user.medical_role %>
      <% accessVar = "medical" %>
-     <% imagePath = 'medical_dummy.png' %>
+     <% imagePath = 'medicalStaff.jpg' %>
    <% end %>
    <% if current_user.office_role %>
      <% accessVar = "office" %>
-     <% imagePath = 'office_dummy.png' %>
+     <% imagePath = 'officeStaff.jpg' %>
    <% end %>
    <% if current_user.volunteer_role %>
      <% accessVar = "volunteer" %>
-     <% imagePath = 'volunteer_dummy.png' %>
+     <% imagePath = 'volunteerStaff.jpg' %>
    <% end %>
 
 	<div class="container" id="wrapper">
@@ -28,6 +28,7 @@
 		
 		<div class="info_boxes" id="info_box2">
 			<div class="patient_box">
+                <!--
 				<form>
 					<div class="form-group">
 						<label for="First Name">First Name</label>
@@ -37,37 +38,35 @@
 						<label for="First Name">Last Name</label>
 						<input type="text" name="last name" class="form-control" id="lastName" />
 					</div>
-
-					<!-- If we need to search by gender then uncomment this -->
-					<!-- 
-					<div class="form-group btn btn-sm cust_rule1">
-						<select class="form-control" id="gender_select">
-    						<option>Male</option>
-    						<option>Female</option>
-  						</select>
-					</div>
-					-->
 				</form>
+                -->
+                <div class="form-group">
+                  <%#= form_tag(pages_path, method: :get) do %> 
+                    <%#= text_field_tag :term, params[:term] %>
+                    <%#= submit_tag 'Search' %>
+                  <%# end %>
+                  
+                  <%= form_tag pages_patient_results_path, :method => 'get' do %>
+                    <p>
+                      <%= text_field_tag :search %>
+                      <%= submit_tag "search" %>
+                    </p>
+                  <% end %>
+
+                </div>
+
+
 			</div>
 			<div class="image_box">
                 <%= image_tag(imagePath) %>
-				<!-- <img src="imgs/holding_xray.jpeg"> -->
 			</div>
 		</div>
 
 		<div class="info_boxes" id="info_box3">			
 			<div class="form-group search_button_div">
                 <% if !current_user.superadmin_role? %>
-                  <!-- delete the immediate line below once decided on what approach to take -->
-                  <!-- <a class="btn btn-small btn-success" href="#">Find Patient</a> -->
+                  <p> Search All Patients</p><br>
                   <%= link_to "Find Patients", {controller: "pages", action: "index"}, class: "btn btn-small btn-success" %>
-              
-                  <!--  Using approach #1 creating a patient controller have seperate actions for each user  
-                        def doctorView, def officeView, etc. -->
-                  <%-# link_to "Find Patients", {controller: "patients", action: "index"}, class: "btn btn-small btn-success" %>
-                  <!--  Using approach #2 create 4 seperate controllers, doctor controller, volunteer controller etc and
-                        have the pass controller route to the right controller once button is clicked -->
-                  <%-# link_to "Find Patients", {controller: "pass", action: "index"}, class: "btn btn-small btn-success" %>
                 <% end %>
                 
                 <% if accessVar == "office"%>

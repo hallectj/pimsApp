@@ -1,0 +1,49 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+#date-nav{
+  display: block;
+  margin-top: 12px;
+  margin-left: 15px;
+  color: #fff;
+  font-size: 1.0em;
+}
+
+.patient-card{
+  padding: 10px;
+  margin: 20px auto;
+  width: 40vw;
+  background-color: #d5e590;
+  border-radius: 25px;
+}
+
+.patient-card > div{
+  width: 90%;
+  margin: 0 auto;
+}
+
+.patient-info-div p{
+  font-family: Arial, sans-serif;
+  list-style-type: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+p.view-more{
+  display: block;
+  text-align: center;
+  padding: 5px;
+  border: 2px solid #56a59a;
+  font-size: 1.5em;
+  width: 160px;
+  border-radius: 25px;
+  background-color: #d0d8ad;
+}
+
+.view-more a{
+  color: #374209;
+  text-align: center;
+  text-decoration: none;
+}
+
