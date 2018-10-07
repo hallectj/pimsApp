@@ -1,0 +1,11 @@
+<% require_relative('./HelperDisplayFunctions') %>
+
+<h2>Patients that matched your search criteria</h2>
+
+<% @patients.first(10).each do |patient| %>
+  <h2>Patient Info for <%= patient.last_name + ", " + patient.first_name %></h2>
+  <p>View Complete Profile</p> <br>
+  <p><%= link_to "View", page_path(patient) %></p>
+<% end %>
+
+
