@@ -9,36 +9,12 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-inverse" style="margin: 0;">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <%= link_to "Hospital Home", new_user_session_path, class: "navbar-brand"%>
-        </div>
-	  <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li id="date-nav"></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <% if !user_signed_in? || current_user.nil? %>
-            <li><%= link_to "Log in", new_user_session_path, class: 'login-button' %></li>
-          <% else %>
-            <li><%= link_to "Log Out", destroy_user_session_path, class: 'login-button', method: :delete %></li>
-          <% end %>
-	    </ul>
-        </div>
-	  </div>
-	</nav>
-    
-    <div class="notice-div">
-      <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-      <% end %>
-      <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-      <% end %>
-    </div>
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/alerts' %>
     
     <%= yield %>
+    
+    
     
   <script type="text/javascript">
      $(document).ready(function(){

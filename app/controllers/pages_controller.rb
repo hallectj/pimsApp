@@ -1,6 +1,9 @@
 class PagesController < ApplicationController
     #load_and_authorize_resource :class => PagesController
     #before_action :look_patients, only: [:show, :edit, :update, :destroy]
+  
+    layout 'pagesPatientResults', only: [:pagesPatientResults]
+  
     before_action :isAdmin?
     before_action :determineRollCustomAction, only: [:index]  
     before_action :look_patients, only: [:show, :edit, :update, :destroy]
@@ -51,23 +54,24 @@ class PagesController < ApplicationController
     def doctorView
       @patients = Patient.all
     end
-    
-    def pagesPatientResults
-       #@patients = Patient.all
-       @patients = Patient.where("last_name like ?", "%#{params[:search]}")
-       #@patient = Patient.where(last_name: params[:search])
-       #@patients = Patient.search(params[:search])
-       #@patient = @patients.search(params[:search]).ids
-    end
   
     def officeView
+      @patients = Patient.all
     end
   
     def medicalView
+      @patients = Patient.all
     end
   
     def volunteerView
+      @patients = Patient.all
     end
+    
+    def pagesPatientResults
+       @patients = Patient.where("last_name like ?", "%#{params[:search]}")
+    end
+  
+
   
 private
     def determineRollCustomAction
