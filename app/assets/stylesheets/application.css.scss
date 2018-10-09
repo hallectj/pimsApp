@@ -12,9 +12,11 @@
  *
  *= require_tree .
  *= require_self
+ *= stub 'pagesPatientResults'
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datepicker';
 
 #date-nav{
   display: block;

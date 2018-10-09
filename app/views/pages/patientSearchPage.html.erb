@@ -2,19 +2,19 @@
    <% imagePath = '' %>
    <% if current_user.doctor_role %>
      <% accessVar = "doctor" %>
-     <% imagePath = 'doctor_dummy.png' %>
+     <% imagePath = 'doctorStaff.jpg' %>
    <% end %>
    <% if current_user.medical_role %>
      <% accessVar = "medical" %>
-     <% imagePath = 'medical_dummy.png' %>
+     <% imagePath = 'medicalStaff.jpg' %>
    <% end %>
    <% if current_user.office_role %>
      <% accessVar = "office" %>
-     <% imagePath = 'office_dummy.png' %>
+     <% imagePath = 'officeStaff.jpg' %>
    <% end %>
    <% if current_user.volunteer_role %>
      <% accessVar = "volunteer" %>
-     <% imagePath = 'volunteer_dummy.png' %>
+     <% imagePath = 'volunteerStaff.jpg' %>
    <% end %>
 
 	<div class="container" id="wrapper">
