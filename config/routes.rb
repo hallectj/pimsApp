@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   get 'pages_patient_results' => "pages#pagesPatientResults", as: "pages_patient_results"
   
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  #devise_for :users
   
   devise_for :users, controllers: {
     sessions: 'users/sessions'
@@ -18,9 +17,31 @@ Rails.application.routes.draw do
   
   #let the pass controller do the necessary route directing
   root :to => 'pass#index'
-  resources :pages
-  resources :patients
+  
+  #get 'pages/:id/edit/edit_patient', to: 'pages#edit_patient', as: :edit_patient
+  #put '/pages/:id/updatePatient', to: 'pages#updatePatient', as: :updatePatient
+  #get '/pages/new/newPatient', to: 'pages#newPatient', as: :newPatient
+  
+  
+  #resources :pages
+  
+  
+  resources :pages do
+    member do
+      #custom new
+      get :new_patient
+    end
+  end
+  
+  #PATIENT CUSTOM ROUTES EDIT UPDATE
+  get '/pages/:id/edit/edit_patient', to: 'pages#edit_patient', as: :edit_patient
+  
+  match "pages/:id/update/update_patient" => "pages#update_patient", as: :update_patient, via: [:patch, :post]
+  
+  #patch '/pages/:id/update/update_patient', to: 'pages#update_patient', as: :update_patient
+  #post '/pages/:id/update/update_patient', to: 'pages#update_patient', as: :update_patient
     
+  
   #resources :pages do 
     #get 'pages/patient_search', to: 'pages#patientSearchPage', as: :patient_search
   #end

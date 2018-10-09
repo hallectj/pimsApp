@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+    @recordLocation = ""
     #load_and_authorize_resource :class => PagesController
     #before_action :look_patients, only: [:show, :edit, :update, :destroy]
   
@@ -6,22 +7,22 @@ class PagesController < ApplicationController
   
     before_action :isAdmin?
     before_action :determineRollCustomAction, only: [:index]  
-    before_action :look_patients, only: [:show, :edit, :update, :destroy]
+    before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
     before_action :look_physicians, only: [:show, :edit, :update, :destroy]
     before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
     before_action :look_contacts, only: [:show, :edit, :update, :destroy]
     before_action :look_locations, only: [:show, :edit, :update, :destroy]
-    before_action :look_admittances, only: [:show, :edit, :update, :destroy]
+    before_action :look_admittances, only: [:show, :edit_patient, :update_patient, :destroy]
     before_action :look_insurances, only: [:show, :edit, :update, :destroy]
+    
     def index
     end
-    def show
-        @patient = Patient.find(params[:id])
-    end
+  
     def new
         @patient = Patient.new
-        treatment = @patient.treatments.build
-        discharge = @patient.discharges.build
+        @patient.admittance.build
+        #treatment = @patient.treatments.build
+        #discharge = @patient.discharges.build
         
         @physician = Physician.new
         @emergency_contact = Emergency_contact.new
@@ -30,10 +31,16 @@ class PagesController < ApplicationController
         @admittance = Admittance.new
         @insurance = Insurance.new
     end
-    def edit
-    end
+  
     def create
-        @patient = Patient.new(patient_params)   
+        @patient = Patient.new(patient_params) 
+      
+        if @patient.save
+          render redirect_to root_path
+        else
+          render 'new_patient'
+        end
+      
         @physician = Physician.new(physician_params)
         @emergency_contact = Emergency_contact.new(emergency_contact_params)
         @contact = Contact.new(contact_params)
@@ -41,14 +48,47 @@ class PagesController < ApplicationController
         @admittance = Admittance.new(admittance_params)
         @insurance = Insurance.new(insurance_params)
     end
-    def update
+    
+    def show
+        @patient = Patient.find(params[:id])
     end
+  
+    def edit
+      @patient = Patient.find(params[:id])
+      
+    end
+  
     def destroy
     end
   
-    def patientSearchPage
-
+    #my custom restfuls
+    ########   PATIENT CUSTOM ACTIONS  ###########################
+    def new_patient
+      @patient = Patient.new
+      #@admittance = Admittance.new
     end
+  
+    def edit_patient
+      @patient = Patient.find(params[:id])
+      @admittance = @patient.admittance
+      
+      pointer_param = params[:pointer]
+      @recordLocation = pointer_param
+    end
+    
+    def update_patient
+      @recordLocation = ""
+      if @patient.update(patient_params)
+        render 'show'
+      else
+        render 'edit_patient'
+      end
+    end
+    ########   END PATIENT CUSTOM ACTIONS  ######################
+    
+    
+  
+  
   
     #create my 4 custom actions here for each role
     def doctorView
@@ -71,7 +111,8 @@ class PagesController < ApplicationController
        @patients = Patient.where("last_name like ?", "%#{params[:search]}")
     end
   
-
+    def patientSearchPage
+    end
   
 private
     def determineRollCustomAction
@@ -87,13 +128,18 @@ private
       end
       redirect_to path
     end
-    
+  
     def look_patients
       @patient = Patient.find(params[:id])
-    end    
+    end  
+  
     def patient_params
-      params.require(:patient).permit(:first_name, :middle_name, :last_name, :search, treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
+      params.require(:patient).permit(:first_name, :middle_name, :last_name, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
     end
+  
+    #def patient_params
+      #params.fetch(:patient, {}).permit!
+    #end
     
     def look_physicians
         @physician = Physician.find_by(patient_id: params[:patient_id])
