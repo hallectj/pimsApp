@@ -1,0 +1,160 @@
+/* line 1, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+* {
+  font-family: Tahoma;
+}
+
+/* line 5, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+:root {
+  --find-background-color: #6d7376;
+}
+
+/* line 9, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+form {
+  font-weight: bold;
+  font-family: Verdana, Tahoma, sans-serif;
+}
+
+/* line 14, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+img {
+  width: 250px;
+  height: 167px;
+}
+
+/* line 19, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+.nav_data_para {
+  color: #000;
+  font-weight: bold;
+}
+
+/* line 24, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 29, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+.info_boxes {
+  flex: 1;
+  width: 90%;
+  margin: 20px auto;
+  padding: 5px;
+}
+
+/* line 36, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+.info_boxes p {
+  padding: 0;
+  margin: 0;
+}
+
+/* line 41, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box1, #info_box2, #info_box3 {
+  display: flex;
+}
+
+/* line 45, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box1 h1 {
+  width: 50%;
+  margin-right: auto;
+}
+
+/* line 50, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box1 > .welcome_box {
+  width: 30%;
+  margin-left: auto;
+  border: 2px solid #f78;
+  padding: 2px;
+}
+
+/* line 57, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box2 .patient_box {
+  width: 50%;
+  margin-right: auto;
+  background: var(--find-background-color);
+  padding: 10px;
+}
+
+/* line 64, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box2 .image_box {
+  width: 30%;
+  margin-left: auto;
+  margin-top: 20px;
+  margin-right: 10px;
+  min-width: 125px;
+  background-color: #f8fafb;
+  padding: 20px;
+}
+
+/* line 74, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box2 .image_box img {
+  min-width: 120px;
+}
+
+/* line 78, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+#info_box3 .search_button_div {
+  padding: 10px;
+  background-color: var(--find-background-color);
+  width: 50%;
+}
+
+/* line 84, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+.office_worker_message {
+  clear: both;
+  margin-top: 20px;
+  width: 70%;
+  color: #fff;
+  font-family: arial;
+  font-size: 1.2em;
+}
+/* line 92, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+.office_worker_message a {
+  color: gold;
+}
+/* line 95, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+.office_worker_message a:hover {
+  color: aqua;
+}
+
+/* Media Queries, move welcome box, remove image */
+@media screen and (max-width: 800px) {
+  /* line 104, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  .info_boxes {
+    width: 100%;
+    flex: none;
+  }
+
+  /* line 109, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  #info_box1 {
+    display: block;
+  }
+
+  /* line 113, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  #info_box1 h1 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+  }
+
+  /* line 120, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  #info_box1 > .welcome_box {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* line 125, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  #info_box2 .patient_box {
+    width: 100%;
+  }
+
+  /* line 129, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  #info_box2 .image_box {
+    display: none;
+  }
+
+  /* line 133, C:/Sites/rails_folder/bitBucketPimsFolder3/pims_travis/app/assets/stylesheets/patient_find_styles.scss */
+  #info_box1 > .welcome_box {
+    width: 200px;
+    margin: 0;
+    padding: 2px;
+  }
+}
