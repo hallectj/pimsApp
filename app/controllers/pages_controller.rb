@@ -24,7 +24,7 @@ class PagesController < ApplicationController
   
     def new
         @patient = Patient.new
-        @patient.admittance.build
+        #@patient.admittance.build
         #treatment = @patient.treatments.build
         #discharge = @patient.discharges.build
         
@@ -79,7 +79,8 @@ class PagesController < ApplicationController
   
     def edit_admittance
       @patient = Patient.find(params[:id]) 
-      @patient.build_admittance if @patient.admittance.nil?
+      @admittance = @patient.build_admittance if @patient.admittance.nil?
+      #@patient.build_admittance
       
       #@patient = Patient.find(params[:id])
       #@admittance = @patient.admittance
@@ -101,8 +102,11 @@ class PagesController < ApplicationController
     end
   
     def update_admittance
-      @patient = User.find(params[:id])
-      if @patient.update(params.require(:patient).permit(:last_name, :first_name, :middle_name, :birthday, admittance_attributes: [:id, :date, :time, :reason]))
+      @patient = Patient.find(params[:id])
+      #@admittance = Admittance.find_by(patient_id: 3)
+      @admittance = @patient.build_admittance
+      #if @patient.update(params.require(:patient).permit(:last_name, :first_name, :middle_name, :birthday, admittance_attributes: [:id, :date, :time, :reason]))
+      if @admittance.update(admittance_params)
         render 'show'
       else
          flash.now[:error] = "Cannot updating your profile"
