@@ -30,6 +30,9 @@ gem 'simple_form', '~> 4.0', '>= 4.0.1'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap-datepicker-rails'
 
+#to make console pretty for development purposes and readibility
+gem 'hirb', '~> 0.7.3'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
