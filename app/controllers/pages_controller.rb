@@ -55,7 +55,6 @@ class PagesController < ApplicationController
     
     def show
         @patient = Patient.find(params[:id])
-        #@admittance = Admittance.find_by(patient_id: 5)
         @admittance = Admittance.find_by(patient_id: params[:patient_id]) 
     end
   
@@ -80,19 +79,11 @@ class PagesController < ApplicationController
     def edit_admittance
       @patient = Patient.find(params[:id]) 
       @admittance = @patient.build_admittance if @patient.admittance.nil?
-      #@patient.build_admittance
-      
-      #@patient = Patient.find(params[:id])
-      #@admittance = @patient.admittance
-      #@admittance = @patient.build_admittance
-      #@admittance = @patient.admittance.find_by(patient_id: params[:patient_id])
-      #@admittance = Admittance.find_by(patient_id: 3)
-      #@admittance = Admittance.find_by(patient_id: params[:patient_id])
     end
     
     def update_patient
       @patient = Patient.find(params[:id])
-      #@admittance = @patient.admittance
+      @admittance = @patient.admittance
      
       if @patient.update(patient_params)
         render 'show'
@@ -103,9 +94,7 @@ class PagesController < ApplicationController
   
     def update_admittance
       @patient = Patient.find(params[:id])
-      #@admittance = Admittance.find_by(patient_id: 3)
       @admittance = @patient.build_admittance
-      #if @patient.update(params.require(:patient).permit(:last_name, :first_name, :middle_name, :birthday, admittance_attributes: [:id, :date, :time, :reason]))
       if @admittance.update(admittance_params)
         render 'show'
       else
@@ -114,43 +103,7 @@ class PagesController < ApplicationController
       end
     end
   
-    #def update_admittance
-      #@patient = Patient.find(params[:id])
-      #if @admittance.present?
-        #@admittance = @patient.admittance
-      #else
-        #@admittance = @patient.build_admittance
-      #end
-      #@admittance = @patient.admittance
-      #@admittance = Admittance.find_by(patient_id: params[:patient_id])  
-      #@admittance = params.fetch(:patient)[:patient_id]
-      #if @admittance.update(admittance_params)
-      #if @admittance.update(admittance_params)
-        #render 'show'
-      #else
-        #render 'edit_admittance'
-      #end
-      
-      
-      
-      #@patient = Patient.find(params[:id])
-      #@admittance = @patient.build_admittance
-      #@admittance = @patient.build
-      #@admittance = @patient.admittance.build(params[:admittance])
-      
-      #@admittance = @patient.admittance
-      
-      #if @admittance.update(admittance_params)
-        #render 'show'
-      #else
-        #render 'edit_patient'
-      #end
-    #end
     ########   END PATIENT CUSTOM ACTIONS  ######################
-    
-    
-  
-  
   
     #create my 4 custom actions here for each role
     def doctorView

@@ -26,7 +26,10 @@
     </div>
     
     <div class="form-group">
-      <input type="submit" class="btn btn-primary" value="Update">
+      <div class="button_choose_show_action">
+        <p><input type="submit" class="btn btn-primary" style="margin-right: 10px;" value="Update"></p>
+        <p><%= link_to "Back", page_path(@patient), html_options = {class: "btn btn-success"} %></p>
+      </div>
     </div>
   </form>
   <% end %>
