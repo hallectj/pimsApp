@@ -11,7 +11,12 @@
     
     <div class="form-group">
       <label>Time</label>
-      <input type="text" class="form-control timepicker" name="admittance[time]" value="<%= @patient.admittance.time %>">
+        <div class='input-group date' id="datetimepicker3">
+            <input type="text" class="form-control timepicker" name="admittance[time]" value="<%= @patient.admittance.time.strftime("%I:%M%p") %>">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+            </span>
+        </div>
     </div>
     
     <div class="form-group">
@@ -32,5 +37,5 @@
 
 <script type="text/javascript">
   $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
-  $('.timepicker').datepicker({format: 'LT'});
+  $('.timepicker').datetimepicker({format: 'LT'});
 </script>

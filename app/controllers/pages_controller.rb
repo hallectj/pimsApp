@@ -2,6 +2,7 @@ class PagesController < ApplicationController
     #load_and_authorize_resource :class => PagesController
     #before_action :look_patients, only: [:show, :edit, :update, :destroy]
   
+  
     layout 'pagesPatientResults', only: [:pagesPatientResults]
   
     before_action :isAdmin?

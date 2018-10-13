@@ -36,6 +36,8 @@
 </div>
 
 <script type="text/javascript">
-  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
-  $('.timepicker').datepicker({format: 'LT'});
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+    $('.timepicker').datepicker({format: 'HH:mm:ss'});
+  });
 </script>
