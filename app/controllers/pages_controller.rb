@@ -79,7 +79,7 @@ class PagesController < ApplicationController
 
   def edit_admittance
     @patient = Patient.find(params[:id]) 
-    @admittance = @patient.build_admittance ##if @patient.admittance.nil?
+    @admittance = @patient.update_admittance if @patient.admittance.nil?
   end
   
   def update_patient
@@ -95,7 +95,7 @@ class PagesController < ApplicationController
 
   def update_admittance
     @patient = Patient.find(params[:id])
-    @admittance = @patient.build_admittance
+    @admittance = @patient.admittance
     if @admittance.update(admittance_params)
       render 'show'
     else
