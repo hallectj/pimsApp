@@ -20,11 +20,7 @@
       
       <p class = "date_para"> Admittance Date: <%= HelperDisplay.datetry(@patient.admittance) %> </p>
       <p class = "time_para"> Admittance Time: <%= HelperDisplay.timetry(@patient.admittance) %> </p>
-      <p class = "reason_para"> Admittance Reason: <%= HelperDisplay.reasontry(@patient.admittance)  %> </p> 
-
-      
-      
-      
+      <p class = "reason_para"> Admittance Reason: <%= HelperDisplay.reasontry(@patient.admittance)  %> </p>
       <p>Edit Admittance Info <%= link_to "Edit", edit_admittance_path(@patient, :pointer => "admittance")  %></p>
   
       <h2>Discharge</h2>

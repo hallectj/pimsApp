@@ -4,16 +4,16 @@ require 'time'
 module HelperDisplay 
 
     def self.datetry(input)
-        if (input.try(:date))
-            return input.date
-        else 
+        if (input == nil)  || (input.date == nil)
             d = Date.new(0001, 01, 1)
             return d
+        else 
+            return input.date
         end
     end
 
     def self.timetry(input)
-        if(input.try(:time))
+        if (input.try(:time))
             return input.time.strftime("%H:%M:%S")
         else
             d = Time.new(01, 01, 01, 01)
