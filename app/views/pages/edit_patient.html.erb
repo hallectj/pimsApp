@@ -1,28 +1,43 @@
 <h2 class="foo">Edit Page Patient Light </h2>
 
 <div class="container">
-<% if @recordLocation == "general" %>
-  <%= simple_form_for @patient, url: update_patient_path do |f| %>
-    <%= f.input :last_name, label: "Last Name" %>
-    <%= f.input :first_name, label: "First Name" %>
-    <%= f.input :middle_name, label: "Middle Name" %>
-    <%= f.input :birthday, as: :string, input_html: { class: "datepicker" } %>
-    <%= f.submit :submit %>
+  <% if @recordLocation == "general" %>
+  <form action="/pages/<%= @patient.id %>/update/update_patient" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" class="form-control" name="patient[last_name]" value="<%= @patient.last_name %>">
+    </div>
+    
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" class="form-control" name="patient[first_name]" value="<%= @patient.first_name %>">
+    </div>
+    
+    <div class="form-group">
+      <label>Middle Name</label>
+      <input type="text" class="form-control" name="patient[middle_name]" value="<%= @patient.middle_name %>">
+    </div>
+    
+    <div class="form-group">
+      <label>Birthday</label>
+      <input type="text" class="form-control datepicker" name="patient[birthday]" value="<%= @patient.birthday %>">
+    </div>
+    
+    <div class="form-group">
+      <div class="button_choose_show_action">
+        <p><input type="submit" class="btn btn-primary" style="margin-right: 10px;" value="Update"></p>
+        <p><%= link_to "Back", page_path(@patient), html_options = {class: "btn btn-success"} %></p>
+      </div>
+    </div>
+  </form>
   <% end %>
-<% end %>
-</div>
-
-<div class="container">
-<% if @recordLocation == "admittance" %>
-  <%= simple_form_for Admittance.new, url: update_patient_path do |f| %>
-    <%= f.input :date, as: :string, input_html: { class: "datepicker" } %>
-    <%= f.input :time, label: "time of admittance" %>
-    <%= f.input :reason, label: "reason for admittance" %>
-    <%= f.submit :submit %>
-  <% end %>
-<% end %>
 </div>
 
 <script type="text/javascript">
-  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+    $('.timepicker').datepicker({format: 'HH:mm:ss'});
+  });
 </script>

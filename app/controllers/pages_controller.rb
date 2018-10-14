@@ -3,16 +3,32 @@ class PagesController < ApplicationController
     #load_and_authorize_resource :class => PagesController
     #before_action :look_patients, only: [:show, :edit, :update, :destroy]
   
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 75b0497ddfc4d177edf96b2de22d328326c533c0
     layout 'pagesPatientResults', only: [:pagesPatientResults]
   
     before_action :isAdmin?
     before_action :determineRollCustomAction, only: [:index]  
+<<<<<<< HEAD
+=======
+  
+    #let's me know what view I'm in so I can update only
+    #those fields
+    before_action :getPointerParam
+  
+>>>>>>> 75b0497ddfc4d177edf96b2de22d328326c533c0
     before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
     before_action :look_physicians, only: [:show, :edit, :update, :destroy]
     before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
     before_action :look_contacts, only: [:show, :edit, :update, :destroy]
     before_action :look_locations, only: [:show, :edit, :update, :destroy]
+<<<<<<< HEAD
     before_action :look_admittances, only: [:show, :edit_patient, :update_patient, :destroy]
+=======
+    before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
+>>>>>>> 75b0497ddfc4d177edf96b2de22d328326c533c0
     before_action :look_insurances, only: [:show, :edit, :update, :destroy]
     
     def index
@@ -20,7 +36,11 @@ class PagesController < ApplicationController
   
     def new
         @patient = Patient.new
+<<<<<<< HEAD
         @patient.admittance.build
+=======
+        #@patient.admittance.build
+>>>>>>> 75b0497ddfc4d177edf96b2de22d328326c533c0
         #treatment = @patient.treatments.build
         #discharge = @patient.discharges.build
         
@@ -51,11 +71,11 @@ class PagesController < ApplicationController
     
     def show
         @patient = Patient.find(params[:id])
+        @admittance = Admittance.find_by(patient_id: params[:patient_id]) 
     end
   
     def edit
       @patient = Patient.find(params[:id])
-      
     end
   
     def destroy
@@ -65,15 +85,11 @@ class PagesController < ApplicationController
     ########   PATIENT CUSTOM ACTIONS  ###########################
     def new_patient
       @patient = Patient.new
-      #@admittance = Admittance.new
+      @admittance = Admittance.new
     end
   
     def edit_patient
       @patient = Patient.find(params[:id])
-      @admittance = @patient.admittance
-      
-      pointer_param = params[:pointer]
-      @recordLocation = pointer_param
     end
     
     def update_patient
@@ -89,6 +105,35 @@ class PagesController < ApplicationController
     
   
   
+  
+    def edit_admittance
+      @patient = Patient.find(params[:id]) 
+      @admittance = @patient.build_admittance if @patient.admittance.nil?
+    end
+    
+    def update_patient
+      @patient = Patient.find(params[:id])
+      @admittance = @patient.admittance
+     
+      if @patient.update(patient_params)
+        render 'show'
+      else
+        render 'edit_patient'
+      end
+    end
+  
+    def update_admittance
+      @patient = Patient.find(params[:id])
+      @admittance = @patient.build_admittance
+      if @admittance.update(admittance_params)
+        render 'show'
+      else
+         flash.now[:error] = "Cannot updating your profile"
+         render 'edit_admittance'
+      end
+    end
+  
+    ########   END PATIENT CUSTOM ACTIONS  ######################
   
     #create my 4 custom actions here for each role
     def doctorView
@@ -134,7 +179,7 @@ private
     end  
   
     def patient_params
-      params.require(:patient).permit(:first_name, :middle_name, :last_name, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
+      params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
     end
   
     #def patient_params
@@ -173,7 +218,7 @@ private
         @admittance = Admittance.find_by(patient_id: params[:patient_id])
     end
     def admittance_params
-        params.require(:admittance).permit(:date, :time, :reason)
+        params.require(:admittance).permit(:patient_id, :date, :time, :reason)
     end
     
     def look_insurances
@@ -183,6 +228,10 @@ private
         params.require(:insurance).permit(:policy_num, :policy_name, :group_num)
     end
     
+    def getPointerParam
+      @recordLocation = params[:pointer] ||= " "
+    end
+  
     def isAdmin?
       if current_user.superadmin_role
         redirect_to rails_admin.dashboard_path

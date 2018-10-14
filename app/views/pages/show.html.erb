@@ -11,20 +11,18 @@
         <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
           <p class = "birthday"> Birthdate: <%= HelperDisplay.birthdaytry(@patient) %> </p>
         <%end%>
-
         <p>Edit General Info <%= link_to "Edit", edit_patient_path(@patient, :pointer => "general") %></p>
+        
       </div>
 
     <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
       <h2>Admittance</h2>
-      <p class = "date_para"> Admittance Date: <%= HelperDisplay.datetry(@patient.admittance)%> </p>
-      <p class = "time_para"> Admittance Time: <%= HelperDisplay.timetry(@patient.admittance)%> </p>
-      <p class = "reason_para"> Admittance Reason: <%= HelperDisplay.reasontry(@patient.admittance) %> </p>
       
-        <% @recordLocation = "Admittance" %>
-      
-       <p>Edit Admittance Info <%= link_to "Edit", edit_patient_path(@patient, :pointer => "admittance")  %></p>
-      
+      <p class = "date_para"> Admittance Date: <%= HelperDisplay.datetry(@patient.admittance) %> </p>
+      <p class = "time_para"> Admittance Time: <%= HelperDisplay.timetry(@patient.admittance) %> </p>
+      <p class = "reason_para"> Admittance Reason: <%= HelperDisplay.reasontry(@patient.admittance)  %> </p>
+      <p>Edit Admittance Info <%= link_to "Edit", edit_admittance_path(@patient, :pointer => "admittance")  %></p>
+  
       <h2>Discharge</h2>
       <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
       <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>

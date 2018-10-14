@@ -13,7 +13,6 @@ patientList = [
   ["Aikers", "Mary", "Louis", "1982-03-29"]
 ]
 
-
 patientList.each do |last, first, middle, birth|
   Patient.create(last_name: last, first_name: first, middle_name: middle, birthday: birth)
 end

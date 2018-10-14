@@ -89,6 +89,7 @@ GEM
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
+    hirb (0.7.3)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -256,6 +257,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   devise
+  hirb (~> 0.7.3)
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3, >= 4.3.3)
   load_and_authorize_resource

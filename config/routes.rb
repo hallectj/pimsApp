@@ -16,35 +16,15 @@ Rails.application.routes.draw do
   }
   
   #let the pass controller do the necessary route directing
-  root :to => 'pass#index'
-  
-  #get 'pages/:id/edit/edit_patient', to: 'pages#edit_patient', as: :edit_patient
-  #put '/pages/:id/updatePatient', to: 'pages#updatePatient', as: :updatePatient
-  #get '/pages/new/newPatient', to: 'pages#newPatient', as: :newPatient
-  
-  
-  #resources :pages
-  
-  
-  resources :pages do
-    member do
-      #custom new
-      get :new_patient
-    end
-  end
+  root :to => 'pass#index'  
+  resources :pages
   
   #PATIENT CUSTOM ROUTES EDIT UPDATE
   get '/pages/:id/edit/edit_patient', to: 'pages#edit_patient', as: :edit_patient
-  
   match "pages/:id/update/update_patient" => "pages#update_patient", as: :update_patient, via: [:patch, :post]
   
-  #patch '/pages/:id/update/update_patient', to: 'pages#update_patient', as: :update_patient
-  #post '/pages/:id/update/update_patient', to: 'pages#update_patient', as: :update_patient
-    
-  
-  #resources :pages do 
-    #get 'pages/patient_search', to: 'pages#patientSearchPage', as: :patient_search
-  #end
+  get '/pages/:id/edit/edit_admittance', to: 'pages#edit_admittance', as: :edit_admittance
+  match "pages/:id/update/update_admittance" => "pages#update_admittance", as: :update_admittance, via: [:patch, :post]  
   
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
   get '*path' => 'error_routes#routing'

@@ -31,6 +31,7 @@ gem 'rails-observers'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap-datepicker-rails'
 
+
 #to make console pretty for development purposes and readibility
 gem 'hirb', '~> 0.7.3'
 
