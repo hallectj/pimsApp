@@ -33,6 +33,7 @@ gem 'bootstrap-datepicker-rails'
 
 #to make console pretty for development purposes and readibility
 gem 'hirb', '~> 0.7.3'
+gem 'activerecord-reset-pk-sequence'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
