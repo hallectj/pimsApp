@@ -1,57 +1,6 @@
 class PagesController < ApplicationController
-<<<<<<< HEAD
-    #load_and_authorize_resource :class => PagesController
-    #before_action :look_patients, only: [:show, :edit, :update, :destroy]
-  
-    layout 'pagesPatientResults', only: [:pagesPatientResults]
-  
-    before_action :isAdmin?
-    before_action :determineRollCustomAction, only: [:index]  
-    before_action :look_patients, only: [:show, :edit, :update, :destroy]
-    before_action :look_physicians, only: [:show, :edit, :update, :destroy]
-    before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
-    before_action :look_contacts, only: [:show, :edit, :update, :destroy]
-    before_action :look_locations, only: [:show, :edit, :update, :destroy]
-    before_action :look_admittances, only: [:show, :edit, :update, :destroy]
-    before_action :look_insurances, only: [:show, :edit, :update, :destroy]
-    def index
-    end
-    def show
-        @patient = Patient.find(params[:id])
-    end
-    def new
-        @patient = Patient.new
-        treatment = @patient.treatments.build
-        discharge = @patient.discharges.build
-        
-        @physician = Physician.new
-        @emergency_contact = Emergency_contact.new
-        @contact = Contact.new
-        @location = Location.new
-        @admittance = Admittance.new
-        @insurance = Insurance.new
-    end
-    def edit
-    end
-    def create
-        @patient = Patient.new(patient_params)   
-        @physician = Physician.new(physician_params)
-        @emergency_contact = Emergency_contact.new(emergency_contact_params)
-        @contact = Contact.new(contact_params)
-        @location = Location.new(location_params)
-        @admittance = Admittance.new(admittance_params)
-        @insurance = Insurance.new(insurance_params)
-    end
-    def update
-    end
-    def destroy
-    end
-  
-    def patientSearchPage
-=======
   #load_and_authorize_resource :class => PagesController
   #before_action :look_patients, only: [:show, :edit, :update, :destroy]
->>>>>>> e6d564212140ed0df70b84a3b5898683be625b44
 
 
   layout 'pagesPatientResults', only: [:pagesPatientResults]
@@ -71,30 +20,6 @@ class PagesController < ApplicationController
   before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
   before_action :look_insurances, only: [:show, :edit, :update, :destroy]
   
-<<<<<<< HEAD
-    #create my 4 custom actions here for each role
-    def doctorView
-      @patients = Patient.all
-    end
-  
-    def officeView
-      @patients = Patient.all
-    end
-  
-    def medicalView
-      @patients = Patient.all
-    end
-  
-    def volunteerView
-      @patients = Patient.all
-    end
-    
-    def pagesPatientResults
-       @patients = Patient.where("last_name like ?", "%#{params[:search]}")
-    end
-  
-
-=======
   def index
   end
 
@@ -197,7 +122,6 @@ class PagesController < ApplicationController
   def volunteerView
     @patients = Patient.all
   end
->>>>>>> e6d564212140ed0df70b84a3b5898683be625b44
   
   def pagesPatientResults
      @patients = Patient.where("last_name like ?", "%#{params[:search]}")

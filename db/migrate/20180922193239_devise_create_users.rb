@@ -8,7 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
-      t.string   :reset_password_token, null: false, default: ""
+      t.string   :reset_password_token
       t.datetime :reset_password_sent_at
 
       ## Rememberable
@@ -52,18 +52,10 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
     
     
         # Initialize first account:
-<<<<<<< HEAD
-    #User.create! do |u|
-    #    u.email     = 'test@test.com'
-    #    u.password    = 'password'
-    #    u.password_confirmation = 'password'
-        
-=======
     User.create! do |u|
         u.email     = 'test@test.com'
         u.password    = 'password'
         u.superadmin_role = true
->>>>>>> e6d564212140ed0df70b84a3b5898683be625b44
     end
     
   end
