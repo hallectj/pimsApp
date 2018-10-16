@@ -5,13 +5,21 @@
 
 <% @patients.first(10).each do |patient| %>
   <div class="patient-card">
+<<<<<<< HEAD
     <h3><%= patient.first_name + ", " + patient.last_name %></h3>
+=======
+    <h3><%= patient.first_name + "  " + patient.last_name %></h3>
+>>>>>>> e6d564212140ed0df70b84a3b5898683be625b44
     <div>
       <p>Basic Info</p>
       <div class="patient-info-div">
         <p>facility: <%= HelperDisplay.facilitytry(patient.location) %></p>
         <p>room: <%= HelperDisplay.roomtry(patient.location) %></p>
+<<<<<<< HEAD
         <p>bed: <%= HelperDisplay.roomtry(patient.location) %></p> <br>
+=======
+        <p>bed: <%= HelperDisplay.bedtry(patient.location) %></p> <br>
+>>>>>>> e6d564212140ed0df70b84a3b5898683be625b44
       </div>
       <p>View Complete Profile</p>
       <p class="view-more"><%= link_to "View More", page_path(patient) %></p>

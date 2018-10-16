@@ -14,6 +14,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       ## Rememberable
       t.datetime :remember_created_at
 
+      ## Add roles to users
+      t.boolean :superadmin_role, default: false
+      t.boolean :doctor_role, default: false 
+      t.boolean :office_role, default: false
+      t.boolean :volunteer_role, dafault: false
+      t.boolean :medical_role, default: false
+      
+
       ## Trackable
       # t.integer  :sign_in_count, default: 0, null: false
       # t.datetime :current_sign_in_at
@@ -44,11 +52,18 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
     
     
         # Initialize first account:
+<<<<<<< HEAD
     #User.create! do |u|
     #    u.email     = 'test@test.com'
     #    u.password    = 'password'
     #    u.password_confirmation = 'password'
         
+=======
+    User.create! do |u|
+        u.email     = 'test@test.com'
+        u.password    = 'password'
+        u.superadmin_role = true
+>>>>>>> e6d564212140ed0df70b84a3b5898683be625b44
     end
     
   end
