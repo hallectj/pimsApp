@@ -124,7 +124,10 @@ class PagesController < ApplicationController
   end
   
   def pagesPatientResults
-     @patients = Patient.where("last_name like ?", "%#{params[:search]}")
+    #replace wild cards and whitespace with regex wildcards
+    searchString = params[:search].gsub("*", "%").gsub(" ", "%")
+    #adapted from https://stackoverflow.com/questions/21470782/concat-inside-rails-query-conditions
+    @patients = Patient.where("(first_name || ' ' || last_name) like ? OR (last_name || ' ' || first_name) like ?", "%#{searchString}%", "%#{searchString}%")
   end
 
   def patientSearchPage
