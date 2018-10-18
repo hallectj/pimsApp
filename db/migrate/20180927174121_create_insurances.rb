@@ -4,7 +4,7 @@ class CreateInsurances < ActiveRecord::Migration[5.1]
       t.string :policy_num
       t.string :policy_name
       t.string :group_num
-
+      t.references :patient
       t.timestamps
     end
   end

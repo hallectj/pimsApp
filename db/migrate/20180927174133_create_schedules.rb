@@ -4,7 +4,7 @@ class CreateSchedules < ActiveRecord::Migration[5.1]
       t.date :date
       t.time :time
       t.text :schedule_msg
-
+      t.references :treatment
       t.timestamps
     end
   end

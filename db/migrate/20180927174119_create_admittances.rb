@@ -4,7 +4,7 @@ class CreateAdmittances < ActiveRecord::Migration[5.1]
       t.date :date
       t.time :time
       t.text :reason
-
+      t.references :patient
       t.timestamps
     end
   end
