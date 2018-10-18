@@ -1,0 +1,19 @@
+<%#= simple_form_for @patient, url: pages_patient_results_path do |f| %>
+<%= simple_form_for @patient, url: edit_patient_path do |f| %>
+  <%= f.input :last_name, label: "Last Name" %>
+  <%= f.input :first_name, label: "First Name" %>
+  <%= f.input :middle_name, label: "Middle Name" %>
+  <%= f.input :birthday, label: "Birthday" %>
+  <%= f.submit :submit %>
+<% end %>
+
+
+
+
+
+
+
+
+  <%#= form_for @patient do |f| %>
+  
+  <%# end %>

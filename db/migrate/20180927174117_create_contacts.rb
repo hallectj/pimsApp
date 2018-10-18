@@ -8,7 +8,7 @@ class CreateContacts < ActiveRecord::Migration[5.1]
       t.string :city
       t.string :state
       t.string :zip
-
+      t.references :patient
       t.timestamps
     end
   end

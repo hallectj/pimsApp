@@ -6,7 +6,7 @@ class CreateLocations < ActiveRecord::Migration[5.1]
       t.string :bed
       t.integer :visitor_limit
       t.text :approved_visitors
-
+      t.references :patient
       t.timestamps
     end
   end
