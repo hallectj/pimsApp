@@ -4,11 +4,11 @@ require 'time'
 module HelperDisplay 
 
     def self.datetry(input)
-        if (input == nil)  || (input.date == nil)
+        if (input.try(:date))
+            return input.date
+        else 
             d = Date.new(0001, 01, 1)
             return d
-        else 
-            return input.date
         end
     end
 
