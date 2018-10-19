@@ -30,28 +30,22 @@ class PagesController < ApplicationController
       #discharge = @patient.discharges.build
       
       @physician = Physician.new
-      @emergency_contact = Emergency_contact.new
+      @emergency_contact = EmergencyContact.new
       @contact = Contact.new
       @location = Location.new
       @admittance = Admittance.new
       @insurance = Insurance.new
   end
 
+
   def create
       @patient = Patient.new(patient_params) 
     
       if @patient.save
-        render redirect_to root_path
+        render 'show'
       else
-        render 'new_patient'
+        render 'new'
       end
-    
-      @physician = Physician.new(physician_params)
-      @emergency_contact = Emergency_contact.new(emergency_contact_params)
-      @contact = Contact.new(contact_params)
-      @location = Location.new(location_params)
-      @admittance = Admittance.new(admittance_params)
-      @insurance = Insurance.new(insurance_params)
   end
   
   def show

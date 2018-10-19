@@ -42,5 +42,5 @@ Rails.application.routes.draw do
     match "pages/:id/update/update_emergency_contact" => "pages#update_emergency_contact", as: :update_emergency_contact, via: [:patch, :post]
     
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
-  get '*path' => 'error_routes#routing'
+  #get '*path' => 'error_routes#routing'
 end
