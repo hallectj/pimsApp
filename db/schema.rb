@@ -181,11 +181,14 @@ end
 
 ActiveRecord::Schema.define(version: 20180927174146) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admittances", force: :cascade do |t|
     t.date "date"
     t.time "time"
     t.text "reason"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_admittances_on_patient_id"
@@ -195,7 +198,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.decimal "amount_paid"
     t.decimal "amount_owed"
     t.decimal "amount_insurance"
-    t.integer "discharge_id"
+    t.bigint "discharge_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["discharge_id"], name: "index_bills_on_discharge_id"
@@ -204,7 +207,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
   create_table "charges", force: :cascade do |t|
     t.text "charge_name"
     t.decimal "charge_amount"
-    t.integer "bill_id"
+    t.bigint "bill_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bill_id"], name: "index_charges_on_bill_id"
@@ -218,7 +221,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.string "city"
     t.string "state"
     t.string "zip"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_contacts_on_patient_id"
@@ -227,7 +230,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
   create_table "discharges", force: :cascade do |t|
     t.date "date"
     t.time "time"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_discharges_on_patient_id"
@@ -236,7 +239,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
   create_table "dr_notes", force: :cascade do |t|
     t.string "name"
     t.text "message"
-    t.integer "treatment_id"
+    t.bigint "treatment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["treatment_id"], name: "index_dr_notes_on_treatment_id"
@@ -247,7 +250,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.string "e1_phone"
     t.string "e2_name"
     t.string "e2_phone"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_emergency_contacts_on_patient_id"
@@ -257,7 +260,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.string "policy_num"
     t.string "policy_name"
     t.string "group_num"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_insurances_on_patient_id"
@@ -269,7 +272,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.string "bed"
     t.integer "visitor_limit"
     t.text "approved_visitors"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_locations_on_patient_id"
@@ -278,7 +281,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
   create_table "n_notes", force: :cascade do |t|
     t.string "name"
     t.text "message"
-    t.integer "treatment_id"
+    t.bigint "treatment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["treatment_id"], name: "index_n_notes_on_treatment_id"
@@ -296,7 +299,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
   create_table "physicians", force: :cascade do |t|
     t.string "family_physician"
     t.string "physician_phone"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_physicians_on_patient_id"
@@ -306,7 +309,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.string "name"
     t.integer "amount"
     t.text "schedule"
-    t.integer "treatment_id"
+    t.bigint "treatment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["treatment_id"], name: "index_prescriptions_on_treatment_id"
@@ -316,7 +319,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.date "date"
     t.time "time"
     t.text "schedule_msg"
-    t.integer "treatment_id"
+    t.bigint "treatment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["treatment_id"], name: "index_schedules_on_treatment_id"
@@ -324,7 +327,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
 
   create_table "treatments", force: :cascade do |t|
     t.string "name"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_treatments_on_patient_id"
