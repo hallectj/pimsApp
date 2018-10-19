@@ -57,6 +57,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
         u.password    = 'password'
         u.password_confirmation = 'password'
         u.superadmin_role = true
+        u.password_confirmation = 'password'
     end
     
   end

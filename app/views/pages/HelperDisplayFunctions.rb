@@ -281,4 +281,95 @@ module HelperDisplay
             return a
         end
     end
+
+    def self.pres_nametry(input)
+        if (input != nil)
+            return input.name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.pres_amounttry(input)
+        if (input != nil)
+            return input.amount
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.pres_scheduletry(input)
+        if (input != nil)
+            return input.schedule
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.schedule_datetry(input)
+        if (input != nil)
+            return input.date
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.schedule_timetry(input)
+        if (input != nil)
+            return input.time
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.schedule_msgtry(input)
+        if (input != nil)
+            return input.schedule_msg
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.drnote_nametry(input)
+        if (input != nil)
+            return input.name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.drnote_msgtry(input)
+        if (input != nil)
+            return input.message
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.nnote_nametry(input)
+        if (input != nil)
+            return input.name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.nnote_msgtry(input)
+        if (input != nil)
+            return input.message
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
 end
