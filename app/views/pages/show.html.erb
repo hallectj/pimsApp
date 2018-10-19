@@ -105,6 +105,7 @@
       <%end%>
 
       <b>Schedule</b>
+        <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules") %></p>
       <% @patient.treatment.schedules.each do |s| %>
         <p class = "date"> Date: <%= HelperDisplay.schedule_datetry(s) %> </p>
         <p class = "time"> Time: <%= HelperDisplay.schedule_timetry(s) %> </p>
@@ -114,6 +115,7 @@
         <%-# Edit scheduled procedure %>
         <%end%>
       <%end%>
+        
 
       <b>Doctor Notes</b>
       <% @patient.treatment.dr_notes.each do |d| %>
