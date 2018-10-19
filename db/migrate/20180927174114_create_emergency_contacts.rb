@@ -5,7 +5,7 @@ class CreateEmergencyContacts < ActiveRecord::Migration[5.1]
       t.string :e1_phone
       t.string :e2_name
       t.string :e2_phone
-
+      t.references :patient
       t.timestamps
     end
   end

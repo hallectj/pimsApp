@@ -14,3 +14,19 @@ a{
   }
 }
 
+//show action div
+.button_choose_show_action{
+  width: 400px;
+  padding: 5px;
+  display: flex;
+}
+
+button_choose_show_action > p{
+  flex: 1;
+  margin: 5px;
+  
+  input{
+    margin-right: 10px;
+  }
+}
+
