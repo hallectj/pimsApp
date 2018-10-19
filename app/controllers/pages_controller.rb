@@ -81,6 +81,11 @@ class PagesController < ApplicationController
     @patient = Patient.find(params[:id]) 
     @admittance = @patient.update_admittance if @patient.admittance.nil?
   end
+
+  def edit_discharge
+    @patient = Patient.find(params[:id]) 
+    @dischrage = @patient.update_discharge if @patient.discharge.nil?
+  end
   
   def update_patient
     @patient = Patient.find(params[:id])
@@ -104,6 +109,18 @@ class PagesController < ApplicationController
     end
   end
 
+  def update_discharge
+    @patient = Patient.find(params[:id])
+    @discharge = @patient.discharge
+    if @discharge.update(discharge_params)
+      render 'show'
+    else
+      flash.now[:error] = "Cannot updating your profile"
+      render 'edit_discharge'
+   end
+ end
+
+ 
   ########   END PATIENT CUSTOM ACTIONS  ######################
 
   #create my 4 custom actions here for each role
@@ -194,6 +211,10 @@ private
   end
   def admittance_params
       params.require(:admittance).permit(:patient_id, :date, :time, :reason)
+  end
+
+  def discharge_params
+      params.require(:discharge).permit(:patient_id, :date, :time)
   end
   
   def look_insurances
