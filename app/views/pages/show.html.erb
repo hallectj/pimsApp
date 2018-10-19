@@ -26,6 +26,7 @@
       <h2>Discharge</h2>
       <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
       <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
+      <p>Edit Discharge Info <%= link_to "Edit", edit_discharge_path(@patient, :pointer => "discharge")  %></p>
     </div>
     <%end%>
 
