@@ -81,6 +81,31 @@ class PagesController < ApplicationController
     @patient = Patient.find(params[:id]) 
     @admittance = @patient.update_admittance if @patient.admittance.nil?
   end
+
+  def edit_discharge
+    @patient = Patient.find(params[:id]) 
+    @discharge = @patient.update_discharge if @patient.discharge.nil?
+  end
+    
+    def edit_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.update_contact if @patient.contact.nil?
+    end
+    
+    def edit_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.update_physician if @patient.physician.nil?
+    end
+    
+    def edit_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.update_location if @patient.location.nil?
+    end
+    
+    def edit_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
+    end
   
   def update_patient
     @patient = Patient.find(params[:id])
@@ -104,6 +129,63 @@ class PagesController < ApplicationController
     end
   end
 
+    def update_discharge
+        @patient = Patient.find(params[:id])
+        @discharge = @patient.discharge
+        if @discharge.update(discharge_params)
+          render 'show'
+        else
+          flash.now[:error] = "Cannot updating your profile"
+          render 'edit_discharge'
+        end
+     end
+    
+    def update_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.contact
+        if @contact.update(contact_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Contact Information"
+            render 'edit_contact'
+        end
+    end
+    
+    def update_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.physician
+        if @physician.update(physician_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Physician Information"
+            render 'edit_physician'
+        end
+    end
+    
+    def update_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.location
+        if @location.update(location_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Location Information"
+            render 'edit_location'
+        end
+    end
+    
+    def update_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.emergency_contact
+        if @emergency_contact.update(emergency_contact_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Emergency Contacts"
+            render 'edit_emergency_contact'
+        end
+    end
+    
+
+ 
   ########   END PATIENT CUSTOM ACTIONS  ######################
 
   #create my 4 custom actions here for each role
@@ -172,7 +254,7 @@ private
       @emergency_contact = EmergencyContact.find_by(patient_id: params[:patient_id])
   end
   def emergency_contact_params
-      params.require(:emergency_contact).permit(:e1_name, :e2_name, :e2_name, :e2_phone)
+      params.require(:emergency_contact).permit(:e1_name, :e1_phone, :e2_name, :e2_phone)
   end
   
   def look_contacts
@@ -194,6 +276,10 @@ private
   end
   def admittance_params
       params.require(:admittance).permit(:patient_id, :date, :time, :reason)
+  end
+
+  def discharge_params
+      params.require(:discharge).permit(:patient_id, :date, :time)
   end
   
   def look_insurances
