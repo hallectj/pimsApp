@@ -28,28 +28,12 @@
 		
 		<div class="info_boxes" id="info_box2">
 			<div class="patient_box">
-                <!--
-				<form>
-					<div class="form-group">
-						<label for="First Name">First Name</label>
-						<input type="text" name="last name" class="form-control" id="firstName" />
-					</div>
-					<div class="form-group">
-						<label for="First Name">Last Name</label>
-						<input type="text" name="last name" class="form-control" id="lastName" />
-					</div>
-				</form>
-                -->
-                <div class="form-group">
-                  <%#= form_tag(pages_path, method: :get) do %> 
-                    <%#= text_field_tag :term, params[:term] %>
-                    <%#= submit_tag 'Search' %>
-                  <%# end %>
-                  
+                <div class="form-group">    
+                <p> Enter a First or Last Name </p>           
                   <%= form_tag pages_patient_results_path, :method => 'get' do %>
                     <p>
                       <%= text_field_tag :search %>
-                      <%= submit_tag "search" %>
+                      <%= submit_tag "Search" %>
                     </p>
                   <% end %>
 
