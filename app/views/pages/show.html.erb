@@ -64,46 +64,30 @@
     <div class = "boxes treatment">
       <h2>Treatment</h2>
       <p class = "treat_para"> Treatment: <%= HelperDisplay.treatmenttry(@patient.treatment) %> </p>
-      <p class = "med_para"> medication </p>
-      <p class = "sched_para"> schedule </p>
-      <p class = "sched_para"> notes </p>
-    </div>
-    <%end%>
 
-    <% if current_user.doctor_role %>
-    <div class = "boxes prescription"
       <b>Prescriptions</b>
       <% @patient.treatment.prescriptions.each do |p| %>
         <p class = "name"> Name: <%= HelperDisplay.pres_nametry(p) %> </p>
         <p class = "amount"> Amount: <%= HelperDisplay.pres_amounttry(p) %> </p>
         <p class = "schedule"> Schedule: <%= HelperDisplay.pres_scheduletry(p) %> </p>
+        <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
+        <p class = "divider"> ------------------- </p>
+        <%end%>
       <%end%>
-    </div>
-    <%end%>
 
-    <% if current_user.doctor_role %>
-    <div class = "boxes schedule"
       <b>Schedule</b>
       <% @patient.treatment.schedules.each do |s| %>
         <p class = "date"> Date: <%= HelperDisplay.schedule_datetry(s) %> </p>
         <p class = "time"> Time: <%= HelperDisplay.schedule_timetry(s) %> </p>
         <p class = "schedule_msg"> Schedule Message: <%= HelperDisplay.schedule_msgtry(s) %> </p>
       <%end%>
-    </div>
-    <%end%>
 
-    <% if current_user.doctor_role %>
-    <div class = "boxes drNote"
       <b>Doctor Notes</b>
       <% @patient.treatment.dr_notes.each do |d| %>
         <p class = "name"> Name: <%= HelperDisplay.drnote_nametry(d) %> </p>
         <p class = "message"> Message: <%= HelperDisplay.drnote_msgtry(d) %> </p>
       <%end%>
-    </div>
-    <%end%>
 
-    <% if current_user.doctor_role %>
-    <div class = "boxes nNote"
       <b>Nurse Notes</b>
       <% @patient.treatment.n_notes.each do |n| %>
         <p class = "name"> Name: <%= HelperDisplay.nnote_nametry(n) %> </p>
