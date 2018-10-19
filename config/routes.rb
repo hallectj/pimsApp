@@ -28,7 +28,19 @@ Rails.application.routes.draw do
   
   get '/pages/:id/edit/edit_discharge', to: 'pages#edit_discharge', as: :edit_discharge
   match "pages/:id/update/update_discharge" => "pages#update_discharge", as: :update_discharge, via: [:patch, :post]  
+    
+    get '/pages/:id/edit/edit_contact', to: 'pages#edit_contact', as: :edit_contact
+    match "pages/:id/update/update_contact" => "pages#update_contact", as: :update_contact, via: [:patch, :post]
+    
+    get '/pages/:id/edit/edit_physician', to: 'pages#edit_physician', as: :edit_physician
+    match "pages/:id/update/update_physician" => "pages#update_physician", as: :update_physician, via: [:patch, :post]
+    
+    get '/pages/:id/edit/edit_location', to: 'pages#edit_location', as: :edit_location
+    match "pages/:id/update/update_location" => "pages#update_location", as: :update_location, via: [:patch, :post]
   
+    get '/pages/:id/edit/edit_emergency_contact', to: 'pages#edit_emergency_contact', as: :edit_emergency_contact
+    match "pages/:id/update/update_emergency_contact" => "pages#update_emergency_contact", as: :update_emergency_contact, via: [:patch, :post]
+    
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
   get '*path' => 'error_routes#routing'
 end
