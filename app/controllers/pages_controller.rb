@@ -25,9 +25,7 @@ class PagesController < ApplicationController
 
   def new
       @patient = Patient.new
-      #@patient.admittance.build
-      #treatment = @patient.treatments.build
-      #discharge = @patient.discharges.build
+      @patient.treatment.build.schedules.build
       
       @physician = Physician.new
       @emergency_contact = EmergencyContact.new
@@ -66,6 +64,22 @@ class PagesController < ApplicationController
     @patient = Patient.new
     @admittance = Admittance.new
   end
+    
+    def new_schedule
+        @patient = Patient.new
+        @patient.build_treatment.schedules.build
+    end
+    
+    def create_schedule
+        @patient = Patient.find(params[:id])
+        @schedule = @patient.treatment.schedules.create(schedule_params)
+        #redirect_to patient_path(@patient)
+        if @schedule.save
+            render 'show'
+        else
+            render 'create_schedule'
+        end
+    end
 
   def edit_patient
     @patient = Patient.find(params[:id])
@@ -283,6 +297,13 @@ private
       params.require(:insurance).permit(:policy_num, :policy_name, :group_num)
   end
   
+    def treatment_params
+        params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
+    end
+    def schedule_params
+        params.require(:schedule).permit(:date, :time, :schedule_msg)
+    end
+    
   def getPointerParam
     @recordLocation = params[:pointer] ||= " "
   end
