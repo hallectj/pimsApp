@@ -91,21 +91,24 @@
       <%end%>
 
       <b>Prescriptions</b>
+    <% if (@patient.treatment.try(:prescriptions)) %>
       <% @patient.treatment.prescriptions.each do |p| %>
         <p class = "name"> Name: <%= HelperDisplay.pres_nametry(p) %> </p>
         <p class = "amount"> Amount: <%= HelperDisplay.pres_amounttry(p) %> </p>
         <p class = "schedule"> Schedule: <%= HelperDisplay.pres_scheduletry(p) %> </p>
         <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
         <p class = "divider"> ------------------- </p>
-
+    
         <% if current_user.doctor_role %>
         <%-# Edit prescriptions %>
+    <%end%>
         <%end%>
         <%end%>
       <%end%>
 
       <b>Schedule</b>
         <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules") %></p>
+      <% if (@patient.treatment.try(:schedules)) %>
       <% @patient.treatment.schedules.each do |s| %>
         <p class = "date"> Date: <%= HelperDisplay.schedule_datetry(s) %> </p>
         <p class = "time"> Time: <%= HelperDisplay.schedule_timetry(s) %> </p>
@@ -113,27 +116,32 @@
 
         <% if current_user.doctor_role %>
         <%-# Edit scheduled procedure %>
+      <%end%>
         <%end%>
       <%end%>
         
 
       <b>Doctor Notes</b>
+      <% if (@patient.treatment.try(:dr_notes)) %>
       <% @patient.treatment.dr_notes.each do |d| %>
         <p class = "name"> Name: <%= HelperDisplay.drnote_nametry(d) %> </p>
         <p class = "message"> Message: <%= HelperDisplay.drnote_msgtry(d) %> </p>
 
         <% if current_user.doctor_role %>
         <%-# Edit doctor notes %>
+      <%end%>
         <%end%>
       <%end%>
 
       <b>Nurse Notes</b>
+      <% if (@patient.treatment.try(:n_notes)) %>
       <% @patient.treatment.n_notes.each do |n| %>
         <p class = "name"> Name: <%= HelperDisplay.nnote_nametry(n) %> </p>
         <p class = "message"> Message: <%= HelperDisplay.nnote_msgtry(n) %> </p>
 
         <% if current_user.medical_role %>
         <%-# Edit nurse notes %>
+      <%end%>
         <%end%>
       <%end%>
     </div>
