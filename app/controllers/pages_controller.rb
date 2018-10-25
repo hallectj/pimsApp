@@ -25,10 +25,10 @@ class PagesController < ApplicationController
   
     def new
         @patient = Patient.new
-        @patient.treatment.build.schedules.build
+        #@patient.treatment.build.schedules.build
         
         @physician = Physician.new
-        @emergency_contact = Emergency_contact.new
+        @emergency_contact = EmergencyContact.new
         @contact = Contact.new
         @location = Location.new
         @admittance = Admittance.new
@@ -39,13 +39,13 @@ class PagesController < ApplicationController
         @patient = Patient.new(patient_params) 
       
         if @patient.save
-          render redirect_to root_path
+          render 'show'
         else
           render 'new_patient'
         end
       
         @physician = Physician.new(physician_params)
-        @emergency_contact = Emergency_contact.new(emergency_contact_params)
+        @emergency_contact = EmergencyContact.new(emergency_contact_params)
         @contact = Contact.new(contact_params)
         @location = Location.new(location_params)
         @admittance = Admittance.new(admittance_params)
@@ -63,7 +63,7 @@ class PagesController < ApplicationController
     end
   
     def edit
-      @patient = Patient.find(params[:id])
+        @patient = Patient.find(params[:id])
     end
   
     def destroy
@@ -76,29 +76,51 @@ class PagesController < ApplicationController
       @admittance = Admittance.new
     end
       
-      def new_schedule
-          @patient = Patient.new
-          @patient.build_treatment.schedules.build
-      end
-      
-      def create_schedule
-          @patient = Patient.find(params[:id])
-          @schedule = @patient.treatment.schedules.create(schedule_params)
-          #redirect_to patient_path(@patient)
-          if @schedule.save
-              render 'show'
-          else
-              render 'create_schedule'
-          end
-      end
-  
+    def new_schedule
+        @patient = Patient.new
+        @patient.build_treatment.schedules.build
+    end
+    
+    def create_schedule
+        @patient = Patient.find(params[:id])
+        @schedule = @patient.treatment.schedules.create(schedule_params)
+        #redirect_to patient_path(@patient)
+        if @schedule.save
+            render 'show'
+        else
+            render 'create_schedule'
+        end
+    end
+
+    def new_dr_note
+        @patient = Patient.new
+        @patient.build_treatment.dr_notes.build
+    end
+
+    def create_dr_note
+        @patient = Patient.find(params[:id])
+        @schedule = @patient.treatment.dr_notes.create(note_params)
+        #redirect_to patient_path(@patient)
+        if @schedule.save
+            render 'show'
+        else
+            render 'create_schedule'
+        end
+    end
+
+
     def edit_patient
       @patient = Patient.find(params[:id])
     end
   
     def edit_admittance
-      @patient = Patient.find(params[:id]) 
-      @admittance = @patient.update_admittance if @patient.admittance.nil?
+        @patient = Patient.find(params[:id])
+        if (@patient.admittance.nil?)
+            Admittance.new(admittance_params)
+        else
+            @admittance = @patient.update_admittance 
+        end
+
     end
   
     def edit_discharge
@@ -106,25 +128,25 @@ class PagesController < ApplicationController
       @discharge = @patient.update_discharge if @patient.discharge.nil?
     end
       
-      def edit_contact
-          @patient = Patient.find(params[:id])
-          @contact = @patient.update_contact if @patient.contact.nil?
-      end
-      
-      def edit_physician
-          @patient = Patient.find(params[:id])
-          @physician = @patient.update_physician if @patient.physician.nil?
-      end
-      
-      def edit_location
-          @patient = Patient.find(params[:id])
-          @location = @patient.update_location if @patient.location.nil?
-      end
-      
-      def edit_emergency_contact
-          @patient = Patient.find(params[:id])
-          @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
-      end
+    def edit_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.update_contact if @patient.contact.nil?
+    end
+    
+    def edit_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.update_physician if @patient.physician.nil?
+    end
+    
+    def edit_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.update_location if @patient.location.nil?
+    end
+    
+    def edit_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
+    end
     
     def update_patient
       @patient = Patient.find(params[:id])
@@ -255,7 +277,7 @@ class PagesController < ApplicationController
     end  
   
     def patient_params
-      params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
+      params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :birthday, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
     end
   
     #def patient_params
@@ -266,55 +288,109 @@ class PagesController < ApplicationController
         @physician = Physician.find_by(patient_id: params[:patient_id])
     end
     def physician_params
-        params.require(:physician).permit(:family_physician, :physician_phone)
+        if(params.has_key?(:physician))
+            params.require(:physician).permit(:family_physician, :physician_phone)
+        else 
+            params.fetch(:physician, {}).permit!
+        end
     end
     
     def look_emergency_contacts
         @emergency_contact = EmergencyContact.find_by(patient_id: params[:patient_id])
     end
+    
     def emergency_contact_params
-        params.require(:emergency_contact).permit(:e1_name, :e1_phone, :e2_name, :e2_phone)
+        if(params.has_key?(:emergency_contact))
+            params.require(:emergency_contact).permit(:e1_name, :e1_phone, :e2_name, :e2_phone)
+        else
+            params.fetch(:physician, {}).permit!
+        end
     end
     
     def look_contacts
         @contact = Contact.find_by(patient_id: params[:patient_id])
     end
     def contact_params
-        params.require(:contact).permit(:home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
+        if(params.has_key?(:contact))
+            params.require(:contact).permit(:home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
+        else
+            params.fetch(:contact, {}).permit!
+        end
     end
     
     def look_locations
         @location = Location.find_by(patient_id: params[:patient_id])
     end
     def location_params
-        params.require(:location).permit(:facility, :room, :bed, :visitor_limit, :approved_visitors)
+        if(params.has_key?(:location))
+            params.require(:location).permit(:facility, :room, :bed, :visitor_limit, :approved_visitors)
+        else
+            params.fetch(:location, {}).permit!
+        end
     end
     
     def look_admittances
         @admittance = Admittance.find_by(patient_id: params[:patient_id])
     end
     def admittance_params
-        params.require(:admittance).permit(:patient_id, :date, :time, :reason)
+        if(params.has_key?(:admittance))
+            params.require(:admittance).permit(:patient_id, :date, :time, :reason)
+        else
+            params.fetch(:admittance, {}).permit!
+        end
     end
   
     def discharge_params
-        params.require(:discharge).permit(:patient_id, :date, :time)
+        if(params.has_key?(:discharge))
+            params.require(:discharge).permit(:patient_id, :date, :time)
+        else
+            params.fetch(:discharge, {}).permit!
+        end
     end
     
     def look_insurances
         @insurance = Insurance.find_by(patient_id: params[:patient_id])
     end
     def insurance_params
-        params.require(:insurance).permit(:policy_num, :policy_name, :group_num)
+        if(params.has_key?(:insurance))
+            params.require(:insurance).permit(:policy_num, :policy_name, :group_num)
+        else
+            params.fetch(:insurance, {}).permit!
+        end    
     end
     
-      def treatment_params
-          params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
-      end
-      def schedule_params
-          params.require(:schedule).permit(:date, :time, :schedule_msg)
-      end
-      
+    def treatment_params
+        if(params.has_key?(:treatment))
+            params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
+        else
+            params.fetch(:treatment, {}).permit!
+        end  
+    end
+
+    def schedule_params
+        if(params.has_key?(:schedule))
+            params.require(:schedule).permit(:date, :time, :schedule_msg)
+        else
+            params.fetch(:schedule, {}).permit!
+        end 
+    end
+
+    def dr_note_params
+        if(params.has_key?(:dr_note))
+            params.require(:dr_note).permit(:name, :message)
+        else
+            params.fetch(:dr_note, {}).permit!
+        end         
+    end
+    
+    def n_note_params
+        if(params.has_key?(:n_note))
+            params.require(:n_note).permit(:name, :message)
+        else
+            params.fetch(:n_note, {}).permit!
+        end         
+    end
+
     def getPointerParam
       @recordLocation = params[:pointer] ||= " "
     end
