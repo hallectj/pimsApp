@@ -91,6 +91,7 @@
       <%end%>
 
       <b>Prescriptions</b>
+        <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions") %></p>
       <% @patient.treatment.prescriptions.each do |p| %>
         <p class = "name"> Name: <%= HelperDisplay.pres_nametry(p) %> </p>
         <p class = "amount"> Amount: <%= HelperDisplay.pres_amounttry(p) %> </p>
@@ -118,6 +119,7 @@
         
 
       <b>Doctor Notes</b>
+        <p><%= link_to "Create a new Doctor's note", new_dr_note_path(@patient, :pointer => "dr_notes") %></p>
       <% @patient.treatment.dr_notes.each do |d| %>
         <p class = "name"> Name: <%= HelperDisplay.drnote_nametry(d) %> </p>
         <p class = "message"> Message: <%= HelperDisplay.drnote_msgtry(d) %> </p>
