@@ -25,10 +25,10 @@ class PagesController < ApplicationController
   
     def new
         @patient = Patient.new
-        @patient.treatment.build.schedules.build
+        #@patient.treatment.build.schedules.build
         
         @physician = Physician.new
-        @emergency_contact = Emergency_contact.new
+        @emergency_contact = EmergencyContact.new
         @contact = Contact.new
         @location = Location.new
         @admittance = Admittance.new
