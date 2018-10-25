@@ -107,6 +107,22 @@ class PagesController < ApplicationController
             render 'create_prescription'
         end
     end
+    
+    def new_dr_note
+        @patient = Patient.new
+        @patient.build_treatment.dr_notes.build
+    end
+    
+    def create_dr_note
+        @patient = Patient.find(params[:id])
+        @dr_note = @patient.treatment.dr_notes.create(dr_note_params)
+        #redirect_to patient_path(@patient)
+        if @dr_note.save
+            render 'show'
+        else
+            render 'create_dr_note'
+        end
+    end
 
   def edit_patient
     @patient = Patient.find(params[:id])
@@ -332,6 +348,9 @@ private
     end
     def schedule_params
         params.require(:schedule).permit(:date, :time, :schedule_msg)
+    end
+    def dr_note_params
+        params.require(:dr_note).permit(:name, :message)
     end
     
   def getPointerParam
