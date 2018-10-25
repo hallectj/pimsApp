@@ -147,7 +147,7 @@
       <p class = "policynum_para"> Policy Number: <%= HelperDisplay.p_numtry(@patient.insurance) %> </p>
       <p class = "policy_para"> Policy Name: <%= HelperDisplay.p_nametry(@patient.insurance) %>  </p>
       <p class = "group_para"> Group Number: <%= HelperDisplay.grouptry(@patient.insurance) %>  </p>
-
+        <p>Edit Insurance Info <%= link_to "Edit", edit_insurance_path(@patient, :pointer => "insurance")  %></p>
       <% if current_user.office_role %>
       <%-# Edit Insurance %>
       <%end%>
