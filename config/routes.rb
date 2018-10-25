@@ -41,6 +41,9 @@ Rails.application.routes.draw do
     get '/pages/:id/edit/edit_emergency_contact', to: 'pages#edit_emergency_contact', as: :edit_emergency_contact
     match "pages/:id/update/update_emergency_contact" => "pages#update_emergency_contact", as: :update_emergency_contact, via: [:patch, :post]
     
+    get '/pages/:id/edit/edit_insurance', to: 'pages#edit_insurance', as: :edit_insurance
+    match "pages/:id/update/update_insurance" => "pages#update_insurance", as: :update_insurance, via: [:patch, :post]
+    
     get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :new_schedule
     get '/pages/:id/treatment/:id/create/create_schedule', to: 'pages#create_schedule'
     match "/pages/:id/treatment/:id/create/create_schedule" => "pages#create_schedule", :via => :post, :as => :create_schedule
