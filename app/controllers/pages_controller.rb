@@ -26,7 +26,7 @@ class PagesController < ApplicationController
   def new
       @patient = Patient.new
       @patient.treatment.build.schedules.build
-      
+      @patient.discharge.build.bill.build.charges.build
       @physician = Physician.new
       @emergency_contact = Emergency_contact.new
       @contact = Contact.new
@@ -55,6 +55,8 @@ class PagesController < ApplicationController
       @prescription = @treatment.prescriptions.build
       @n_note = @treatment.n_notes.build
       @dr_note = @treatment.dr_notes.build
+      @discharge = Discharge.new(discharge_params)
+      @bill = @discharge.bill.build
   end
   
   def show
@@ -137,6 +139,10 @@ class PagesController < ApplicationController
     @patient = Patient.find(params[:id]) 
     @discharge = @patient.update_discharge if @patient.discharge.nil?
   end
+    def edit_bill
+    @patient = Patient.find(params[:id]) 
+    @bill = @patient.discharge.update_bill if @patient.discharge.bill.nil?
+    end
     
     def edit_contact
         @patient = Patient.find(params[:id])
@@ -193,6 +199,16 @@ class PagesController < ApplicationController
         else
           flash.now[:error] = "Cannot updating your profile"
           render 'edit_discharge'
+        end
+     end
+    def update_bill
+        @patient = Patient.find(params[:id])
+        @bill = @patient.discharge.bill
+        if @bill.update(bill_params)
+          render 'show'
+        else
+          flash.now[:error] = "Cannot update billing information"
+          render 'edit_bill'
         end
      end
     
@@ -345,9 +361,13 @@ private
       params.require(:admittance).permit(:patient_id, :date, :time, :reason)
   end
 
-  def discharge_params
+    def discharge_params
       params.require(:discharge).permit(:patient_id, :date, :time)
-  end
+    end
+    def bill_params
+        params.require(:bill).permit(:amount_paid, :amount_owed, :amount_insurance)
+    end
+    
   
   def look_insurances
       @insurance = Insurance.find_by(patient_id: params[:patient_id])
