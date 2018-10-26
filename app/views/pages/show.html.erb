@@ -31,10 +31,19 @@
       <h2>Discharge</h2>
       <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
       <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
-
       <% if current_user.office_role %>
       <p>Edit Discharge Info <%= link_to "Edit", edit_discharge_path(@patient, :pointer => "discharge") %></p>
       <%end%>
+        
+        <b>Bill</b>
+        <p class = "amount_paid"> Amount Paid: <%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %> </p>
+        <p class = "amount_owed"> Amount Owed: <%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %> </p>
+        <p class = "amount_insurance"> Amount Paid by Insurance: <%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %> </p>
+        
+        <% if current_user.office_role %>
+        <p>Edit Billing Information <%= link_to "Edit", edit_bill_path(@patient, :pointer => "bill") %></p>
+        <%end%>
+        
     </div>
     <%end%>
 

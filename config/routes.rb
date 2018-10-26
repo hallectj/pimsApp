@@ -24,10 +24,13 @@ Rails.application.routes.draw do
   match "pages/:id/update/update_patient" => "pages#update_patient", as: :update_patient, via: [:patch, :post]
   
   get '/pages/:id/edit/edit_admittance', to: 'pages#edit_admittance', as: :edit_admittance
-  match "pages/:id/update/update_admittance" => "pages#update_admittance", as: :update_admittance, via: [:patch, :post]  
+  match "pages/:id/update/update_admittance" => "pages#update_admittance", as: :update_admittance, via: [:patch, :post]
   
   get '/pages/:id/edit/edit_discharge', to: 'pages#edit_discharge', as: :edit_discharge
-  match "pages/:id/update/update_discharge" => "pages#update_discharge", as: :update_discharge, via: [:patch, :post]  
+  match "pages/:id/update/update_discharge" => "pages#update_discharge", as: :update_discharge, via: [:patch, :post]
+    
+    get '/pages/:id/discharge/:id/edit/edit_bill', to: 'pages#edit_bill', as: :edit_bill
+    match "pages/:id/discharge/:id/update/update_bill" => "pages#update_bill", as: :update_bill, via: [:patch, :post]
     
     get '/pages/:id/edit/edit_contact', to: 'pages#edit_contact', as: :edit_contact
     match "pages/:id/update/update_contact" => "pages#update_contact", as: :update_contact, via: [:patch, :post]
