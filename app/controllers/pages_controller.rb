@@ -1,262 +1,325 @@
 class PagesController < ApplicationController
-    #load_and_authorize_resource :class => PagesController
-    #before_action :look_patients, only: [:show, :edit, :update, :destroy]
+  #load_and_authorize_resource :class => PagesController
+  #before_action :look_patients, only: [:show, :edit, :update, :destroy]
+
+
+  layout 'pagesPatientResults', only: [:pagesPatientResults]
+
+  before_action :isAdmin?
+  before_action :determineRollCustomAction, only: [:index]  
+
+  #let's me know what view I'm in so I can update only
+  #those fields
+  before_action :getPointerParam
+
+  before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
+  before_action :look_physicians, only: [:show, :edit, :update, :destroy]
+  before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
+  before_action :look_contacts, only: [:show, :edit, :update, :destroy]
+  before_action :look_locations, only: [:show, :edit, :update, :destroy]
+  before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
+  before_action :look_insurances, only: [:show, :edit, :update, :destroy]
   
-  
-    layout 'pagesPatientResults', only: [:pagesPatientResults]
-  
-    before_action :isAdmin?
-    before_action :determineRollCustomAction, only: [:index] 
-  
-    #let's me know what view I'm in so I can update only
-    #those fields
-    before_action :getPointerParam
-   
-  
-    before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
-    before_action :look_physicians, only: [:show, :edit, :update, :destroy]
-    before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
-    before_action :look_contacts, only: [:show, :edit, :update, :destroy]
-    before_action :look_locations, only: [:show, :edit, :update, :destroy]
-    before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
-    before_action :look_insurances, only: [:show, :edit, :update, :destroy]
-  
-    def index
-    end
-  
-    def new
-          
-          @patient = Patient.new
-          #@patient.treatment.build.schedules.build
-        
-          @physician = Physician.new
-          @emergency_contact = EmergencyContact.new
-          @contact = Contact.new
-          @location = Location.new
-          @admittance = Admittance.new
-          @insurance = Insurance.new
-    end
-  
-    def create
-        @patient = Patient.new(patient_params)
-          if @patient.save
-            redirect_to 'show'
-          else
-            render 'new_patient'
-          end
-        @physician = Physician.new(physician_params)
-        @emergency_contact = EmergencyContact.new(emergency_contact_params)
-        @contact = Contact.new(contact_params)
-        @location = Location.new(location_params)
-        @admittance = Admittance.new(admittance_params)
-        @insurance = Insurance.new(insurance_params)
-        @treatment = Treatment.new(treatment_params)
-        @schedule = @treatment.schedules.build
-        @prescription = @treatment.prescriptions.build
-        @n_note = @treatment.n_notes.build
-        @dr_note = @treatment.dr_notes.build
-    end
-    
-    def show
-        @patient = Patient.find(params[:id])
-        #@admittance = Admittance.find_by(patient_id: params[:patient_id])
-        respond_to do |format|
-          format.html
-          format.pdf do
-            pdf = PatientShowPdf.new(@patient)
-            send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
-          end
-        end
-      
-    end
-  
-    def edit
-      @patient = Patient.find(params[:id])
-    end
-  
-    def destroy
-    end
-  
-    #my custom restfuls
-    ########   PATIENT CUSTOM ACTIONS  ###########################
-    def new_patient
+  def index
+  end
+
+  def new
       @patient = Patient.new
+      @patient.treatment.build.schedules.build
+      @patient.discharge.build.bill.build.charges.build
+      @physician = Physician.new
+      @emergency_contact = Emergency_contact.new
+      @contact = Contact.new
+      @location = Location.new
       @admittance = Admittance.new
-    end
-      
-      def new_schedule
-          @patient = Patient.new
-          @patient.build_treatment.schedules.build
-      end
-      
-      def create_schedule
-          @patient = Patient.find(params[:id])
-          @schedule = @patient.treatment.schedules.create(schedule_params)
-          #redirect_to patient_path(@patient)
-          if @schedule.save
-              render 'show'
-          else
-              render 'create_schedule'
-          end
-      end
-  
-    def edit_patient
-      @patient = Patient.find(params[:id])
-    end
-  
-    def edit_admittance
-      @patient = Patient.find(params[:id]) 
-      @admittance = @patient.update_admittance if @patient.admittance.nil?
-    end
-  
-    def edit_discharge
-      @patient = Patient.find(params[:id]) 
-      @discharge = @patient.update_discharge if @patient.discharge.nil?
-    end
-      
-      def edit_contact
-          @patient = Patient.find(params[:id])
-          @contact = @patient.update_contact if @patient.contact.nil?
-      end
-      
-      def edit_physician
-          @patient = Patient.find(params[:id])
-          @physician = @patient.update_physician if @patient.physician.nil?
-      end
-      
-      def edit_location
-          @patient = Patient.find(params[:id])
-          @location = @patient.update_location if @patient.location.nil?
-      end
-      
-      def edit_emergency_contact
-          @patient = Patient.find(params[:id])
-          @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
+      @insurance = Insurance.new
+  end
+
+  def create
+      @patient = Patient.new(patient_params) 
+    
+      if @patient.save
+        render 'show'
+      else
+        render 'new_patient'
       end
     
-    def update_patient
-      @patient = Patient.find(params[:id])
-      @admittance = @patient.admittance
-     
-      if @patient.update(patient_params)
-        render 'show'
-      else
-        render 'edit_patient'
-      end
-    end
+      @physician = Physician.new(physician_params)
+      @emergency_contact = Emergency_contact.new(emergency_contact_params)
+      @contact = Contact.new(contact_params)
+      @location = Location.new(location_params)
+      @admittance = Admittance.new(admittance_params)
+      @insurance = Insurance.new(insurance_params)
+      @treatment = Treatment.new(treatment_params)
+      @schedule = @treatment.schedules.build
+      @prescription = @treatment.prescriptions.build
+      @n_note = @treatment.n_notes.build
+      @dr_note = @treatment.dr_notes.build
+      @discharge = Discharge.new(discharge_params)
+      @bill = @discharge.bill.build
+  end
   
-    def update_admittance
+  def show
       @patient = Patient.find(params[:id])
-      @admittance = @patient.admittance
-      if @admittance.update(admittance_params)
-        render 'show'
-      else
-         flash.now[:error] = "Cannot updating your profile"
-         render 'edit_admittance'
+      #@admittance = Admittance.find_by(patient_id: params[:patient_id])
+      respond_to do |format|
+        format.html
+        format.pdf do
+          pdf = PatientShowPdf.new(@patient)
+          send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
+        end
       end
+  end
+
+  def edit
+    @patient = Patient.find(params[:id])
+  end
+
+  def destroy
+  end
+
+  #my custom restfuls
+  ########   PATIENT CUSTOM ACTIONS  ###########################
+  def new_patient
+    @patient = Patient.new
+    @admittance = Admittance.new
+  end
+    
+    def new_schedule
+        @patient = Patient.new
+        @patient.build_treatment.schedules.build
     end
-  
-      def update_discharge
-          @patient = Patient.find(params[:id])
-          @discharge = @patient.discharge
-          if @discharge.update(discharge_params)
+    
+    def create_schedule
+        @patient = Patient.find(params[:id])
+        @schedule = @patient.treatment.schedules.create(schedule_params)
+        #redirect_to patient_path(@patient)
+        if @schedule.save
             render 'show'
-          else
-            flash.now[:error] = "Cannot updating your profile"
-            render 'edit_discharge'
-          end
-       end
-      
-      def update_contact
-          @patient = Patient.find(params[:id])
-          @contact = @patient.contact
-          if @contact.update(contact_params)
-              render 'show'
-          else
-              flash.now[:error] = "Cannot update Contact Information"
-              render 'edit_contact'
-          end
-      end
-      
-      def update_physician
-          @patient = Patient.find(params[:id])
-          @physician = @patient.physician
-          if @physician.update(physician_params)
-              render 'show'
-          else
-              flash.now[:error] = "Cannot update Physician Information"
-              render 'edit_physician'
-          end
-      end
-      
-      def update_location
-          @patient = Patient.find(params[:id])
-          @location = @patient.location
-          if @location.update(location_params)
-              render 'show'
-          else
-              flash.now[:error] = "Cannot update Location Information"
-              render 'edit_location'
-          end
-      end
-      
-      def update_emergency_contact
-          @patient = Patient.find(params[:id])
-          @emergency_contact = @patient.emergency_contact
-          if @emergency_contact.update(emergency_contact_params)
-              render 'show'
-          else
-              flash.now[:error] = "Cannot update Emergency Contacts"
-              render 'edit_emergency_contact'
-          end
-      end
-      
-  
-   
-    ########   END PATIENT CUSTOM ACTIONS  ######################
-  
-    #create my 4 custom actions here for each role
-    def doctorView
-      @patients = Patient.all
-    end
-  
-    def officeView
-      @patients = Patient.all
-    end
-  
-    def medicalView
-      @patients = Patient.all
-    end
-  
-    def volunteerView
-      @patients = Patient.all
+        else
+            render 'create_schedule'
+        end
     end
     
-    def pagesPatientResults
-      #replace wild cards and whitespace with regex wildcards
-      searchString = params[:search].gsub("*", "%")
-      #adapted from https://stackoverflow.com/questions/21470782/concat-inside-rails-query-conditions
-      @patients = Patient.where("last_name like ? OR first_name like ? OR (first_name || ' ' || last_name) like ? OR (last_name || ' ' || first_name) like ?", "#{searchString}", "#{searchString}", "#{searchString}", "#{searchString}")
-      #@patients = Patient.where("(first_name || ' ' || last_name) like ? OR (last_name || ' ' || first_name) like ?", "%#{searchString}%", "%#{searchString}%")
+    def new_prescription
+        @patient = Patient.new
+        @patient.build_treatment.prescriptions.build
+    end
+    
+    def create_prescription
+        @patient = Patient.find(params[:id])
+        @prescription = @patient.treatment.prescriptions.create(prescription_params)
+        #redirect_to patient_path(@patient)
+        if @prescription.save
+            render 'show'
+        else
+            render 'create_prescription'
+        end
+    end
+    
+    def new_dr_note
+        @patient = Patient.new
+        @patient.build_treatment.dr_notes.build
+    end
+    
+    def create_dr_note
+        @patient = Patient.find(params[:id])
+        @dr_note = @patient.treatment.dr_notes.create(dr_note_params)
+        #redirect_to patient_path(@patient)
+        if @dr_note.save
+            render 'show'
+        else
+            render 'create_dr_note'
+        end
+    end
+
+  def edit_patient
+    @patient = Patient.find(params[:id])
+  end
+
+  def edit_admittance
+    @patient = Patient.find(params[:id]) 
+    @admittance = @patient.update_admittance if @patient.admittance.nil?
+  end
+
+  def edit_discharge
+    @patient = Patient.find(params[:id]) 
+    @discharge = @patient.update_discharge if @patient.discharge.nil?
+  end
+    def edit_bill
+    @patient = Patient.find(params[:id]) 
+    @bill = @patient.discharge.update_bill if @patient.discharge.bill.nil?
+    end
+    
+    def edit_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.update_contact if @patient.contact.nil?
+    end
+    
+    def edit_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.update_physician if @patient.physician.nil?
+    end
+    
+    def edit_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.update_location if @patient.location.nil?
+    end
+    
+    def edit_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
+    end
+    
+    def edit_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.update_insurance if @patient.insurance.nil?
     end
   
-    def patientSearchPage
+  def update_patient
+    @patient = Patient.find(params[:id])
+    @admittance = @patient.admittance
+   
+    if @patient.update(patient_params)
+      render 'show'
+    else
+      render 'edit_patient'
     end
+  end
+
+  def update_admittance
+    @patient = Patient.find(params[:id])
+    @admittance = @patient.admittance
+    if @admittance.update(admittance_params)
+      render 'show'
+    else
+       flash.now[:error] = "Cannot updating your profile"
+       render 'edit_admittance'
+    end
+  end
+
+    def update_discharge
+        @patient = Patient.find(params[:id])
+        @discharge = @patient.discharge
+        if @discharge.update(discharge_params)
+          render 'show'
+        else
+          flash.now[:error] = "Cannot updating your profile"
+          render 'edit_discharge'
+        end
+     end
+    def update_bill
+        @patient = Patient.find(params[:id])
+        @bill = @patient.discharge.bill
+        if @bill.update(bill_params)
+          render 'show'
+        else
+          flash.now[:error] = "Cannot update billing information"
+          render 'edit_bill'
+        end
+     end
+    
+    def update_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.contact
+        if @contact.update(contact_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Contact Information"
+            render 'edit_contact'
+        end
+    end
+    
+    def update_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.physician
+        if @physician.update(physician_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Physician Information"
+            render 'edit_physician'
+        end
+    end
+    
+    def update_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.location
+        if @location.update(location_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Location Information"
+            render 'edit_location'
+        end
+    end
+    
+    def update_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.emergency_contact
+        if @emergency_contact.update(emergency_contact_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Emergency Contacts"
+            render 'edit_emergency_contact'
+        end
+    end
+    
+    def update_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.insurance
+        if @insurance.update(insurance_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Insurance Information"
+            render 'edit_insurance'
+        end
+    end
+    
+
+ 
+  ########   END PATIENT CUSTOM ACTIONS  ######################
+
+  #create my 4 custom actions here for each role
+  def doctorView
+    @patients = Patient.all
+  end
+
+  def officeView
+    @patients = Patient.all
+  end
+
+  def medicalView
+    @patients = Patient.all
+  end
+
+  def volunteerView
+    @patients = Patient.all
+  end
   
-  private
-    def determineRollCustomAction
-      path = ""
-      if current_user.doctor_role
-        path = doctor_path
-      elsif current_user.office_role
-        path = office_path
-      elsif current_user.medical_role
-        path = medical_path
-      elsif current_user.volunteer_role
-        path = volunteer_path
-      end
-      redirect_to path
+  def pagesPatientResults
+    #replace wild cards and whitespace with regex wildcards
+    searchString = params[:search].gsub("*", "%")
+    #adapted from https://stackoverflow.com/questions/21470782/concat-inside-rails-query-conditions
+    @patients = Patient.where("lower(last_name) like lower(?) OR lower(first_name) like lower(?) OR lower(first_name || ' ' || last_name) like lower(?) OR lower(last_name || ' ' || first_name) like lower(?)", "#{searchString}", "#{searchString}", "#{searchString}", "#{searchString}")
+    #@patients = Patient.where("(first_name || ' ' || last_name) like ? OR (last_name || ' ' || first_name) like ?", "%#{searchString}%", "%#{searchString}%")
+  end
+
+  def patientSearchPage
+  end
+
+private
+  def determineRollCustomAction
+    path = ""
+    if current_user.doctor_role
+      path = doctor_path
+    elsif current_user.office_role
+      path = office_path
+    elsif current_user.medical_role
+      path = medical_path
+    elsif current_user.volunteer_role
+      path = volunteer_path
     end
+    redirect_to path
+  end
 
   
     def patient_params
@@ -326,6 +389,8 @@ class PagesController < ApplicationController
       else
         params.fetch(:treatment, {}).permit!
       end
+    def prescription_params
+        params.require(:prescription).permit(:name, :amount, :schedule)
     end
   
     def schedule_params
@@ -335,6 +400,13 @@ class PagesController < ApplicationController
         params.fetch(:schedule, {}).permit!
       end
     end
+  
+  
+    def dr_note_params
+        params.require(:dr_note).permit(:name, :message)
+    end
+  
+  
   
     #look methods
     def look_admittances

@@ -29,6 +29,33 @@ module HelperDisplay
             return a
         end
     end
+    
+    def self.amount_paid_try(input)
+        if (input != nil) 
+            return input.amount_paid
+        else  
+            a = Decimal.new(00)
+            return a
+        end
+    end
+    
+    def self.amount_owed_try(input)
+        if (input != nil) 
+            return input.amount_owed
+        else  
+            a = Decimal.new(00)
+            return a
+        end
+    end
+    
+    def self.amount_insurance_try(input)
+        if (input != nil) 
+            return input.amount_insurance
+        else  
+            a = Decimal.new(00)
+            return a
+        end
+    end
 
     def self.facilitytry(input)
         if (input != nil) 
