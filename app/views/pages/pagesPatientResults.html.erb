@@ -1,6 +1,6 @@
 <% require_relative('./HelperDisplayFunctions') %>
 
-<h2 class="text-center">Patients that matched your search criteria</h2>
+<h2 class="center-text">Patients that matched your search criteria</h2>
 <p class="go_back"> <%= link_to "Back", :back %></p>
 
 <% @patients.first(10).each do |patient| %>
@@ -9,9 +9,9 @@
     <div>
       <p>Basic Info</p>
       <div class="patient-info-div">
-        <p>facility: <%= HelperDisplay.facilitytry(patient.location) %></p>
-        <p>room: <%= HelperDisplay.roomtry(patient.location) %></p>
-        <p>bed: <%= HelperDisplay.bedtry(patient.location) %></p> <br>
+        <p> facility: <%= HelperDisplay.facilitytry(patient.location) %> </p>
+        <p> room: <%= HelperDisplay.roomtry(patient.location) %> </p>
+        <p> bed: <%= HelperDisplay.bedtry(patient.location) %> </p> <br>
       </div>
       <p>View Complete Profile</p>
       <p class="view-more"><%= link_to "View More", page_path(patient) %></p>
