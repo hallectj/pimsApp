@@ -41,6 +41,7 @@
     <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
     <div class = "boxes contact">
       <h2>Contact Information</h2>
+      <% if !(@patient.contact.nil?)%>
       <p class = "home"> Home Number: <%= HelperDisplay.hometry(@patient.contact) %> </p>
       <p class = "work"> Work Number: <%= HelperDisplay.worktry(@patient.contact) %> </p>
       <p class = "mobile"> Mobile Number: <%= HelperDisplay.mobiletry(@patient.contact) %> </p>
@@ -48,9 +49,14 @@
       <p class = "city"> City: <%= HelperDisplay.citytry(@patient.contact) %> </p>
       <p class = "state"> State: <%= HelperDisplay.statetry(@patient.contact) %> </p>
       <p class = "zip"> ZIP: <%= HelperDisplay.ziptry(@patient.contact) %> </p>
-      
       <% if current_user.office_role %>
       <p>Edit Contact Info <%= link_to "Edit", edit_contact_path(@patient, :pointer => "contact")  %></p>
+      <%end%>
+      <% end %>
+      <% if current_user.office_role %>
+      <% if @patient.contact.nil?%>
+      <p>Add Contact Info <%= link_to "Create Contact", new_contact_path(@patient)  %></p>
+      <%end%>
       <%end%>
     </div>
     <%end%>

@@ -25,11 +25,11 @@ class PagesController < ApplicationController
   
     def new
         @patient = Patient.new
-        #@patient.treatment.build.schedules.build
-        
+        @patient.build_treatment.schedules.build
+        @contact = @patient.build_contact
         @physician = Physician.new
         @emergency_contact = EmergencyContact.new
-        @contact = Contact.new
+        @contact = Contact.new({patient_id: @patient.id})
         @location = Location.new
         @admittance = Admittance.new
         @insurance = Insurance.new
@@ -46,7 +46,7 @@ class PagesController < ApplicationController
       
         @physician = Physician.new(physician_params)
         @emergency_contact = EmergencyContact.new(emergency_contact_params)
-        @contact = Contact.new(contact_params)
+        @contact = @patient.build_contact(contact_params)
         @location = Location.new(location_params)
         @admittance = Admittance.new(admittance_params)
         @insurance = Insurance.new(insurance_params)
@@ -80,6 +80,12 @@ class PagesController < ApplicationController
         @patient = Patient.new
         @patient.build_treatment.schedules.build
     end
+
+    def new_contact
+        @patient = Patient.find(params[:id])
+
+        
+    end
     
     def create_schedule
         @patient = Patient.find(params[:id])
@@ -91,6 +97,20 @@ class PagesController < ApplicationController
             render 'create_schedule'
         end
     end
+
+    def create_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.build_contact(contact_params)
+        # @patient.create_contact.fail
+        #@contact.update(contact_params)
+        #redirect_to patient_path(@patient)
+        if @contact.save
+            render 'show'
+        else
+            render 'new_contact'
+        end
+    end        
+
 
     def new_dr_note
         @patient = Patient.new
@@ -115,12 +135,7 @@ class PagesController < ApplicationController
   
     def edit_admittance
         @patient = Patient.find(params[:id])
-        if (@patient.admittance.nil?)
-            Admittance.new(admittance_params)
-        else
-            @admittance = @patient.update_admittance 
-        end
-
+        @admittance = @patient.update_admittance if @patient.admittance.nil?
     end
   
     def edit_discharge
@@ -130,7 +145,11 @@ class PagesController < ApplicationController
       
     def edit_contact
         @patient = Patient.find(params[:id])
-        @contact = @patient.update_contact if @patient.contact.nil?
+        if (@patient.contact.nil?)
+            @contact = Contact.new(patient_id: @patient.id)
+        else
+            @contact = @patient.update_contact if @patient.contact.nil?
+        end
     end
     
     def edit_physician
@@ -165,7 +184,7 @@ class PagesController < ApplicationController
       if @admittance.update(admittance_params)
         render 'show'
       else
-         flash.now[:error] = "Cannot updating your profile"
+         flash.now[:error] = "Cannot update your profile"
          render 'edit_admittance'
       end
     end
@@ -176,7 +195,7 @@ class PagesController < ApplicationController
           if @discharge.update(discharge_params)
             render 'show'
           else
-            flash.now[:error] = "Cannot updating your profile"
+            flash.now[:error] = "Cannot update your profile"
             render 'edit_discharge'
           end
        end
@@ -256,7 +275,7 @@ class PagesController < ApplicationController
   
     def patientSearchPage
     end
-  
+
   private
     def determineRollCustomAction
       path = ""
@@ -317,7 +336,11 @@ class PagesController < ApplicationController
             params.fetch(:contact, {}).permit!
         end
     end
-    
+
+    def new_contact_params
+        params.permit(:patient_id, :home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
+    end
+
     def look_locations
         @location = Location.find_by(patient_id: params[:patient_id])
     end
