@@ -132,6 +132,16 @@ class PagesController < ApplicationController
         #end
     #end
     
+    def create_contact
+        @patient = Patient.find(params[:id])
+        @contact = @patient.build_contact(contact_params)
+        if @contact.save
+            render 'show'
+        else
+            render 'new_contact'
+        end
+    end
+  
     def new_prescription
         @patient = Patient.new
         @prescriptions = @patient.build_treatment.prescriptions.build
