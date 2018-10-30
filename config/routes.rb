@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     get '/patient/:id/new_contact', to: 'pages#new_contact', as: :create_contact
     match "/patient/:id/new_contact" => "pages#create_contact", as: :new_contact, :via => [:patch, :post]
 
+    get '/patient/:id/new_discharge', to: 'pages#new_discharge', as: :create_discharge
+    match "/patient/:id/new_discharge" => "pages#create_discharge", as: :new_discharge, :via => [:patch, :post]
 
     get '/pages/:id/edit/edit_emergency_contact', to: 'pages#edit_emergency_contact', as: :edit_emergency_contact
     match "pages/:id/update/update_emergency_contact" => "pages#update_emergency_contact", as: :update_emergency_contact, via: [:patch, :post]

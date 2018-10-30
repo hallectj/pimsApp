@@ -84,7 +84,21 @@ class PagesController < ApplicationController
     def new_contact
         @patient = Patient.find(params[:id])
     end
-    
+
+    def new_discharge
+        @patient = Patient.find(params[:id])
+    end
+
+    def create_discharge
+        @patient = Patient.find(params[:id])
+        @contact = @patient.build_discharge(discharge_params)
+        if @contact.save
+            render 'show'
+        else
+            render 'new_contact'
+        end
+    end  
+        
     def create_schedule
         @patient = Patient.find(params[:id])
         @schedule = @patient.treatment.schedules.create(schedule_params)
