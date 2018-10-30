@@ -1,5 +1,6 @@
 require 'date'
 require 'time'
+require 'bigdecimal'
 
 module HelperDisplay 
 
@@ -34,7 +35,8 @@ module HelperDisplay
         if (input != nil) 
             return input.amount_paid
         else  
-            a = Decimal.new(00)
+            #a = Decimal.new(00)
+            a = BigDecimal.new("0")
             return a
         end
     end
@@ -43,7 +45,8 @@ module HelperDisplay
         if (input != nil) 
             return input.amount_owed
         else  
-            a = Decimal.new(00)
+            #a = Decimal.new(00)
+            a = BigDecimal.new("0")
             return a
         end
     end
@@ -52,7 +55,8 @@ module HelperDisplay
         if (input != nil) 
             return input.amount_insurance
         else  
-            a = Decimal.new(00)
+            #a = Decimal.new(00)
+            a = BigDecimal.new("0")
             return a
         end
     end

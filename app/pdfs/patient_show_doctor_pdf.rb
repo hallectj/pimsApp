@@ -1,6 +1,7 @@
-class PatientShowPdf < Prawn::Document
+class PatientShowDoctorPdf < Prawn::Document
   def initialize(patient)
     @patient = patient
+    
     super(top_margin: 50)
     patient_name
     general_data
@@ -11,9 +12,11 @@ class PatientShowPdf < Prawn::Document
   end
   
   def general_data
-    table general_data_rows
-    table admittance_data_rows
+    #if @current_user.current_user.doctor_role
+      #table admittance_data_rows
+    #end
     table physicians_data_rows
+    table general_data_rows
   end
   
   def general_data_rows
