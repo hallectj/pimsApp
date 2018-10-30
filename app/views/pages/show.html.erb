@@ -31,10 +31,19 @@
       <h2>Discharge</h2>
       <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
       <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
-
       <% if current_user.office_role %>
       <p>Edit Discharge Info <%= link_to "Edit", edit_discharge_path(@patient, :pointer => "discharge") %></p>
       <%end%>
+        
+        <b>Bill</b>
+        <p class = "amount_paid"> Amount Paid: <%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %> </p>
+        <p class = "amount_owed"> Amount Owed: <%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %> </p>
+        <p class = "amount_insurance"> Amount Paid by Insurance: <%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %> </p>
+        
+        <% if current_user.office_role %>
+        <p>Edit Billing Information <%= link_to "Edit", edit_bill_path(@patient, :pointer => "bill") %></p>
+        <%end%>
+        
     </div>
     <%end%>
 
@@ -97,7 +106,11 @@
       <%end%>
 
       <b>Prescriptions</b>
+<<<<<<< HEAD
     <% if (@patient.treatment.try(:prescriptions)) %>
+=======
+        <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions") %></p>
+>>>>>>> b099cc9da22e096a832d9f3a7f085eedf3bb74fe
       <% @patient.treatment.prescriptions.each do |p| %>
         <p class = "name"> Name: <%= HelperDisplay.pres_nametry(p) %> </p>
         <p class = "amount"> Amount: <%= HelperDisplay.pres_amounttry(p) %> </p>
@@ -128,7 +141,11 @@
         
 
       <b>Doctor Notes</b>
+<<<<<<< HEAD
       <% if (@patient.treatment.try(:dr_notes)) %>
+=======
+        <p><%= link_to "Create a new Doctor's note", new_dr_note_path(@patient, :pointer => "dr_notes") %></p>
+>>>>>>> b099cc9da22e096a832d9f3a7f085eedf3bb74fe
       <% @patient.treatment.dr_notes.each do |d| %>
         <p class = "name"> Name: <%= HelperDisplay.drnote_nametry(d) %> </p>
         <p class = "message"> Message: <%= HelperDisplay.drnote_msgtry(d) %> </p>
@@ -159,7 +176,7 @@
       <p class = "policynum_para"> Policy Number: <%= HelperDisplay.p_numtry(@patient.insurance) %> </p>
       <p class = "policy_para"> Policy Name: <%= HelperDisplay.p_nametry(@patient.insurance) %>  </p>
       <p class = "group_para"> Group Number: <%= HelperDisplay.grouptry(@patient.insurance) %>  </p>
-
+        <p>Edit Insurance Info <%= link_to "Edit", edit_insurance_path(@patient, :pointer => "insurance")  %></p>
       <% if current_user.office_role %>
       <%-# Edit Insurance %>
       <%end%>
