@@ -41,6 +41,21 @@ Rails.application.routes.draw do
     get '/pages/:id/edit/edit_emergency_contact', to: 'pages#edit_emergency_contact', as: :edit_emergency_contact
     match "pages/:id/update/update_emergency_contact" => "pages#update_emergency_contact", as: :update_emergency_contact, via: [:patch, :post]
     
+    get '/pages/:id/edit/edit_insurance', to: 'pages#edit_insurance', as: :edit_insurance
+    match "pages/:id/update/update_insurance" => "pages#update_insurance", as: :update_insurance, via: [:patch, :post]
+    
+    get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :new_schedule
+    get '/pages/:id/treatment/:id/create/create_schedule', to: 'pages#create_schedule'
+    match "/pages/:id/treatment/:id/create/create_schedule" => "pages#create_schedule", :via => :post, :as => :create_schedule
+    
+    get '/pages/:id/treatment/:id/new_prescription', to: 'pages#new_prescription', as: :new_prescription
+    get '/pages/:id/treatment/:id/create/create_prescription', to: 'pages#create_prescription'
+    match "/pages/:id/treatment/:id/create/create_prescription" => "pages#create_prescription", :via => :post, :as => :create_prescription
+    
+    get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :new_dr_note
+    get '/pages/:id/treatment/:id/create/create_dr_note', to: 'pages#create_dr_note'
+    match "/pages/:id/treatment/:id/create/create_dr_note" => "pages#create_dr_note", :via => :post, :as => :create_dr_note
+    
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
   get '*path' => 'error_routes#routing'
 end

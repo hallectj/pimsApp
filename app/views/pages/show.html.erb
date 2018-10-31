@@ -98,6 +98,7 @@
       <%end%>
 
       <b>Prescriptions</b>
+        <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions") %></p>
       <% @patient.treatment.prescriptions.each do |p| %>
         <p class = "name"> Name: <%= HelperDisplay.pres_nametry(p) %> </p>
         <p class = "amount"> Amount: <%= HelperDisplay.pres_amounttry(p) %> </p>
@@ -112,6 +113,7 @@
       <%end%>
 
       <b>Schedule</b>
+        <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules") %></p>
       <% @patient.treatment.schedules.each do |s| %>
         <p class = "date"> Date: <%= HelperDisplay.schedule_datetry(s) %> </p>
         <p class = "time"> Time: <%= HelperDisplay.schedule_timetry(s) %> </p>
@@ -121,8 +123,10 @@
         <%-# Edit scheduled procedure %>
         <%end%>
       <%end%>
+        
 
       <b>Doctor Notes</b>
+        <p><%= link_to "Create a new Doctor's note", new_dr_note_path(@patient, :pointer => "dr_notes") %></p>
       <% @patient.treatment.dr_notes.each do |d| %>
         <p class = "name"> Name: <%= HelperDisplay.drnote_nametry(d) %> </p>
         <p class = "message"> Message: <%= HelperDisplay.drnote_msgtry(d) %> </p>
@@ -150,7 +154,7 @@
       <p class = "policynum_para"> Policy Number: <%= HelperDisplay.p_numtry(@patient.insurance) %> </p>
       <p class = "policy_para"> Policy Name: <%= HelperDisplay.p_nametry(@patient.insurance) %>  </p>
       <p class = "group_para"> Group Number: <%= HelperDisplay.grouptry(@patient.insurance) %>  </p>
-
+        <p>Edit Insurance Info <%= link_to "Edit", edit_insurance_path(@patient, :pointer => "insurance")  %></p>
       <% if current_user.office_role %>
       <%-# Edit Insurance %>
       <%end%>

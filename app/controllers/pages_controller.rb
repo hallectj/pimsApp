@@ -25,9 +25,7 @@ class PagesController < ApplicationController
 
   def new
       @patient = Patient.new
-      #@patient.admittance.build
-      #treatment = @patient.treatments.build
-      #discharge = @patient.discharges.build
+      @patient.treatment.build.schedules.build
       
       @physician = Physician.new
       @emergency_contact = Emergency_contact.new
@@ -41,7 +39,7 @@ class PagesController < ApplicationController
       @patient = Patient.new(patient_params) 
     
       if @patient.save
-        render redirect_to root_path
+        render 'show'
       else
         render 'new_patient'
       end
@@ -52,6 +50,11 @@ class PagesController < ApplicationController
       @location = Location.new(location_params)
       @admittance = Admittance.new(admittance_params)
       @insurance = Insurance.new(insurance_params)
+      @treatment = Treatment.new(treatment_params)
+      @schedule = @treatment.schedules.build
+      @prescription = @treatment.prescriptions.build
+      @n_note = @treatment.n_notes.build
+      @dr_note = @treatment.dr_notes.build
   end
   
   def show
@@ -72,6 +75,54 @@ class PagesController < ApplicationController
     @patient = Patient.new
     @admittance = Admittance.new
   end
+    
+    def new_schedule
+        @patient = Patient.new
+        @patient.build_treatment.schedules.build
+    end
+    
+    def create_schedule
+        @patient = Patient.find(params[:id])
+        @schedule = @patient.treatment.schedules.create(schedule_params)
+        #redirect_to patient_path(@patient)
+        if @schedule.save
+            render 'show'
+        else
+            render 'create_schedule'
+        end
+    end
+    
+    def new_prescription
+        @patient = Patient.new
+        @patient.build_treatment.prescriptions.build
+    end
+    
+    def create_prescription
+        @patient = Patient.find(params[:id])
+        @prescription = @patient.treatment.prescriptions.create(prescription_params)
+        #redirect_to patient_path(@patient)
+        if @prescription.save
+            render 'show'
+        else
+            render 'create_prescription'
+        end
+    end
+    
+    def new_dr_note
+        @patient = Patient.new
+        @patient.build_treatment.dr_notes.build
+    end
+    
+    def create_dr_note
+        @patient = Patient.find(params[:id])
+        @dr_note = @patient.treatment.dr_notes.create(dr_note_params)
+        #redirect_to patient_path(@patient)
+        if @dr_note.save
+            render 'show'
+        else
+            render 'create_dr_note'
+        end
+    end
 
   def edit_patient
     @patient = Patient.find(params[:id])
@@ -105,6 +156,11 @@ class PagesController < ApplicationController
     def edit_emergency_contact
         @patient = Patient.find(params[:id])
         @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
+    end
+    
+    def edit_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.update_insurance if @patient.insurance.nil?
     end
   
   def update_patient
@@ -184,6 +240,17 @@ class PagesController < ApplicationController
         end
     end
     
+    def update_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.insurance
+        if @insurance.update(insurance_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Insurance Information"
+            render 'edit_insurance'
+        end
+    end
+    
 
  
   ########   END PATIENT CUSTOM ACTIONS  ######################
@@ -236,7 +303,7 @@ private
   end  
 
   def patient_params
-    params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
+    params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :birthday, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
   end
 
   #def patient_params
@@ -289,6 +356,19 @@ private
       params.require(:insurance).permit(:policy_num, :policy_name, :group_num)
   end
   
+    def treatment_params
+        params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
+    end
+    def prescription_params
+        params.require(:prescription).permit(:name, :amount, :schedule)
+    end
+    def schedule_params
+        params.require(:schedule).permit(:date, :time, :schedule_msg)
+    end
+    def dr_note_params
+        params.require(:dr_note).permit(:name, :message)
+    end
+    
   def getPointerParam
     @recordLocation = params[:pointer] ||= " "
   end
