@@ -38,10 +38,36 @@ class PagesController < ApplicationController
     
       @admittance = Admittance.new(admittance_params)
   end
-  
+
   def show
-      @patient = Patient.find(params[:id])
-      @admittance = Admittance.find_by(patient_id: params[:patient_id]) 
+    @patient = Patient.find(params[:id])
+    @admittance = Admittance.find_by(patient_id: params[:patient_id]) 
+    
+    #@treatment = @patient.build_treatment
+    #@schedules = @treatment.schedules.build
+    #@prescriptions = @treatment.prescriptions.build
+    #@n_notes = @treatment.n_notes.build
+    #@dr_notes = @treatment.dr_notes.build
+    #@bills = @discharge.build_bill
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        if current_user.doctor_role
+          pdf = PatientShowDoctorPdf.new(@patient)
+        elsif current_user.office_role
+          #not created yet
+          #pdf = PatientShowOfficePdf.new(@patient)
+        elsif current_user.medical_role
+          #not created yet
+          #pdf = PatientShowMedicalPdf.new(@patient)
+        elsif current_user.volunteer_role
+          #not created yet
+          #pdf = PatientShowVolunteerPdf.new(@patient)
+        end
+        send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
+      end
+    end
   end
 
   def edit
