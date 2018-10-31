@@ -32,22 +32,24 @@
   
       <h2>Discharge</h2>
       <% if !(@patient.discharge.nil?)%>
-      <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
-      <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
-      <% if current_user.office_role %>
-      <p>Edit Discharge Info <%= link_to "Edit", edit_discharge_path(@patient, :pointer => "discharge") %></p>
-      <%end%>
+          <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
+          <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
+        <% if current_user.office_role %>
+              <p>Edit Discharge Info <%= link_to "Edit", edit_discharge_path(@patient, :pointer => "discharge") %></p>
+        <%end%>
         
         <b>Bill</b>
-        <p class = "amount_paid"> Amount Paid: <%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %> </p>
-        <p class = "amount_owed"> Amount Owed: <%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %> </p>
-        <p class = "amount_insurance"> Amount Paid by Insurance: <%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %> </p>
+          <p class = "amount_paid"> Amount Paid: <%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %> </p>
+          <p class = "amount_owed"> Amount Owed: <%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %> </p>
+          <p class = "amount_insurance"> Amount Paid by Insurance: <%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %> </p>
         
         <% if current_user.office_role %>
-        <p>Edit Billing Information <%= link_to "Edit", edit_bill_path(@patient, :pointer => "bill") %></p>
+          <p>Edit Billing Information <%= link_to "Edit", edit_bill_path(@patient, :pointer => "bill") %></p>
         <%end%>
       <%end%>
-        
+      <% if @patient.contact.nil?%>
+        <p>Add Discharge Info <%= link_to "Create Discharge", new_discharge_path(@patient)  %></p>
+      <%end%>
     </div>
     <%end%>
 
@@ -82,7 +84,7 @@
       <p class = "physician_num"> Primary Care Number: <%= HelperDisplay.fp_phonetry(@patient.physician) %> </p>
 
       <% if current_user.office_role %>
-      <p>Edit Physician Info <%= link_to "Edit", edit_physician_path(@patient, :pointer => "physician")  %></p>
+      <p>Edit Physician Info <%#= link_to "Edit", edit_physician_path(@patient, :pointer => "physician")  %></p>
       <%end%>
       <%end%>
     </div>
@@ -99,7 +101,7 @@
       <p class = "vapprove_para"> Approved Visitors: <%= HelperDisplay.vapprovedtry(@patient.location) %> </p>
 
       <% if current_user.office_role %>
-      <p>Edit Location Info <%= link_to "Edit", edit_location_path(@patient, :pointer => "location")  %></p>
+      <p>Edit Location Info <%#= link_to "Edit", edit_location_path(@patient, :pointer => "location")  %></p>
       <%end%>
       <%end%>
     </div>

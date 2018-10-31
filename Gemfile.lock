@@ -115,7 +115,7 @@ GEM
     kaminari-core (1.1.1)
     load_and_authorize_resource (0.4.1)
       rails (>= 4.0)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)

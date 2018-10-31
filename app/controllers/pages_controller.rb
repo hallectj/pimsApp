@@ -115,6 +115,14 @@ class PagesController < ApplicationController
     @patient = Patient.new
     @admittance = Admittance.new
   end
+  
+  def new_contact
+    @patient = Patient.find(params[:id])
+  end
+
+  def new_discharge
+    @patient = Patient.find(params[:id])
+  end
     
     #def new_schedule
         #@patient = Patient.new
@@ -133,13 +141,23 @@ class PagesController < ApplicationController
     #end
     
     def create_contact
-        @patient = Patient.find(params[:id])
-        @contact = @patient.build_contact(contact_params)
-        if @contact.save
-            render 'show'
-        else
-            render 'new_contact'
-        end
+      @patient = Patient.find(params[:id])
+      @contact = @patient.build_contact(contact_params)
+      if @contact.save
+        render 'show'
+      else
+        render 'new_contact'
+      end
+    end
+  
+    def create_discharge
+      @patient = Patient.find(params[:id])
+      @contact = @patient.build_discharge(discharge_params)
+      if @contact.save
+        render 'show'
+      else
+        render 'new_contact'
+      end
     end
   
     def new_prescription
