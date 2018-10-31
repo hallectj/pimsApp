@@ -48,7 +48,9 @@
         <%end%>
       <%end%>
       <% if @patient.discharge.nil?%>
-        <p>Add Discharge Info <%= link_to "Create Discharge", new_discharge_path(@patient)  %></p>
+        <% if current_user.office_role %>
+          <p>Add Discharge Info <%= link_to "Create Discharge", new_discharge_path(@patient)  %></p>
+        <% end %>
       <%end%>
     </div>
     <%end%>
@@ -69,8 +71,10 @@
       <%end%>
       <% end %>
       <% if current_user.office_role %>
-      <% if @patient.contact.nil?%>
-      <p>Add Contact Info <%= link_to "Create Contact", new_contact_path(@patient)  %></p>
+      <% if @patient.contact.nil?%> 
+        <% if current_user.office_role %>
+          <p>Add Contact Info <%= link_to "Create Contact", new_contact_path(@patient)  %></p>
+        <% end %>
       <%end%>
       <%end%>
     </div>
@@ -88,7 +92,9 @@
       <%end%>
       <%end%>
       <% if @patient.physician.nil?%>
-        <p>Add Physician Info <%= link_to "Create Physician", new_physician_path(@patient)  %></p>
+        <% if current_user.office_role %>
+          <p>Add Physician Info <%= link_to "Create Physician", new_physician_path(@patient)  %></p>
+        <% end %>
       <%end%>
     </div>
     <%end%>
@@ -108,7 +114,9 @@
       <%end%>
       <%end%>
       <% if @patient.location.nil?%>
-      <p>Add Location Info <%= link_to "Create Location", new_location_path(@patient)  %></p>
+        <% if current_user.office_role %>
+          <p>Add Location Info <%= link_to "Create Location", new_location_path(@patient)  %></p>
+        <% end %>
       <%end%>
     </div>
 
@@ -186,11 +194,13 @@
       <%-# Edit Insurance %>
       <%end%>
       <%end%>
-    <% if @patient.location.nil?%>
-    <p>Add Insurance Info <%= link_to "Create Insurance", new_insurance_path(@patient)  %></p>
-    <%end%>
-    </div>
-    <%end%>
+      <% if @patient.location.nil?%>
+        <% if current_user.office_role%>      
+          <p>Add Insurance Info <%= link_to "Create Insurance", new_insurance_path(@patient)  %></p>
+        <% end %>
+      <%end%>
+      </div>
+      <%end%>
 
     <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
     <div class = "boxes emergency">
@@ -207,8 +217,10 @@
         <p>Edit Emergency Contact Info <%= link_to "Edit", edit_emergency_contact_path(@patient, :pointer => "emergency_contact")  %></p>
         <%end%>
         <%end%>
-   <% if @patient.emergency_contact.nil?%>
-    <p>Add Emergency Contact Info <%= link_to "Create Emergency Contact", new_emergency_contact_path(@patient)  %></p>
+    <% if @patient.emergency_contact.nil?%>
+        <% if current_user.office_role %>
+          <p>Add Emergency Contact Info <%= link_to "Create Emergency Contact", new_emergency_contact_path(@patient)  %></p>
+        <% end %>
     <%end%>
 </div>
 <%end%>
