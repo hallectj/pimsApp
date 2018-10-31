@@ -97,6 +97,20 @@ class PagesController < ApplicationController
         @patient = Patient.find(params[:id])
     end
 
+    def new_treatment
+        @patient = Patient.find(params[:id])
+    end
+
+    def create_treatment
+        @patient = Patient.find(params[:id])
+        @treatment = @patient.build_treatment(treatment_params)
+        if @treatment.save
+            render 'show'
+        else
+            render 'new_treatment'
+        end
+    end  
+
     def create_emergency_contact
         @patient = Patient.find(params[:id])
         @emergency_contact = @patient.build_emergency_contact(emergency_contact_params)
@@ -109,6 +123,50 @@ class PagesController < ApplicationController
 
 
     def create_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.build_insurance(insurance_params)
+        if @insurance.save
+            render 'show'
+        else
+            render 'new_insurance'
+        end
+    end  
+
+    def create_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.build_location(location_params)
+        if @location.save
+            render 'show'
+        else
+            render 'new_location'
+        end
+    end  
+
+    def create_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.build_physician(physician_params)
+        if @physician.save
+            render 'show'
+        else
+            render 'new_physician'
+        end
+    end  
+
+    def create_discha
+    end
+
+    def create_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.build_emergency_contact(emergency_contact_params)
+        if @emergency_contact.save
+            render 'show'
+        else
+            render 'new_emergency_contact'
+        end
+    end  
+
+
+    def create_insuranceemergency_contact
         @patient = Patient.find(params[:id])
         @insurance = @patient.build_insurance(insurance_params)
         if @insurance.save
