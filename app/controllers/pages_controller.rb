@@ -25,14 +25,6 @@ class PagesController < ApplicationController
   
     def new
         @patient = Patient.new
-        @patient.build_treatment.schedules.build
-        @contact = @patient.build_contact
-        @physician = Physician.new
-        @emergency_contact = EmergencyContact.new
-        @contact = Contact.new({patient_id: @patient.id})
-        @location = Location.new
-        @admittance = Admittance.new
-        @insurance = Insurance.new
     end
   
     def create
@@ -89,13 +81,70 @@ class PagesController < ApplicationController
         @patient = Patient.find(params[:id])
     end
 
-    def create_discharge
+    def new_physician
         @patient = Patient.find(params[:id])
-        @contact = @patient.build_discharge(discharge_params)
-        if @contact.save
+    end
+
+    def new_location
+        @patient = Patient.find(params[:id])
+    end
+
+    def new_insurance
+        @patient = Patient.find(params[:id])
+    end
+
+    def new_emergency_contact
+        @patient = Patient.find(params[:id])
+    end
+
+    def create_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.build_emergency_contact(emergency_contact_params)
+        if @emergency_contact.save
             render 'show'
         else
-            render 'new_contact'
+            render 'new_emergency_contact'
+        end
+    end  
+
+
+    def create_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.build_insurance(insurance_params)
+        if @insurance.save
+            render 'show'
+        else
+            render 'new_insurance'
+        end
+    end  
+
+    def create_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.build_location(location_params)
+        if @location.save
+            render 'show'
+        else
+            render 'new_location'
+        end
+    end  
+
+    def create_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.build_physician(physician_params)
+        if @physician.save
+            render 'show'
+        else
+            render 'new_physician'
+        end
+    end  
+
+    def create_discharge
+        @patient = Patient.find(params[:id])
+        @discharge = @patient.build_discharge(discharge_params)
+        if @discharge.save
+            render 'show'
+        else
+            render 'new_discharge'
         end
     end  
         
@@ -105,7 +154,7 @@ class PagesController < ApplicationController
         if @schedule.save
             render 'show'
         else
-            render 'create_schedule'
+            render 'new_schedule'
         end
     end
 
@@ -191,7 +240,7 @@ class PagesController < ApplicationController
       if @admittance.update(admittance_params)
         render 'show'
       else
-         flash.now[:error] = "Cannot update your profile"
+         flash.now[:error] = "Cannot update your Admittance"
          render 'edit_admittance'
       end
     end
@@ -202,7 +251,7 @@ class PagesController < ApplicationController
           if @discharge.update(discharge_params)
             render 'show'
           else
-            flash.now[:error] = "Cannot update your profile"
+            flash.now[:error] = "Cannot update your Discharge"
             render 'edit_discharge'
           end
        end
