@@ -2,11 +2,7 @@ require 'date'
 require 'time'
 require 'bigdecimal'
 
-
-
-
 module HelperDisplay 
-
     def self.datetry(input)
         if (input.try(:date))
             return input.date
@@ -18,10 +14,10 @@ module HelperDisplay
 
     def self.timetry(input)
         if (input.try(:time))
-            return input.time.strftime("%H:%M:%S")
+            return input.time.to_s(:time) 
         else
             d = Time.new(01, 01, 01, 01)
-            return d.strftime("%H:%M:%S")
+            return d.strftime("%H:%M %p")
         end
     end
 

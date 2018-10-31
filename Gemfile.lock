@@ -33,6 +33,7 @@ GEM
       activemodel (= 5.1.6)
       activesupport (= 5.1.6)
       arel (~> 8.0)
+    activerecord-reset-pk-sequence (0.2.1)
     activesupport (5.1.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
@@ -41,9 +42,8 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
-    autoprefixer-rails (9.2.1)
+    autoprefixer-rails (9.3.1)
       execjs
-    bcrypt (3.1.12)
     bcrypt (3.1.12-x86-mingw32)
     bindex (0.5.0)
     bootstrap-datepicker-rails (1.8.0.1)
@@ -81,7 +81,6 @@ GEM
       warden (~> 1.2.3)
     erubi (1.7.1)
     execjs (2.7.0)
-    ffi (1.9.25)
     ffi (1.9.25-x86-mingw32)
     font-awesome-rails (4.7.0.4)
       railties (>= 3.2, < 6.0)
@@ -116,7 +115,7 @@ GEM
     kaminari-core (1.1.1)
     load_and_authorize_resource (0.4.1)
       rails (>= 4.0)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -130,13 +129,16 @@ GEM
     multi_json (1.13.1)
     nested_form (0.3.2)
     nio4r (2.3.1)
-    nokogiri (1.8.5)
-      mini_portile2 (~> 2.3.0)
     nokogiri (1.8.5-x86-mingw32)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
-    pg (0.21.0)
-    pg (0.21.0-x86-mingw32)
+    pdf-core (0.7.0)
+    pg (1.1.3-x86-mingw32)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
+    prawn-table (0.2.2)
+      prawn (>= 1.3.0, < 3.0.0)
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.5)
@@ -224,12 +226,13 @@ GEM
     tilt (2.0.8)
     toastr-rails (1.0.3)
       railties (>= 3.1.0)
+    ttfunk (1.5.1)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2018.6)
+    tzinfo-data (1.2018.7)
       tzinfo (>= 1.0.0)
     uglifier (4.1.19)
       execjs (>= 0.3.0, < 3)
@@ -249,10 +252,10 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
-  ruby
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-reset-pk-sequence
   bootstrap-datepicker-rails
   bootstrap-sass (~> 3.3, >= 3.3.7)
   byebug
@@ -267,6 +270,8 @@ DEPENDENCIES
   minitest
   momentjs-rails (>= 2.9.0)
   pg
+  prawn (~> 2.2, >= 2.2.2)
+  prawn-table (~> 0.2.2)
   puma (~> 3.7)
   rails (~> 5.1.6)
   rails-observers
@@ -284,4 +289,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.2
+   1.16.0
