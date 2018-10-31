@@ -1,11 +1,10 @@
-<h2>New Discharge Information</h2>
-<%= simple_form_for @patient.build_emergency_contact, url: new_emergency_contact_path do |f| %>
-  Contact Information:
-  <ul>
-        <%= f.input :e1_name %>
-        <%= f.input :e1_phone %>
-        <%= f.input :e2_name %>
-        <%= f.input :e2_phone %>
-        <%= f.submit :submit %>
-  </ul>
-<% end %>
+
+<div class="container">
+  <%= simple_form_for @patient.build_emergency_contact, url: new_emergency_contact_path do |f| %>
+    <%= f.input :e1_name %>
+    <%= f.input :e1_phone %>
+    <%= f.input :e2_name %>
+    <%= f.input :e2_phone %>
+    <%= f.submit :submit %>
+  <% end %>
+</div>
