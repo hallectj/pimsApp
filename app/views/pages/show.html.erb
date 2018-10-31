@@ -84,7 +84,7 @@
       <p class = "physician_num"> Primary Care Number: <%= HelperDisplay.fp_phonetry(@patient.physician) %> </p>
 
       <% if current_user.office_role %>
-      <p>Edit Physician Info <%#= link_to "Edit", edit_physician_path(@patient, :pointer => "physician")  %></p>
+      <p>Edit Physician Info <%= link_to "Edit", edit_physician_path(@patient, :pointer => "physician")  %></p>
       <%end%>
       <%end%>
       <% if @patient.physician.nil?%>
@@ -104,7 +104,7 @@
       <p class = "vapprove_para"> Approved Visitors: <%= HelperDisplay.vapprovedtry(@patient.location) %> </p>
 
       <% if current_user.office_role %>
-      <p>Edit Location Info <%#= link_to "Edit", edit_location_path(@patient, :pointer => "location")  %></p>
+      <p>Edit Location Info <%= link_to "Edit", edit_location_path(@patient, :pointer => "location")  %></p>
       <%end%>
       <%end%>
       <% if @patient.location.nil?%>
