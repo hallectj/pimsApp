@@ -1,17 +1,158 @@
 class PagesController < ApplicationController
-  #load_and_authorize_resource :class => PagesController
-  #before_action :look_patients, only: [:show, :edit, :update, :destroy]
-  include Devise::Controllers::Helpers
-  helper_method :current_user
+    #load_and_authorize_resource :class => PagesController
+    #before_action :look_patients, only: [:show, :edit, :update, :destroy]
+  
+    layout 'pagesPatientResults', only: [:pagesPatientResults]
+  
+    before_action :isAdmin?
+    before_action :determineRollCustomAction, only: [:index]  
+  
+    #let's me know what view I'm in so I can update only
+    #those fields
+    before_action :getPointerParam
+  
+    before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
+    before_action :look_physicians, only: [:show, :edit, :update, :destroy]
+    before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
+    before_action :look_contacts, only: [:show, :edit, :update, :destroy]
+    before_action :look_locations, only: [:show, :edit, :update, :destroy]
+    before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
+    before_action :look_insurances, only: [:show, :edit, :update, :destroy]
+    
+    def index
+    end
+  
+    def new
+        @patient = Patient.new
+    end
+  
+    def create
+        @patient = Patient.new(patient_params) 
+      
+        if @patient.save
+          render 'show'
+        else
+          render 'new_patient'
+        end
+      
+        @physician = Physician.new(physician_params)
+        @emergency_contact = EmergencyContact.new(emergency_contact_params)
+        @contact = @patient.build_contact(contact_params)
+        @location = Location.new(location_params)
+        @admittance = Admittance.new(admittance_params)
+        @insurance = Insurance.new(insurance_params)
+        @treatment = Treatment.new(treatment_params)
+        @schedule = @treatment.schedules.build
+        @prescription = @treatment.prescriptions.build
+        @n_note = @treatment.n_notes.build
+        @dr_note = @treatment.dr_notes.build
+    end
+    
+    def show
+        @patient = Patient.find(params[:id])
+        @admittance = Admittance.find_by(patient_id: params[:patient_id]) 
+    end
+  
+    def edit
+        @patient = Patient.find(params[:id])
+    end
+  
+    def destroy
+    end
+  
+    #my custom restfuls
+    ########   PATIENT CUSTOM ACTIONS  ###########################
+    def new_patient
+      @patient = Patient.new
+      @admittance = Admittance.new
+    end
+      
+    def new_schedule
+        @patient = Patient.new
+        @patient.build_treatment.schedules.build
+    end
 
   layout 'pagesPatientResults', only: [:pagesPatientResults]
 
   before_action :isAdmin?
   before_action :determineRollCustomAction, only: [:index]  
 
-  #let's me know what view I'm in so I can update only
-  #those fields
-  before_action :getPointerParam
+    def new_physician
+        @patient = Patient.find(params[:id])
+    end
+
+    def new_location
+        @patient = Patient.find(params[:id])
+    end
+
+    def new_insurance
+        @patient = Patient.find(params[:id])
+    end
+
+    def new_emergency_contact
+        @patient = Patient.find(params[:id])
+    end
+
+    def create_emergency_contact
+        @patient = Patient.find(params[:id])
+        @emergency_contact = @patient.build_emergency_contact(emergency_contact_params)
+        if @emergency_contact.save
+            render 'show'
+        else
+            render 'new_emergency_contact'
+        end
+    end  
+
+
+    def create_insurance
+        @patient = Patient.find(params[:id])
+        @insurance = @patient.build_insurance(insurance_params)
+        if @insurance.save
+            render 'show'
+        else
+            render 'new_insurance'
+        end
+    end  
+
+    def create_location
+        @patient = Patient.find(params[:id])
+        @location = @patient.build_location(location_params)
+        if @location.save
+            render 'show'
+        else
+            render 'new_location'
+        end
+    end  
+
+    def create_physician
+        @patient = Patient.find(params[:id])
+        @physician = @patient.build_physician(physician_params)
+        if @physician.save
+            render 'show'
+        else
+            render 'new_physician'
+        end
+    end  
+
+    def create_discharge
+        @patient = Patient.find(params[:id])
+        @discharge = @patient.build_discharge(discharge_params)
+        if @discharge.save
+            render 'show'
+        else
+            render 'new_discharge'
+        end
+    end  
+        
+    def create_schedule
+        @patient = Patient.find(params[:id])
+        @schedule = @patient.treatment.schedules.create(schedule_params)
+        if @schedule.save
+            render 'show'
+        else
+            render 'new_schedule'
+        end
+    end
 
   before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
   before_action :look_physicians, only: [:show, :edit, :update, :destroy]

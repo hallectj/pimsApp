@@ -12,7 +12,6 @@ patientList = [
   ["Bradford", "Brandi", "Sue", "1989-05-17"],
   ["Aikers", "Mary", "Louis", "1982-03-29"]
 ]
-
 userList = [
   {email: "doctor@example.com", password: "password", password_confirmation: "password", doctor_role: true},
   {email: "office@example.com", password: "password", password_confirmation: "password", office_role: true},
