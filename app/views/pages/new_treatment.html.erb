@@ -1,0 +1,8 @@
+<h2>New Treatment Information</h2>
+<%= simple_form_for @patient.build_treatment, url: new_treatment_path do |f| %>
+  Treatment Information:
+  <ul>
+        <%= f.input :name %>
+        <%= f.submit :submit %>
+  </ul>
+<% end %>

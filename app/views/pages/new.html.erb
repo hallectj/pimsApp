@@ -1,2 +1,10 @@
 <h1>New Patient</h1>
-<%= render 'patientForm'%>
+<%= simple_form_for @patient, url: {action: "create"} do |f| %>
+<%= f.input :last_name, label: "Last Name" %>
+<%= f.input :first_name, label: "First Name" %>
+<%= f.input :middle_name, label: "Middle Name" %>
+<%= f.input :birthday, label: "Birthday" %>
+<%= f.submit :submit %>
+<% end %>
+
+

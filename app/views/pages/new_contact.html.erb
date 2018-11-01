@@ -1,0 +1,20 @@
+<h2>New Contact Information</h2>
+<%= simple_form_for @patient.build_contact, url: new_contact_path do |f| %>
+  Contact Information:
+  <ul>
+        <%= f.label :home_phone %>
+        <%= f.text_field :home_phone %>
+        <%= f.label :work_phone %>
+        <%= f.text_field :work_phone %>
+        <%= f.label :mobile_phone %>
+        <%= f.text_field :mobile_phone %>
+        <%= f.label :street %>
+        <%= f.text_field :street %>
+        <%= f.label :state %>
+        <%= f.text_field :state %>
+        <%= f.label :zip %>
+        <%= f.text_field :zip %>
+        <%= f.submit :submit %>
+  </ul>
+<% end %>
+

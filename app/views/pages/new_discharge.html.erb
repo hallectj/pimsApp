@@ -1,0 +1,10 @@
+<h2>New Discharge Information</h2>
+<%= simple_form_for @patient.build_discharge, url: new_discharge_path do |f| %>
+  Contact Information:
+  <ul>
+        <%= f.input :date %>
+        <%= f.input :time %>
+        <%= f.submit :submit %>
+  </ul>
+<% end %>
+

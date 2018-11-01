@@ -12,18 +12,16 @@ patientList = [
   ["Bradford", "Brandi", "Sue", "1989-05-17"],
   ["Aikers", "Mary", "Louis", "1982-03-29"]
 ]
-
 userList = [
   {email: "doctor@example.com", password: "password", password_confirmation: "password", doctor_role: true},
   {email: "office@example.com", password: "password", password_confirmation: "password", office_role: true},
   {email: "volunteer@example.com", password: "password", password_confirmation: "password", volunteer_role: true},
   {email: "medical@example.com", password: "password", password_confirmation: "password", medical_role: true}
 ]
+patientList.each do |last, first, middle, birth|
+  Patient.create(last_name: last, first_name: first, middle_name: middle, birthday: birth)
+end
 
 userList.each do |user|
   User.create user
-end
-
-patientList.each do |last, first, middle, birth|
-  Patient.create(last_name: last, first_name: first, middle_name: middle, birthday: birth)
 end
