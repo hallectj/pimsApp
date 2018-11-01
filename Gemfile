@@ -32,9 +32,13 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap-datepicker-rails'
 gem 'whenever'
 
+#to print reports
+gem 'prawn', '~> 2.2', '>= 2.2.2'
+gem 'prawn-table', '~> 0.2.2'
 
 #to make console pretty for development purposes and readibility
 gem 'hirb', '~> 0.7.3'
+gem 'activerecord-reset-pk-sequence'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

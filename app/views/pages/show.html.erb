@@ -210,7 +210,7 @@
               <%end%>
           <%end%>
 
-            <% if @patient.location.nil? && current_user.office_role%>
+            <% if @patient.insurance.nil?%>
               <p>Add Insurance Info <%= link_to "Create Insurance", new_insurance_path(@patient)  %></p>
             <%end%>
       </div>

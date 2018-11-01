@@ -17,7 +17,7 @@ class Patient < ApplicationRecord
     accepts_nested_attributes_for :insurance, update_only: true
     accepts_nested_attributes_for :discharge, update_only: true
     accepts_nested_attributes_for :treatment, update_only: true
-    
+  
     def build_a_admittance
        if admittance
            admittance

@@ -18,6 +18,9 @@ userList = [
   {email: "volunteer@example.com", password: "password", password_confirmation: "password", volunteer_role: true},
   {email: "medical@example.com", password: "password", password_confirmation: "password", medical_role: true}
 ]
+
+superUser = User.create(email: "admin@example.com", password: "password", password_confirmation: "password", superadmin_role: true)
+
 patientList.each do |last, first, middle, birth|
   Patient.create(last_name: last, first_name: first, middle_name: middle, birthday: birth)
 end
