@@ -1,14 +1,7 @@
 <h2>Create a Doctor's Note:</h2>
-<%= form_with(model: [@patient, @patient.build_treatment.dr_notes.build], url: create_dr_note_path, local: true) do |form| %>
-  <p>
-    <%= form.label :Name %><br>         
-    <%= form.text_field :name %>        
-  </p>
-    <p>
-        <%= form.label :Message %><br>         
-        <%= form.text_area :message %>        
-    </p>
-  <p>
-    <%= form.submit %>
-  </p>
+<%= simple_form_for @patient.treatment.dr_notes.build, url: new_dr_note_path do |f| %>
+    <%= f.input :name %>
+    <%= f.input :message %>
+    <%= f.submit :submit %>
 <% end %>
+

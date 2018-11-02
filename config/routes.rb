@@ -80,10 +80,9 @@ Rails.application.routes.draw do
     get '/pages/:id/treatment/:id/create/create_prescription', to: 'pages#create_prescription'
     match "/pages/:id/treatment/:id/create/create_prescription" => "pages#create_prescription", :via => :post, :as => :create_prescription
     
-    get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :new_dr_note
-    get '/pages/:id/treatment/:id/create/create_dr_note', to: 'pages#create_dr_note'
-    match "/pages/:id/treatment/:id/create/create_dr_note" => "pages#create_dr_note", :via => :post, :as => :create_dr_note
+    get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :create_dr_note
+    match "/pages/:id//treatment/:id/new_dr_note" => "pages#create_dr_note", as: :new_dr_note, :via => [:patch, :post]
     
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
-  #get '*path' => 'error_routes#routing'
+    get '*path' => 'error_routes#routing'
 end

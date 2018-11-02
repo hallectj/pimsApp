@@ -199,17 +199,17 @@ class PagesController < ApplicationController
 
 
   def new_dr_note
-      @patient = Patient.new
-      @patient.build_treatment.dr_notes.build
+    @patient = Patient.find(params[:id])
   end
 
   def create_dr_note
       @patient = Patient.find(params[:id])
-      @schedule = @patient.treatment.dr_notes.create(note_params)
-      if @schedule.save
+      @treatment = @patient.treatment
+      @notes = @treatment.dr_notes.build(dr_note_params)
+      if @notes.save
           render 'show'
       else
-          render 'create_schedule'
+          render 'new_dr_note'
       end
   end
 
