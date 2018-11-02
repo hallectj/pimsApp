@@ -46,24 +46,22 @@
 		<div class="info_boxes" id="info_box3">			
 			<div class="form-group search_button_div">
         <% if !current_user.superadmin_role? %>
-        <p> Search All Patients</p><br>
-        <%= link_to "Find Patients", {controller: "pages", action: "index"}, class: "btn btn-small btn-success" %>
+          <p> Search All Patients</p><br>
+          <%= link_to "Find Patients", {controller: "pages", action: "index"}, class: "btn btn-small btn-success" %>
         <% end %>
+                
         <% if accessVar == "office"%>
-        <div class="office_worker_message">
-          <p>If you need to add a new patient instead, click the link below</p>
-          <div class="form-group">
-            <!-- delete the immediate line below once decided on what approach to take -->
-            <a class="" href="#">Go to Add Patient Page</a>
+          <div class="office_worker_message">
+            <p>If you need to add a new patient instead, click the link below</p>
+            <div class="form-group">
+              <%= link_to "Add New Patient", new_page_path %>
+            </div>
           </div>
-        </div>
         <% end %>
+        <div class="welcome_box">
+          <p> <%= current_user.email %> </p>
+          <p>Access Rights: <span id="access_rights"> <%= accessVar %> </span></p>
+        </div>             
 			</div>
-    </div>
-
-		<div class="welcome_box">
-      <p> <%= current_user.email %> </p>
-      <p>Access Rights: <span id="access_rights"> <%= accessVar %> </span></p>
-    </div>
-  </div>
-</div>
+		</div>
+	</div>

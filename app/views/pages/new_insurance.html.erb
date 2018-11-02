@@ -1,0 +1,11 @@
+<h2>New Insurance Information</h2>
+<%= simple_form_for @patient.build_insurance, url: new_insurance_path do |f| %>
+  Insurance Information:
+  <ul>
+        <%= f.input :policy_num %>
+        <%= f.input :policy_name %>
+        <%= f.input :group_num %>           
+        <%= f.submit :submit %>
+  </ul>
+<% end %>
+

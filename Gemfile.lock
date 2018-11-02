@@ -33,6 +33,7 @@ GEM
       activemodel (= 5.1.6)
       activesupport (= 5.1.6)
       arel (~> 8.0)
+    activerecord-reset-pk-sequence (0.2.1)
     activesupport (5.1.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
@@ -41,7 +42,7 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
-    autoprefixer-rails (9.2.1)
+    autoprefixer-rails (9.3.1)
       execjs
     bcrypt (3.1.12)
     bcrypt (3.1.12-x86-mingw32)
@@ -116,7 +117,7 @@ GEM
     kaminari-core (1.1.1)
     load_and_authorize_resource (0.4.1)
       rails (>= 4.0)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -135,7 +136,14 @@ GEM
     nokogiri (1.8.5-x86-mingw32)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
-    pg (0.21.0-x86-mingw32)
+    pdf-core (0.7.0)
+    pg (1.1.3)
+    pg (1.1.3-x86-mingw32)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
+    prawn-table (0.2.2)
+      prawn (>= 1.3.0, < 3.0.0)
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.5)
@@ -223,12 +231,13 @@ GEM
     tilt (2.0.8)
     toastr-rails (1.0.3)
       railties (>= 3.1.0)
+    ttfunk (1.5.1)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2018.6)
+    tzinfo-data (1.2018.7)
       tzinfo (>= 1.0.0)
     uglifier (4.1.19)
       execjs (>= 0.3.0, < 3)
@@ -252,6 +261,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-reset-pk-sequence
   bootstrap-datepicker-rails
   bootstrap-sass (~> 3.3, >= 3.3.7)
   byebug
@@ -263,8 +273,11 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3, >= 4.3.3)
   load_and_authorize_resource
+  minitest
   momentjs-rails (>= 2.9.0)
   pg
+  prawn (~> 2.2, >= 2.2.2)
+  prawn-table (~> 0.2.2)
   puma (~> 3.7)
   rails (~> 5.1.6)
   rails-observers

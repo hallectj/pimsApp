@@ -1,0 +1,10 @@
+<h2>New Physician Information</h2>
+
+<div class="container">
+  <%= simple_form_for @patient.build_physician, url: new_physician_path do |f| %>
+    <%= f.input :family_physician %>
+    <%= f.input :physician_phone %>
+    <%= f.submit :submit %>
+  <% end %>
+</div>
+
