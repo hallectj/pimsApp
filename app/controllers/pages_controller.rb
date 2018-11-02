@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   #before_action :look_patients, only: [:show, :edit, :update, :destroy]
 
 
-  layout 'pagesPatientResults', only: [:pagesPatientResults]
+  #layout 'pagesPatientResults', only: [:pagesPatientResults]
 
   before_action :isAdmin?
   before_action :determineRollCustomAction, only: [:index]  
