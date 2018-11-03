@@ -67,6 +67,9 @@ Rails.application.routes.draw do
     get '/patient/:id/new_discharge', to: 'pages#new_discharge', as: :create_discharge
     match "/patient/:id/new_discharge" => "pages#create_discharge", as: :new_discharge, :via => [:patch, :post]
 
+    get '/patient/:id/new_treatment', to: 'pages#new_treatment', as: :create_treatment
+    match "/patient/:id/new_treatment" => "pages#create_treatment", as: :new_treatment, :via => [:patch, :post]
+
     
     
     get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :new_schedule
