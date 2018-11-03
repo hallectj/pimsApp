@@ -8,7 +8,7 @@ class PatientShowDoctorPdf < Prawn::Document
   end
   
   def patient_name
-    text "Patient name: #{@patient.last_name}", size: 20, style: :bold
+    text "Patient name: #{@patient.last_name}, #{@patient.first_name}", size: 20, style: :bold
   end
   
   def general_data
@@ -18,6 +18,8 @@ class PatientShowDoctorPdf < Prawn::Document
     table emergency_contact_data_rows
     table phone_data_rows
     table location_data_rows
+    table admittance_rows
+    table discharge_rows
   end
   
   def general_data_rows
@@ -66,5 +68,24 @@ class PatientShowDoctorPdf < Prawn::Document
     text "Location Information on Patient", size: 16, style: :bold 
     [["facility", "room number", "bed number", "approved visitors"]] + 
     [[HelperDisplay.facilitytry(@patient.location), HelperDisplay.roomtry(@patient.location), HelperDisplay.bedtry(@patient.location), HelperDisplay.vlimittry(@patient.location)]]
+  end
+
+  def admittance_rows
+    move_down 20
+    text "Admittance Information on Patient", size: 16, style: :bold 
+    [["date", "time", "reason"]] + 
+    [[HelperDisplay.datetry(@patient.admittance), HelperDisplay.timetry(@patient.admittance), HelperDisplay.reasontry(@patient.admittance)]]
+  end
+
+  def discharge_rows
+    move_down 20
+    text "Discharge Information on Patient", size: 16, style: :bold
+    [["date", "time"]] + 
+    [[HelperDisplay.datetry(@patient.discharge), HelperDisplay.timetry(@patient.discharge)]]
+  end
+
+  def detailed_report
+    #treatment
+    #schedule, prescriptions, Dr note will go here
   end
 end

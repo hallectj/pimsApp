@@ -80,6 +80,12 @@ class PagesController < ApplicationController
   def destroy
   end
 
+  #delete everything associated with patient including patient him or herself.
+  def reset
+    Rails.application.eager_load!
+    ActiveRecord::Base.descendants.each { |c| c.delete_all unless c == ActiveRecord::SchemaMigration  }
+  end
+
   #my custom restfuls
   ########   PATIENT CUSTOM ACTIONS  ###########################
   def new_patient
