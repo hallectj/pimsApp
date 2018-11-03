@@ -95,21 +95,6 @@
       </div>
       <%end%>
 
-        
-      <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
-      <div class = "boxes phy">
-        <div class="show-card">
-          <h2>Physician</h2>
-          <p class = "physician"> Primary Care Physician: <%= HelperDisplay.fphysiciantry(@patient.physician) %> </p>
-          <p class = "physician_num"> Primary Care Number: <%= HelperDisplay.fp_phonetry(@patient.physician) %> </p>
-
-          <% if current_user.office_role %>
-          <p>Edit Physician Info <%= link_to "Edit", edit_physician_path(@patient, :pointer => "physician")  %></p>
-          <%end%>
-        </div>
-      </div>
-      <%end%>
-
       <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
         <div class = "boxes phy">
           <div class="show-card">
@@ -188,7 +173,7 @@
 
         <% if !(@patient.treatment.nil?)%>
           <div class="show-card">
-          <b>Schedule</b>
+            <b>Schedule</b>
             <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules") %></p>
             <% @patient.treatment.schedules.each do |s| %>
               <p class = "date"> Date: <%= HelperDisplay.schedule_datetry(s) %> </p>
@@ -275,6 +260,11 @@
               <% if current_user.office_role %>
                 <p>Edit Emergency Contact Info <%= link_to "Edit", edit_emergency_contact_path(@patient, :pointer => "emergency_contact")  %></p>
               <%end%>
+
+              <% if @patient.emergency_contact.nil? && current_user.office_role%>
+                <p>Add Emergency Contact Info <%= link_to "Create Emergency Contact", new_emergency_contact_path(@patient)  %></p>
+              <%end%>
+              
             <%end%>
           </div>
         </div>
