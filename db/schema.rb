@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20180927174146) do
     t.string "bed"
     t.integer "visitor_limit"
     t.text "approved_visitors"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_locations_on_patient_id"
