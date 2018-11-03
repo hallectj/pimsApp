@@ -122,6 +122,10 @@ class PagesController < ApplicationController
       @patient = Patient.find(params[:id])
   end
 
+  def new_treatment
+    @patient = Patient.find(params[:id])
+  end
+
   def create_emergency_contact
       @patient = Patient.find(params[:id])
       @emergency_contact = @patient.build_emergency_contact(emergency_contact_params)
@@ -193,6 +197,15 @@ class PagesController < ApplicationController
       end
   end        
 
+  def create_treatment
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.build_treatment(treatment_params)
+    if @treatment.save
+        render 'show'
+    else
+        render 'new_treatment'
+    end
+  end 
 
   def new_dr_note
       @patient = Patient.new
@@ -418,9 +431,9 @@ private
       end
   end
 
-  def new_contact_params
-      params.permit(:patient_id, :home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
-  end
+  #def new_contact_params
+      #params.permit(:patient_id, :home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
+  #end
 
   def look_locations
       @location = Location.find_by(patient_id: params[:patient_id])

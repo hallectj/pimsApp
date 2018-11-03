@@ -49,26 +49,26 @@ Rails.application.routes.draw do
 
     #Adding new records
   
-    get '/patient/:id/new_physician', to: 'pages#new_physician', as: :create_physician
-    match "/patient/:id/new_physician" => "pages#create_physician", as: :new_physician, :via => [:patch, :post]
+    get '/pages/:id/new_physician', to: 'pages#new_physician', as: :create_physician
+    match "/pages/:id/new_physician" => "pages#create_physician", as: :new_physician, :via => [:patch, :post]
 
-    get '/patient/:id/new_location', to: 'pages#new_location', as: :create_location
-    match "/patient/:id/new_location" => "pages#create_location", as: :new_location, :via => [:patch, :post]
+    get '/pages/:id/new_location', to: 'pages#new_location', as: :create_location
+    match "/pages/:id/new_location" => "pages#create_location", as: :new_location, :via => [:patch, :post]
 
-    get '/patient/:id/new_insurance', to: 'pages#new_insurance', as: :create_insurance
-    match "/patient/:id/new_insurance" => "pages#create_insurance", as: :new_insurance, :via => [:patch, :post]
+    get '/pages/:id/new_insurance', to: 'pages#new_insurance', as: :create_insurance
+    match "/pages/:id/new_insurance" => "pages#create_insurance", as: :new_insurance, :via => [:patch, :post]
 
-    get '/patient/:id/new_emergency_contact', to: 'pages#new_emergency_contact', as: :create_emergency_contact
-    match "/patient/:id/new_emergency_contact" => "pages#create_emergency_contact", as: :new_emergency_contact, :via => [:patch, :post]
+    get '/pages/:id/new_emergency_contact', to: 'pages#new_emergency_contact', as: :create_emergency_contact
+    match "/pages/:id/new_emergency_contact" => "pages#create_emergency_contact", as: :new_emergency_contact, :via => [:patch, :post]
 
-    get '/patient/:id/new_contact', to: 'pages#new_contact', as: :create_contact
-    match "/patient/:id/new_contact" => "pages#create_contact", as: :new_contact, :via => [:patch, :post]
+    get '/pages/:id/new_contact', to: 'pages#new_contact', as: :create_contact
+    match "/pages/:id/new_contact" => "pages#create_contact", as: :new_contact, :via => [:patch, :post]
 
-    get '/patient/:id/new_discharge', to: 'pages#new_discharge', as: :create_discharge
-    match "/patient/:id/new_discharge" => "pages#create_discharge", as: :new_discharge, :via => [:patch, :post]
+    get '/pages/:id/new_discharge', to: 'pages#new_discharge', as: :create_discharge
+    match "/pages/:id/new_discharge" => "pages#create_discharge", as: :new_discharge, :via => [:patch, :post]
 
-    get '/patient/:id/new_treatment', to: 'pages#new_treatment', as: :create_treatment
-    match "/patient/:id/new_treatment" => "pages#create_treatment", as: :new_treatment, :via => [:patch, :post]
+    get '/pages/:id/new_treatment', to: 'pages#new_treatment', as: :create_treatment
+    match "/pages/:id/new_treatment" => "pages#create_treatment", as: :new_treatment, :via => [:patch, :post]
 
     
     get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :new_schedule

@@ -1,6 +1,6 @@
 <div class="container">
   <h2>New Treatment Information</h2>
-  <%= simple_form_for @patient.build_treatment, url: new_treatment_path do |f| %>
+  <%= simple_form_for @patient.build_treatment, url: create_treatment_path, controller: 'pages', action: 'create_treatment' do |f| %>
     <%= f.input :name %>
     <%= f.submit :submit %>
   <% end %>
