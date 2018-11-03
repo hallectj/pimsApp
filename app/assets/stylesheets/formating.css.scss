@@ -1,0 +1,19 @@
+:root {
+    --find-background-color: rgba(109, 115, 118, 0.93);
+    --light-green: #d5e590;
+    --dark-green: #374209;
+    --light-green-card: rgb(213, 229, 144, 0.2);
+    --scrubs-background: rgba(69, 172, 139, 0.3);
+}
+
+.header {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.divLine {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background-image: linear-gradient(to right, transparent, black, transparent);
+}

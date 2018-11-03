@@ -1,0 +1,38 @@
+.boxes {
+	margin: 20px;
+	padding: 5px;
+	background-color: rgba(69, 124, 57, 0.30);
+	position: relative;
+}
+
+.boxes::after{
+	content: "";
+	opacity: 0.2;
+}
+
+#patient_wrapper{
+	
+}
+
+.patient_background{
+	position: relative;
+}
+
+.patient_background::after {
+	content: "";
+    background-image: url("../assets/stethoscope.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	z-index: -1;
+	position: fixed;
+	opacity: 0.1;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.show-card{
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
