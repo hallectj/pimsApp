@@ -12,13 +12,14 @@ class PagesController < ApplicationController
   #those fields
   before_action :getPointerParam
 
-  before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
+  before_action :look_patients, only: [:show, :destroy, :update_patient, :edit_patient]
   before_action :look_physicians, only: [:show, :edit, :update, :destroy]
   before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
   before_action :look_contacts, only: [:show, :edit, :update, :destroy]
   before_action :look_locations, only: [:show, :edit, :update, :destroy]
   before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
   before_action :look_insurances, only: [:show, :edit, :update, :destroy]
+  before_action :look_treatments, only: [:show, :edit_treatment, :update_treatment, :destroy]
   
   def index
   end
@@ -236,6 +237,11 @@ class PagesController < ApplicationController
     @patient = Patient.find(params[:id]) 
     @discharge = @patient.update_discharge if @patient.discharge.nil?
   end
+
+  def edit_treatment
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.update_treatment if @patient.treatment.nil?
+  end
     
   def edit_contact
       @patient = Patient.find(params[:id])
@@ -302,6 +308,17 @@ class PagesController < ApplicationController
         else
             flash.now[:error] = "Cannot update Contact Information"
             render 'edit_contact'
+        end
+    end
+
+    def update_treatment
+        @patient = Patient.find(params[:id])
+        @treatment = @patient.treatment
+        if @treatment.update(treatment_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Treatment Information"
+            render 'edit_treatment'
         end
     end
     
@@ -388,6 +405,10 @@ private
   def look_patients
     @patient = Patient.find(params[:id])
   end  
+
+  def look_treatments
+    @treatment = Treatment.find_by(patient_id: params[:patient_id])
+  end
 
   def patient_params
     params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :birthday, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])

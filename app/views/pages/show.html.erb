@@ -153,6 +153,7 @@
                     <p class="treat_para"> Treatment:<%= HelperDisplay.treatmenttry(@patient.treatment) %></p>
                     <% if current_user.doctor_role %>
                       <%-# Edit treatment %>
+                      <p><%= link_to "Edit Treatment", edit_treatment_path(@patient, :pointer => "treatment") %></p>
                     <%end%>
                   <%end%>
                 </div>
