@@ -1,9 +1,17 @@
+.div_parent_divider{
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+}
+
 .boxes {
+	flex: 1;
 	margin: 20px;
 	padding: 5px;
 	background-color: rgba(69, 124, 57, 0.30);
 	position: relative;
 	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	width: 33%;
 }
 
 .patient_background{
@@ -34,4 +42,17 @@
 
 #pdfDivWrapper{
 	margin-bottom: 40px;
+}
+
+
+@media only screen and (max-width: 800px) {
+	.div_parent_divider{
+		display: block;
+	}
+
+    .boxes {
+		margin: 20px auto;
+		width: 90%;
+        flex: none;
+    }
 }
