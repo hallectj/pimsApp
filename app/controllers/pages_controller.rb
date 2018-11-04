@@ -272,20 +272,19 @@ class PagesController < ApplicationController
   def edit_schedule
     @patient = Patient.find(params[:id])
     #@treatment = Treatment.find(params[:id])
-    #@schedule = @patient.treatment.schedules.first
+    @schedule = @patient.treatment.schedules.first
     
     
-    @schedule = @treatment.schedules.build if @patient.treatment.schedules.nil?
-    #@schedule = 
+    #@schedule = @treatment.schedules.build if @patient.treatment.schedules.nil?
     #@schedule = @patient.treatment.update_schedule if @patient.treatment.schedule.nil?
   end
 
   def update_schedule
-    #@patient = Patient.find(params[:id])
+    @patient = Patient.find(params[:id])
     @treatment = Treatment.find(params[:id])
     #@schedule = Schedule.find(params[:treatment_id])
-    @schedule = @treatment.schedule
-    #@schedule = @patient.treatment.schedules
+    #@schedule = @treatment.schedule
+    @schedule = @treatment.schedules
 
     if @schedule.update(schedule_params)
         render 'show'

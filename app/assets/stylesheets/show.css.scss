@@ -58,6 +58,8 @@
 	border: 1px solid #ccc;
 	border-top: none;
 	background: #fff;
+	max-height:350px;
+	overflow-y:scroll;
 }
 
 .tabs {
