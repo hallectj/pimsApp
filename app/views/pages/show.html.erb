@@ -149,53 +149,84 @@
               <div class="boxes treatment">
                 <div class="show-card">
                   <h2>Treatment</h2>
-                  <% if !(@patient.treatment.nil?)%>
+                  <% if !(@patient.treatment.nil? or @patient.treatment == " ")%>
                     <p class="treat_para"> Treatment:<%= HelperDisplay.treatmenttry(@patient.treatment) %></p>
                     <% if current_user.doctor_role %>
-                      <%-# Edit treatment %>
                       <p><%= link_to "Edit Treatment", edit_treatment_path(@patient, :pointer => "treatment") %></p>
                     <%end%>
                   <%end%>
                 </div>
 
-                <% if !(@patient.treatment.nil?)%>
-                  <div class="inner-card">
-                    <b>Prescriptions</b>
-                    <% if current_user.doctor_role %>
-                      <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions"), class: "btn btn-small btn-default" %></p>
-                    <%end%>
-                    <% @patient.treatment.prescriptions.each do |p| %>
-                      <p class="name"> Name:<%= HelperDisplay.pres_nametry(p) %></p>
-                      <p class="amount"> Amount:<%= HelperDisplay.pres_amounttry(p) %></p>
-                      <p class="schedule"> Schedule:<%= HelperDisplay.pres_scheduletry(p) %></p>
-                      <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
-                        <p class="divider"> ------------------- </p>
+
+                <!-- tab feature code -->
+                <ul class="tabs" id="tab-ul">
+                  <li class="clickedTabs" data-name="tab1"><a href="#tab1">Prescriptions</a></li>
+                  <li class="clickedTabs" data-name="tab2"><a href="#tab2">Schedule</a></li>
+                  <li class="clickedTabs" data-name="tab3"><a href="#tab3">Doctor Notes</a></li>
+                </ul>
+
+                <div class="tab_container">
+                  <div id="tab1" class="tab_content">
+                  
+                  
+                  
+                    <% if !(@patient.treatment.nil?)%>
+                      <div class="inner-card">
+                        <b>Prescriptions</b>
                         <% if current_user.doctor_role %>
-                          <%-# Edit prescriptions %>
+                          <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions"), class: "btn btn-small btn-default" %></p>
                         <%end%>
-                      <%end%>
-                    <%end%>
+                        <% @patient.treatment.prescriptions.each do |p| %>
+                          <p class="name"> Name:<%= HelperDisplay.pres_nametry(p) %></p>
+                          <p class="amount"> Amount:<%= HelperDisplay.pres_amounttry(p) %></p>
+                          <p class="schedule"> Schedule:<%= HelperDisplay.pres_scheduletry(p) %></p>
+                          <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
+                            <p class="divider"> ------------------- </p>
+                            <% if current_user.doctor_role %>
+                              <%-# Edit prescriptions %>
+                            <%end%>
+                          <%end%>
+                        <%end%>
+                      </div>
+                    <%end%>                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
                   </div>
-                <%end%>
 
-                <% if !(@patient.treatment.nil?)%>
-                  <div class="inner-card">
-                    <b>Schedule</b>
-                    <% if current_user.doctor_role %>
-                      <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules"), class: "btn btn-small btn-default" %></p>
-                    <%end%>
-                    <% @patient.treatment.schedules.each do |s| %>
-                      <p class="date"> Date:<%= HelperDisplay.schedule_datetry(s) %></p>
-                      <p class="time"> Time:<%= HelperDisplay.schedule_timetry(s) %></p>
-                      <p class="schedule_msg"> Schedule Message:<%= HelperDisplay.schedule_msgtry(s) %></p>
 
-                      <% if current_user.doctor_role %>
-                        <%-# Edit scheduled procedure %>
-                      <%end%>
-                    <%end%>
+                  <div id="tab2" class="tab_content">
+                  
+                  
+                    <% if !(@patient.treatment.nil?)%>
+                      <div class="inner-card">
+                        <b>Schedule</b>
+                        <% if current_user.doctor_role %>
+                          <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules"), class: "btn btn-small btn-default" %></p>
+                        <%end%>
+                        <% @patient.treatment.schedules.each do |s| %>
+                          <p class="date"> Date:<%= HelperDisplay.schedule_datetry(s) %></p>
+                          <p class="time"> Time:<%= HelperDisplay.schedule_timetry(s) %></p>
+                          <p class="schedule_msg"> Schedule Message:<%= HelperDisplay.schedule_msgtry(s) %></p>
+
+                          <% if current_user.doctor_role %>
+                            <p><%= link_to "edit schedule", edit_schedule_path(s)  %></p>
+                          <%end%>
+                        <%end%>
+                      </div>
+                    <%end%>                  
+                  
+                  
+                  
                   </div>
-                <%end%>
-
+                  <div id="tab3" class="tab_content">
+                  
+                  
                 <% if !(@patient.treatment.nil?)%>
                   <div class="inner-card">
                     <b>Doctor Notes</b>
@@ -210,7 +241,13 @@
                       <%end%>
                     <%end%>
                   </div>
-                <%end%>
+                <%end%>            
+
+                  
+                  
+                  </div>
+                </div>
+
 
                 <% if !(@patient.treatment.nil?)%>
                   <div class="show-card">
@@ -250,6 +287,9 @@
                 </div>
               </div>
             <%end%>
+          
+          </div> <!-- End of divider 3 -->
+
 
             <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
               <div class="boxes emergency">
@@ -274,8 +314,7 @@
                 </div>
               </div>
             <%end%>
-
-          </div> <!-- End of divider 3 -->
+          
         </div>
       </div>
 
@@ -294,3 +333,17 @@
 
     </div>
   </div>
+
+<script type="text/javascript">
+$(document).ready(function($) {
+  $('.tab_content').hide();
+  $('#tab1').show();
+  $('.tabs').find('li').on('click', function(event){
+    $this_li = $(this);
+    event.preventDefault();
+    $this_li.addClass('show_div');
+    $('.tab_content').hide();
+    $($(this).find('a').attr("href")).fadeIn();
+  });
+});
+</script>

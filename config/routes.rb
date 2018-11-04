@@ -49,6 +49,17 @@ Rails.application.routes.draw do
 
     get '/pages/:id/edit/edit_treatment', to: 'pages#edit_treatment', as: :edit_treatment
     match "pages/:id/update/update_treatment" => "pages#update_treatment", as: :update_treatment, via: [:patch, :post]
+    
+  
+    
+    #/pages/:id/treatment/:id/create/create_dr_note(.:format)
+    #/treatments/:treatment_id/schedules/:id(.:format)
+
+    #Nested edits and updates (schedule, prescriptions, doctor notes, nurse notes)
+    get '/pages/treatment/:treatment_id/edit/schedule/:id/edit_schedule', to: 'pages#edit_schedule', as: :edit_schedule
+    match "/pages/treatment/:treatment_id/update/schedule/:id/update_schedule" => "pages#update_schedule", as: :update_schedule, via: [:patch, :post]
+    #end of nested edits and updates
+
     #Adding new records
   
     get '/pages/:id/new_physician', to: 'pages#new_physician', as: :create_physician
@@ -86,5 +97,5 @@ Rails.application.routes.draw do
     match "/pages/:id/treatment/:id/create/create_dr_note" => "pages#create_dr_note", :via => :post, :as => :create_dr_note
     
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
-  #get '*path' => 'error_routes#routing'
+  get '*path' => 'error_routes#routing'
 end

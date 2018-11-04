@@ -20,6 +20,7 @@ class PagesController < ApplicationController
   before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
   before_action :look_insurances, only: [:show, :edit, :update, :destroy]
   before_action :look_treatments, only: [:show, :edit_treatment, :update_treatment, :destroy]
+  before_action :look_schedules, only: [:show, :edit_schedule, :update_schedule, :destroy]
   
   def index
   end
@@ -266,6 +267,33 @@ class PagesController < ApplicationController
       @patient = Patient.find(params[:id])
       @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
   end
+
+  #nested edits and updates
+  def edit_schedule
+    @patient = Patient.find(params[:id])
+    #@treatment = Treatment.find(params[:id])
+    #@schedule = @patient.treatment.schedules.first
+    
+    
+    @schedule = @treatment.schedules.build if @patient.treatment.schedules.nil?
+    #@schedule = 
+    #@schedule = @patient.treatment.update_schedule if @patient.treatment.schedule.nil?
+  end
+
+  def update_schedule
+    #@patient = Patient.find(params[:id])
+    @treatment = Treatment.find(params[:id])
+    #@schedule = Schedule.find(params[:treatment_id])
+    @schedule = @treatment.schedule
+    #@schedule = @patient.treatment.schedules
+
+    if @schedule.update(schedule_params)
+        render 'show'
+    else
+        render 'edit_schedule'
+    end
+  end
+  #end of nested edits and updates
   
   def update_patient
     @patient = Patient.find(params[:id])
@@ -405,6 +433,10 @@ private
   def look_patients
     @patient = Patient.find(params[:id])
   end  
+
+  def look_schedules
+    @schedule = Schedule.find_by(treatment_id: params[:treatment_id])
+  end
 
   def look_treatments
     @treatment = Treatment.find_by(patient_id: params[:patient_id])

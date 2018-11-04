@@ -1,0 +1,36 @@
+<h2>Edit Schedule:</h2>
+
+
+
+<%= simple_form_for([@treatment, @schedule], url: :update_schedule) do |f| %>
+  <% f.simple_fields_for :schedules do |p| %>
+    <%= p.input :schedule_msg %>
+    <%= p.button :submit %>
+  <% end %>
+<%#= simple_form_for([@patient.update_treatment, @schedule]) do |f| %>
+<%#= form_with(model: [@treatment, @schedule], url: edit_schedule_path, local: true) do |f| %>
+
+  <%#= f.error_notification %>
+
+  <div class="form-inputs">
+    <%#= f.association :user %>
+    
+    <%#= f.association :node %>
+  </div>
+
+  <div class="form-actions">
+    <%#= f.button :submit %>
+  </div>
+<% end %>
+
+
+
+
+
+<%#= simple_form_for @treatment do |f| %>
+  <%#= f.input :email %>
+  <%#= f.simple_fields_for :schedule do |p| %>
+    <%#= p.input :schedule_msg %>
+  <%# end %>
+  <%#= f.submit %>
+<%# end %>
