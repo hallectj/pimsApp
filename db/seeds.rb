@@ -8,11 +8,11 @@
 
 patientList = [
 
-  ["Anderson", "Arn", "Orion", "1979-04-15", "2018-10-20", "12:44am", "Chest Pain"],
-  ["Levi", "Richard", "Brian", "1990-02-03", "2017-09-02", "4:15pm", "Diarrhea"],
-  ["Bradford", "Brandi", "Sue", "1989-05-17", "2017-01-21", "7:25am", "Lung Cancer"],
-  ["Aikers", "Mary", "Louis", "1982-03-29", "2018-05-12", "7:45pm", "Gunshot Wound"],
-  ['Nayda', 'Faith', 'Hollee', '1936-02-22', '2016-06-22', '12:37', 'natoque'],
+	["Anderson", "Arn", "Orion", "1979-04-15", "2018-10-20", "12:44am", "Chest Pain"],
+	["Levi", "Richard", "Brian", "1990-02-03", "2017-09-02", "4:15pm", "Diarrhea"],
+	["Bradford", "Brandi", "Sue", "1989-05-17", "2017-01-21", "7:25am", "Lung Cancer"],
+	["Aikers", "Mary", "Louis", "1982-03-29", "2018-05-12", "7:45pm", "Gunshot Wound"],
+	['Nayda', 'Faith', 'Hollee', '1936-02-22', '2016-06-22', '12:37', 'natoque'],
 	['Dorian', 'Maggie', 'Summer', '2006-11-21', '2014-12-18', '21:19', 'dis'],
 	['Thane', 'Brady', 'Ian', '1924-06-28', '2018-10-31', '11:24', 'adipiscing'],
 	['Sean', 'Ulla', 'Bethany', '2001-10-05', '2014-05-03', '12:54', 'senectus'],
