@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>Treatment / Diagnosis</h2>
+  <% if @recordLocation == "treatment" %>
+  <form action="/pages/<%= @patient.id %>/update/update_treatment" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      
+    <div class="form-group">
+      <label>Treatment</label>
+       <input type="text" class="form-control" name="treatment[name]" value="<%= @patient.treatment.name %>">
+    </div>
+    
+    <div class="form-group">
+      <div class="button_choose_show_action">
+        <p><input type="submit" class="btn btn-primary" style="margin-right: 10px;" value="Update"></p>
+        <p><%= link_to "Back", page_path(@patient), html_options = {class: "btn btn-success"} %></p>
+      </div>
+    </div>
+  </form>
+  <% end %>
+</div>

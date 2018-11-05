@@ -12,13 +12,15 @@ class PagesController < ApplicationController
   #those fields
   before_action :getPointerParam
 
-  before_action :look_patients, only: [:show, :destroy, :update_patient, "edit_patient"]
+  before_action :look_patients, only: [:show, :destroy, :update_patient, :edit_patient]
   before_action :look_physicians, only: [:show, :edit, :update, :destroy]
   before_action :look_emergency_contacts, only: [:show, :edit, :update, :destroy]
   before_action :look_contacts, only: [:show, :edit, :update, :destroy]
   before_action :look_locations, only: [:show, :edit, :update, :destroy]
   before_action :look_admittances, only: [:show, :update_admittance, :edit_patient, :destroy]
   before_action :look_insurances, only: [:show, :edit, :update, :destroy]
+  before_action :look_treatments, only: [:show, :edit_treatment, :update_treatment, :destroy]
+  before_action :look_schedules, only: [:show, :edit_schedule, :update_schedule, :destroy]
   
   def index
   end
@@ -55,17 +57,20 @@ class PagesController < ApplicationController
       format.pdf do
         if current_user.doctor_role
           pdf = PatientShowDoctorPdf.new(@patient)
+          send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.office_role
           #not created yet
           #pdf = PatientShowOfficePdf.new(@patient)
+          #send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.medical_role
           #not created yet
           #pdf = PatientShowMedicalPdf.new(@patient)
+          #send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.volunteer_role
           #not created yet
           #pdf = PatientShowVolunteerPdf.new(@patient)
+          #send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         end
-        send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
       end
     end
   end
@@ -77,6 +82,12 @@ class PagesController < ApplicationController
   def destroy
   end
 
+  #delete everything associated with patient including patient him or herself.
+  def reset
+    Rails.application.eager_load!
+    ActiveRecord::Base.descendants.each { |c| c.delete_all unless c == ActiveRecord::SchemaMigration  }
+  end
+
   #my custom restfuls
   ########   PATIENT CUSTOM ACTIONS  ###########################
   def new_patient
@@ -85,8 +96,7 @@ class PagesController < ApplicationController
   end
     
   def new_schedule
-      @patient = Patient.new
-      @patient.build_treatment.schedules.build
+    @patient = Patient.find(params[:id])
   end
 
   def new_contact
@@ -115,7 +125,25 @@ class PagesController < ApplicationController
 
   def new_treatment
     @patient = Patient.find(params[:id])
-  end 
+  end
+
+  def new_prescription
+    @patient = Patient.find(params[:id])
+  end
+
+  def new_dr_note
+    @patient = Patient.find(params[:id])
+  end
+
+  def new_bill
+    @patient = Patient.find(params[:id])
+  end    
+
+  def new_charge
+    @patient = Patient.find(params[:id])
+  end    
+
+#create functions
 
   def create_emergency_contact
       @patient = Patient.find(params[:id])
@@ -189,18 +217,35 @@ class PagesController < ApplicationController
       
   def create_schedule
       @patient = Patient.find(params[:id])
-      @schedule = @patient.treatment.schedules.create(schedule_params)
+      @treatment = @patient.treatment
+      @schedule = @treatment.schedules.build(schedule_params)
       if @schedule.save
           render 'show'
       else
           render 'new_schedule'
       end
-  end     
-
-
-  def new_dr_note
-    @patient = Patient.find(params[:id])
   end
+
+  def create_treatment
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.build_treatment(treatment_params)
+    if @treatment.save
+        render 'show'
+    else
+        render 'new_treatment'
+    end
+  end 
+
+  def create_bill
+    @patient = Patient.find(params[:id])
+    @discharge = @patient.discharge
+    @bill = @discharge.build_bill(bill_params)
+    if @bill.save
+        render 'show'
+    else
+        render 'new_bill'
+    end
+  end 
 
   def create_dr_note
       @patient = Patient.find(params[:id])
@@ -213,6 +258,33 @@ class PagesController < ApplicationController
       end
   end
 
+  def create_prescription
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @prescriptions = @treatment.prescriptions.build(prescription_params)
+    if @prescriptions.save
+        render 'show'
+    else
+        render 'new_prescription'
+    end
+   end  
+
+  def create_charge
+    @patient = Patient.find(params[:id])
+    @discharge = @patient.discharge
+    @bill = @discharge.bill
+    @charges = @bill.charges.build(charge_params)
+    if @charges.save
+        render 'show'
+    else
+        render 'new_charge'
+    end
+  end   
+
+
+
+
+#edit functions
 
   def edit_patient
     @patient = Patient.find(params[:id])
@@ -227,6 +299,11 @@ class PagesController < ApplicationController
   def edit_discharge
     @patient = Patient.find(params[:id]) 
     @discharge = @patient.update_discharge if @patient.discharge.nil?
+  end
+
+  def edit_treatment
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.update_treatment if @patient.treatment.nil?
   end
     
   def edit_contact
@@ -252,6 +329,32 @@ class PagesController < ApplicationController
       @patient = Patient.find(params[:id])
       @emergency_contact = @patient.update_emergency_contact if @patient.emergency_contact.nil?
   end
+
+  #nested edits and updates
+  def edit_schedule
+    @patient = Patient.find(params[:id])
+    #@treatment = Treatment.find(params[:id])
+    @schedule = @patient.treatment.schedules.first
+    
+    
+    #@schedule = @treatment.schedules.build if @patient.treatment.schedules.nil?
+    #@schedule = @patient.treatment.update_schedule if @patient.treatment.schedule.nil?
+  end
+
+  def update_schedule
+    @patient = Patient.find(params[:id])
+    @treatment = Treatment.find(params[:id])
+    #@schedule = Schedule.find(params[:treatment_id])
+    #@schedule = @treatment.schedule
+    @schedule = @treatment.schedules
+
+    if @schedule.update(schedule_params)
+        render 'show'
+    else
+        render 'edit_schedule'
+    end
+  end
+  #end of nested edits and updates
   
   def update_patient
     @patient = Patient.find(params[:id])
@@ -294,6 +397,17 @@ class PagesController < ApplicationController
         else
             flash.now[:error] = "Cannot update Contact Information"
             render 'edit_contact'
+        end
+    end
+
+    def update_treatment
+        @patient = Patient.find(params[:id])
+        @treatment = @patient.treatment
+        if @treatment.update(treatment_params)
+            render 'show'
+        else
+            flash.now[:error] = "Cannot update Treatment Information"
+            render 'edit_treatment'
         end
     end
     
@@ -380,6 +494,14 @@ private
   def look_patients
     @patient = Patient.find(params[:id])
   end  
+
+  def look_schedules
+    @schedule = Schedule.find_by(treatment_id: params[:treatment_id])
+  end
+
+  def look_treatments
+    @treatment = Treatment.find_by(patient_id: params[:patient_id])
+  end
 
   def patient_params
     params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :birthday, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
@@ -495,6 +617,31 @@ private
           params.fetch(:n_note, {}).permit!
       end         
   end
+
+  def prescription_params
+    if(params.has_key?(:prescription))
+        params.require(:prescription).permit(:name, :amount, :schedule)
+    else
+        params.fetch(:prescription, {}).permit!
+    end         
+  end
+
+  def bill_params
+    if(params.has_key?(:bill))
+        params.require(:bill).permit(:amount_paid, :amount_owed, :amount_insurance)
+    else
+        params.fetch(:bill, {}).permit!
+    end         
+  end  
+
+  def charge_params
+    if(params.has_key?(:charge))
+        params.require(:charge).permit(:charge_name, :charge_amount)
+    else
+        params.fetch(:charge, {}).permit!
+    end         
+  end  
+
 
   def getPointerParam
     @recordLocation = params[:pointer] ||= " "
