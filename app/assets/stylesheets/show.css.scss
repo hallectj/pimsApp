@@ -1,0 +1,117 @@
+.div_parent_divider{
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+}
+
+.boxes {
+	flex: 1;
+	margin: 20px;
+	padding: 5px;
+	background-color: rgba(69, 124, 57, 0.30);
+	position: relative;
+	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	width: 33%;
+}
+
+.patient_background{
+	position: relative;
+}
+
+.patient_background::after {
+	content: "";
+    background-image: url("../assets/stethoscope.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	z-index: -1;
+	position: fixed;
+	opacity: 0.1;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.inner-card{
+	margin-top: 20px;
+	margin-left: 10px;
+	padding: 5px;
+
+}
+
+#pdfDivWrapper{
+	margin-bottom: 40px;
+}
+
+
+/* Tabs styles */
+.hidden_div{
+	display: none;
+}
+
+.show_div{
+	display: block;
+}
+
+.tab_container {
+	border: 1px solid #ccc;
+	border-top: none;
+	background: #fff;
+	max-height:350px;
+	overflow-y:scroll;
+}
+
+.tabs {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-bottom: 1px solid #999;
+	width: 475px;
+  }
+  
+  .tabs li {
+	flex: 1;
+	border: 1px solid #999;
+	border-bottom: none;
+	background: #e0e0e0;
+	width: 150px;
+  }
+  
+  .tabs li a {
+	display: block;
+	padding: 10px 20px;
+	font-size: 16px;
+	color: #000;
+	text-decoration: none;
+  }
+  
+  .tabs li a:hover {
+	background: #ccc;
+  }
+  
+  .tabs li.active,
+  .tabs li.active a:hover {
+	font-weight: bold;
+	background: #fff;
+  }
+  
+  .tab_content {
+	padding: 20px;
+	font-size: 16px;
+  }
+
+
+
+@media only screen and (max-width: 800px) {
+	.div_parent_divider{
+		display: block;
+	}
+
+    .boxes {
+		margin: 20px auto;
+		width: 90%;
+        flex: none;
+    }
+}

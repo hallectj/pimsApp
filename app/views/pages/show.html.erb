@@ -1,280 +1,349 @@
 <% require_relative('./HelperDisplayFunctions') %>
 
-<div class="container">
-  <div class = "patient_background">
-    <div class = "patient_wrapper">
-      <div class = "boxes_admit">
-        <div class = "boxes_patient">
-          <div>
-            <span class = "last_name name"><%= HelperDisplay.lasttry(@patient) %>, </span>
-            <span class = "first_name name"><%= HelperDisplay.firsttry(@patient) %> </span>
-            <span class = "middle_name name"><%= HelperDisplay.middletry(@patient) %> </span>
-          </div>
-        
-          <div>
+  <div class="container">
+    <div class="patient_background">
+      <div class="patient_wrapper">
+        <div class="boxes_admit" id="boxes_wrapper">
+          
+          <div class ="div_parent_divider">
+
+            <div class = "boxes_patient show-card boxes">
+              <h2>General</h2>
+              <p class = "first_name"> First Name: <%= HelperDisplay.firsttry(@patient) %> </p>
+              <p class = "last_name"> Last Name: <%= HelperDisplay.lasttry(@patient) %> </p>
+              <p class = "middle_name"> Middle Name: <%= HelperDisplay.middletry(@patient) %> </p>
+            
+              <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
+                <p class = "birthday"> Birthdate: <%= HelperDisplay.birthdaytry(@patient) %> </p>
+              <%end%>
+
+              <% if current_user.office_role %>
+                <p><%= link_to "Edit General Information", edit_patient_path(@patient, :pointer => "general"), class: "btn btn-small btn-default" %></p>
+              <%end%>
+            </div>
+
+
             <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
-              <div class="bday" > <p class = "birthday name"> Birthdate: <%= HelperDisplay.birthdaytry(@patient) %> </div>
+              <div class="show-card boxes">
+                <h2>Admittance</h2>
+                <% if !(@patient.admittance.nil?)%>
+                  <p class="date_para"> Admittance Date:<%= HelperDisplay.datetry(@patient.admittance) %></p>
+                  <p class="time_para"> Admittance Time:<%= HelperDisplay.timetry(@patient.admittance) %></p>
+                  <p class="reason_para"> Admittance Reason:<%= HelperDisplay.reasontry(@patient.admittance)%></p>
+                  <% if current_user.office_role %>
+                    <p><%= link_to "Edit Admittance Info", edit_admittance_path(@patient, :pointer => "admittance"), class: "btn btn-small btn-default"  %></p>
+                  <%end%>
+                <%end%>
+              </div>
+
+              <div class="show-card boxes">
+                <h2>Discharge</h2>
+                <% if !(@patient.discharge.nil?)%>
+                  <p class="date_dis_para"> Discharge Date:<%= HelperDisplay.datetry(@patient.discharge) %></p>
+                  <p class="time_dis_para"> Discharge Time:<%= HelperDisplay.timetry(@patient.discharge) %></p>
+
+                  <% if current_user.office_role %>
+                    <p><%= link_to "Edit Discharge", edit_discharge_path(@patient, :pointer => "discharge"), class: "btn btn-small btn-default" %></p>
+                  <%end%>
+
+                  <b>Bill</b>
+                  <p class="amount_paid"> Amount Paid:<%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %></p>
+                  <p class="amount_owed"> Amount Owed:<%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %></p>
+                  <p class="amount_insurance"> Amount Paid by Insurance:<%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %></p>
+                  <% if current_user.office_role %>
+                    <p><%= link_to "Edit Billing", edit_bill_path(@patient, :pointer => "bill"), class: "btn btn-small btn-default" %></p>
+                  <%end%>
+                <%end%>
+
+                <% if current_user.office_role %>
+                  <% if @patient.discharge.nil?%> 
+                    <p><%= link_to "Create Discharge", new_discharge_path(@patient), class: "btn btn-small btn-default"  %></p>
+                  <%end%>
+                <%end%>
+              </div>
             <%end%>
-          </div>
 
 
-          <% if current_user.office_role %>
-            <p>Edit General Info <%= link_to "Edit", edit_patient_path(@patient, :pointer => "general") %></p>
-          <%end%>
+          </div> <!-- end divider 1 -->
+          
+
+          <div class ="div_parent_divider">
+
+
+            <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
+              <div class="boxes contact">
+                <div class="show-card">
+                  <h2>Contact Information</h2>
+                  <% if !(@patient.contact.nil?)%>
+                    <p class="home"> Home Number:<%= HelperDisplay.hometry(@patient.contact) %></p>
+                    <p class="work"> Work Number:<%= HelperDisplay.worktry(@patient.contact) %></p>
+                    <p class="mobile"> Mobile Number:<%= HelperDisplay.mobiletry(@patient.contact) %></p>
+                    <p class="street"> Street Address:<%= HelperDisplay.streettry(@patient.contact)%></p>
+                    <p class="city"> City:<%= HelperDisplay.citytry(@patient.contact) %></p>
+                    <p class="state"> State:<%= HelperDisplay.statetry(@patient.contact) %></p>
+                    <p class="zip"> ZIP:<%= HelperDisplay.ziptry(@patient.contact) %></p>
+
+                    <% if current_user.office_role %>
+                      <p><%= link_to "Edit Contact Information", edit_contact_path(@patient, :pointer => "contact"), class: "btn btn-small btn-default"  %></p>
+                    <%end%>
+                  <%end%>
+
+                  <% if current_user.office_role %>
+                    <% if @patient.contact.nil?%>
+                      <p><%= link_to "Create Contact", new_contact_path(@patient), class: "btn btn-small btn-default"  %></p>
+                    <%end%>
+                  <%end%>
+                </div>
+              </div>
+            <%end%>
+
+            <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
+              <div class="boxes phy">
+                <div class="show-card">
+                  <h2>Physician</h2>
+                  <% if !(@patient.physician.nil?)%>
+                    <p class="physician"> Primary Care Physician:<%= HelperDisplay.fphysiciantry(@patient.physician) %></p>
+                    <p class="physician_num"> Primary Care Number:<%= HelperDisplay.fp_phonetry(@patient.physician) %></p>
+
+                    <% if current_user.office_role %>
+                      <p><%= link_to "Edit Family Physician Information", edit_physician_path(@patient, :pointer => "physician"), class: "btn btn-small btn-default"  %></p>
+                    <%end%>
+                  <%end%>
+
+                  <% if current_user.office_role && @patient.physician.nil? %>
+                    <p><%= link_to "Create Physician", new_physician_path(@patient), class: "btn btn-small btn-default"  %></p>
+                  <%end%>
+                </div>
+              </div>
+            <%end%>
+
+            <div class="boxes location">
+              <div class="show-card">
+                <h2>Location</h2>
+                <% if !(@patient.location.nil?)%>
+                  <p class="facility_para"> Facility:<%= HelperDisplay.facilitytry(@patient.location) %></p>
+                  <p class="room_para"> Room:<%= HelperDisplay.roomtry(@patient.location) %></p>
+                  <p class="bed_para"> Bed:<%= HelperDisplay.bedtry(@patient.location) %></p>
+                  <h5><b>Vistor Information</b></h5>
+                  <p class="vlimit_para"> Visitor Limit:<%= HelperDisplay.vlimittry(@patient.location) %></p>
+                  <p class="vapprove_para"> Approved Visitors:<%= HelperDisplay.vapprovedtry(@patient.location) %></p>
+                  <% if current_user.office_role %>
+                    <p>Edit Location Info<%= link_to "Edit", edit_location_path(@patient, :pointer => "location")  %></p>
+                  <%end%>
+                <%end%>
+
+                <% if current_user.office_role && @patient.location.nil?%>
+                  <p><%= link_to "Create Location", new_location_path(@patient), class: "btn btn-small btn-default"  %></p>
+                <%end%>
+              </div>
+            </div>
+
+
+          </div> <!-- end divider 2-->
+
+          
+
+          <div class ="div_parent_divider">
+
+            <% if current_user.doctor_role || current_user.medical_role %>
+              <div class="boxes treatment">
+                <div class="show-card">
+                  <h2>Treatment</h2>
+                  <% if !(@patient.treatment.nil? or @patient.treatment == " ")%>
+                    <p class="treat_para"> Treatment:<%= HelperDisplay.treatmenttry(@patient.treatment) %></p>
+                    <% if current_user.doctor_role %>
+                      <p><%= link_to "Edit Treatment", edit_treatment_path(@patient, :pointer => "treatment") %></p>
+                    <%end%>
+                  <%end%>
+                </div>
+
+
+                <!-- tab feature code -->
+                <ul class="tabs" id="tab-ul">
+                  <li class="clickedTabs" data-name="tab1"><a href="#tab1">Prescriptions</a></li>
+                  <li class="clickedTabs" data-name="tab2"><a href="#tab2">Schedule</a></li>
+                  <li class="clickedTabs" data-name="tab3"><a href="#tab3">Doctor Notes</a></li>
+                </ul>
+
+                <div class="tab_container">
+                  <div id="tab1" class="tab_content">
+                  
+                  
+                  
+                    <% if !(@patient.treatment.nil?)%>
+                      <div class="inner-card">
+                        <b>Prescriptions</b>
+                        <% if current_user.doctor_role %>
+                          <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions"), class: "btn btn-small btn-default" %></p>
+                        <%end%>
+                        <% @patient.treatment.prescriptions.each do |p| %>
+                          <p class="name"> Name:<%= HelperDisplay.pres_nametry(p) %></p>
+                          <p class="amount"> Amount:<%= HelperDisplay.pres_amounttry(p) %></p>
+                          <p class="schedule"> Schedule:<%= HelperDisplay.pres_scheduletry(p) %></p>
+                          <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
+                            <p class="divider"> ------------------- </p>
+                            <% if current_user.doctor_role %>
+                              <%-# Edit prescriptions %>
+                            <%end%>
+                          <%end%>
+                        <%end%>
+                      </div>
+                    <%end%>                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  </div>
+
+
+                  <div id="tab2" class="tab_content">
+                  
+                  
+                    <% if !(@patient.treatment.nil?)%>
+                      <div class="inner-card">
+                        <b>Schedule</b>
+                        <% if current_user.doctor_role %>
+                          <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules"), class: "btn btn-small btn-default" %></p>
+                        <%end%>
+                        <% @patient.treatment.schedules.each do |s| %>
+                          <p class="date"> Date:<%= HelperDisplay.schedule_datetry(s) %></p>
+                          <p class="time"> Time:<%= HelperDisplay.schedule_timetry(s) %></p>
+                          <p class="schedule_msg"> Schedule Message:<%= HelperDisplay.schedule_msgtry(s) %></p>
+
+                          <% if current_user.doctor_role %>
+                            <p><%= link_to "edit schedule", edit_schedule_path(s)  %></p>
+                          <%end%>
+                        <%end%>
+                      </div>
+                    <%end%>                  
+                  
+                  
+                  
+                  </div>
+                  <div id="tab3" class="tab_content">
+                  
+                  
+                <% if !(@patient.treatment.nil?)%>
+                  <div class="inner-card">
+                    <b>Doctor Notes</b>
+                    <% if current_user.doctor_role %>
+                      <p><%= link_to "Create a new Doctor's note", new_dr_note_path(@patient, :pointer => "dr_notes"), class: "btn btn-small btn-default" %></p>
+                    <%end%>
+                    <% @patient.treatment.dr_notes.each do |d| %>
+                      <p class="name"> Name:<%= HelperDisplay.drnote_nametry(d) %></p>
+                      <p class="message"> Message:<%= HelperDisplay.drnote_msgtry(d) %></p>
+                      <% if current_user.doctor_role %>
+                        <%-# Edit doctor notes %>
+                      <%end%>
+                    <%end%>
+                  </div>
+                <%end%>            
+
+                  
+                  
+                  </div>
+                </div>
+
+
+                <% if !(@patient.treatment.nil?)%>
+                  <div class="show-card">
+                    <b>Nurse Notes</b>
+                    <% @patient.treatment.n_notes.each do |n| %>
+                      <p class="name"> Name:<%= HelperDisplay.nnote_nametry(n) %></p>
+                      <p class="message"> Message:<%= HelperDisplay.nnote_msgtry(n) %></p>
+                      <% if current_user.medical_role %>
+                        <%-# Edit nurse notes %>
+                      <%end%>
+                    <%end%>
+                  </div>
+                <%end%>
+
+                <%if @patient.treatment.nil? %>
+                  <p><%= link_to "Create Treatment", new_treatment_path(@patient), class: "btn btn-small btn-default"  %></p>
+                <%end%>
+              </div> <!-- end boxes treatment -->
+            <%end%> <!-- end doctor and medical role -->
+
+            <% if current_user.office_role  %>
+              <div class="boxes insurance">
+                <div class="show-card">
+                  <h2>Insurance</h2>
+                  <% if !(@patient.insurance.nil?)%><p class="policynum_para"> Policy Number:<%= HelperDisplay.p_numtry(@patient.insurance) %></p>
+                    <p class="policy_para"> Policy Name:<%= HelperDisplay.p_nametry(@patient.insurance) %></p>
+                    <p class="group_para"> Group Number:<%= HelperDisplay.grouptry(@patient.insurance) %></p>
+                    <p><%= link_to "Edit Insurance", edit_insurance_path(@patient, :pointer => "insurance"), class: "btn btn-small btn-default"  %></p>
+                    <% if current_user.office_role %>
+                      <%-# Edit Insurance %>
+                    <%end%>
+                  <%end%>
+
+                  <% if @patient.insurance.nil?%>
+                    <p><%= link_to "Create Insurance", new_insurance_path(@patient), class: "btn btn-small btn-default"  %></p>
+                  <%end%>
+                </div>
+              </div>
+            <%end%>
+          
+          </div> <!-- End of divider 3 -->
+
+
+            <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
+              <div class="boxes emergency">
+                <div class="show-card">
+                  <h2>Emergency Contacts</h2>
+                  <% if !(@patient.emergency_contact.nil?)%>
+                    <h5><b>Contact 1</b></h5>
+                    <p class="e1_para"> Name:<%= HelperDisplay.e1_try(@patient.emergency_contact) %></p>
+                    <p class="e1num_para"> Number:<%= HelperDisplay.e1p_try(@patient.emergency_contact) %></p>
+                    <h5><b>Contact 2</b></h5>
+                    <p class="e2_para"> Name:<%= HelperDisplay.e2_try(@patient.emergency_contact) %></p>
+                    <p class="e2num_para"> Number:<%= HelperDisplay.e2p_try(@patient.emergency_contact) %></p>
+
+                    <% if current_user.office_role %>
+                      <p><%= link_to "Edit Emergency Contacts", edit_emergency_contact_path(@patient, :pointer => "emergency_contact"), class: "btn btn-small btn-default"  %></p>
+                    <%end%>
+                  <%end%>
+
+                  <% if @patient.emergency_contact.nil? && current_user.office_role%>
+                    <p><%= link_to "Create Emergency Contact", new_emergency_contact_path(@patient), class: "btn btn-small btn-default"  %></p>
+                  <%end%>
+                </div>
+              </div>
+            <%end%>
           
         </div>
-
-        <hr class="divLine">
-
-        <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
-        <div class="show-card">
-          <h2>Admittance</h2>
-          <% if !(@patient.admittance.nil?)%>
-            <p class = "date_para"> Admittance Date: <%= HelperDisplay.datetry(@patient.admittance) %> </p>
-            <p class = "time_para"> Admittance Time: <%= HelperDisplay.timetry(@patient.admittance) %> </p>
-            <p class = "reason_para"> Admittance Reason: <%= HelperDisplay.reasontry(@patient.admittance)  %> </p>
-        
-            <% if current_user.office_role %>
-              <p>Edit Admittance Info <%= link_to "Edit", edit_admittance_path(@patient, :pointer => "admittance")  %></p>
-            <%end%>
-          <%end%>
-        </div>
-      
-        <div class="show-card">
-          <h2>Discharge</h2>
-            <% if !(@patient.discharge.nil?)%>
-              <p class = "date_dis_para"> Discharge Date: <%= HelperDisplay.datetry(@patient.discharge) %> </p>
-              <p class = "time_dis_para"> Discharge Time: <%= HelperDisplay.timetry(@patient.discharge) %> </p>
-
-              <% if current_user.office_role %>
-                <p>Edit Discharge Info <%= link_to "Edit", edit_discharge_path(@patient, :pointer => "discharge") %></p>
-              <%end%>
-            
-              <b>Bill</b>
-                <p class = "amount_paid"> Amount Paid: <%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %> </p>
-                <p class = "amount_owed"> Amount Owed: <%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %> </p>
-                <p class = "amount_insurance"> Amount Paid by Insurance: <%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %> </p>
-              <% if current_user.office_role %>
-                <p>Edit Billing Information <%= link_to "Edit", edit_bill_path(@patient, :pointer => "bill") %></p>
-              <%end%>
-            <%end%>
-
-            <% if current_user.office_role %>
-              <% if @patient.discharge.nil?%>
-                <p>Add Discharge Info <%= link_to "Create Discharge", new_discharge_path(@patient)  %></p>
-              <%end%>
-            <%end%>
-        </div>
       </div>
-      <%end%>
 
-      <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
-      <div class = "boxes contact">
-        <div class="show-card">
-          <h2>Contact Information</h2>
-          <% if !(@patient.contact.nil?)%>
-            <p class = "home"> Home Number: <%= HelperDisplay.hometry(@patient.contact) %> </p>
-            <p class = "work"> Work Number: <%= HelperDisplay.worktry(@patient.contact) %> </p>
-            <p class = "mobile"> Mobile Number: <%= HelperDisplay.mobiletry(@patient.contact) %> </p>
-            <p class = "street"> Street Address: <%= HelperDisplay.streettry(@patient.contact)%> </p>
-            <p class = "city"> City: <%= HelperDisplay.citytry(@patient.contact) %> </p>
-            <p class = "state"> State: <%= HelperDisplay.statetry(@patient.contact) %> </p>
-            <p class = "zip"> ZIP: <%= HelperDisplay.ziptry(@patient.contact) %> </p>
-            
-            <% if current_user.office_role %>
-              <p>Edit Contact Info <%= link_to "Edit", edit_contact_path(@patient, :pointer => "contact")  %></p>
-            <%end%>
-          <%end%>
 
-          <% if current_user.office_role %>
-            <% if @patient.contact.nil?%>
-              <p>Add Contact Info <%= link_to "Create Contact", new_contact_path(@patient)  %></p>
-            <%end%>
-          <%end%>
-        </div>
-      </div>
-      <%end%>
-
-      <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
-        <div class = "boxes phy">
-          <div class="show-card">
-            <h2>Physician</h2>
-
-            <% if !(@patient.physician.nil?)%>
-              <p class = "physician"> Primary Care Physician: <%= HelperDisplay.fphysiciantry(@patient.physician) %> </p>
-              <p class = "physician_num"> Primary Care Number: <%= HelperDisplay.fp_phonetry(@patient.physician) %> </p>
-
-              <% if current_user.office_role %>
-                <p>Edit Physician Info <%= link_to "Edit", edit_physician_path(@patient, :pointer => "physician")  %></p>
-              <%end%>
-            <%end%>
-
-            <% if current_user.office_role && @patient.physician.nil? %>
-              <p>Add Physician Info <%= link_to "Create Physician", new_physician_path(@patient)  %></p>
-            <%end%>
+      <div id="pdfDivWrapper">
+        <div class="panel panel-default">
+          <div class="panel-body"></div>
+            <%# if current_user.doctor_role %>
+              <%= link_to "Patient Report PDF", page_path(@patient, format: "pdf") %>
+            <%# end %>
           </div>
-        </div>
-      <%end%>
-
-      <div class = "boxes location">
-        <div class="show-card">
-          <h2>Location</h2>
-          <% if !(@patient.location.nil?)%>
-            <p class = "facility_para"> Facility: <%= HelperDisplay.facilitytry(@patient.location) %> </p>
-            <p class = "room_para"> Room: <%= HelperDisplay.roomtry(@patient.location) %> </p>
-            <p class = "bed_para"> Bed: <%= HelperDisplay.bedtry(@patient.location) %> </p>
-            <h5><b>Vistor Information</b></h5>
-            <p class = "vlimit_para"> Visitor Limit: <%= HelperDisplay.vlimittry(@patient.location) %> </p>
-            <p class = "vapprove_para"> Approved Visitors: <%= HelperDisplay.vapprovedtry(@patient.location) %> </p>
-
-            <% if current_user.office_role %>
-              <p>Edit Location Info <%= link_to "Edit", edit_location_path(@patient, :pointer => "location")  %></p>
-            <%end%>
-          <%end%>
-
-          <% if current_user.office_role && @patient.location.nil?%>
-            <p>Add Location Info <%= link_to "Create Location", new_location_path(@patient)  %></p>
-          <%end%>
         </div>
       </div>
 
-      <% if current_user.doctor_role || current_user.medical_role %>
-      <div class = "boxes treatment">
-        <div class="show-card">
-          <h2>Treatment</h2>
-          <% if !(@patient.treatment.nil?)%>
-            <p class = "treat_para"> Treatment: <%= HelperDisplay.treatmenttry(@patient.treatment) %> </p>
 
-            <% if current_user.doctor_role %>
-              <%-# Edit treatment %>
-            <%end%>
-          <%end%>
-        </div>
 
-        <% if !(@patient.treatment.nil?)%>
-          <div class="show-card">
-            <b>Prescriptions</b>
-            <% if current_user.doctor_role %>
-              <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions") %></p>
-            <%end%>
-            <% @patient.treatment.prescriptions.each do |p| %>
-              <p class = "name"> Name: <%= HelperDisplay.pres_nametry(p) %> </p>
-              <p class = "amount"> Amount: <%= HelperDisplay.pres_amounttry(p) %> </p>
-              <p class = "schedule"> Schedule: <%= HelperDisplay.pres_scheduletry(p) %> </p>
-
-              <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
-                <p class = "divider"> ------------------- </p>
-
-                <% if current_user.doctor_role %>
-                  <%-# Edit prescriptions %>
-                <%end%>
-              <%end%>
-            <%end%>
-          </div>
-        <%end%>
-
-        <% if !(@patient.treatment.nil?)%>
-          <div class="show-card">
-            <b>Schedule</b>
-            <% if current_user.doctor_role %>
-              <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules") %></p>
-            <%end%>
-            <% @patient.treatment.schedules.each do |s| %>
-              <p class = "date"> Date: <%= HelperDisplay.schedule_datetry(s) %> </p>
-              <p class = "time"> Time: <%= HelperDisplay.schedule_timetry(s) %> </p>
-              <p class = "schedule_msg"> Schedule Message: <%= HelperDisplay.schedule_msgtry(s) %> </p>
-
-              <% if current_user.doctor_role %>
-                <%-# Edit scheduled procedure %>
-              <%end%>
-            <%end%>
-          </div>
-        <%end%>
-
-        <% if !(@patient.treatment.nil?)%>
-          <div class="show-card">
-            <b>Doctor Notes</b>
-            <% if current_user.doctor_role %>
-              <p><%= link_to "Create a new Doctor's note", new_dr_note_path(@patient, :pointer => "dr_notes") %></p>
-            <%end%>
-              <% @patient.treatment.dr_notes.each do |d| %>
-              <p class = "name"> Name: <%= HelperDisplay.drnote_nametry(d) %> </p>
-              <p class = "message"> Message: <%= HelperDisplay.drnote_msgtry(d) %> </p>
-
-              <% if current_user.doctor_role %>
-                <%-# Edit doctor notes %>
-              <%end%>
-            <%end%>
-          </div>
-        <%end%>
-
-        <% if !(@patient.treatment.nil?)%>
-          <div class="show-card">
-            <b>Nurse Notes</b>
-            <% @patient.treatment.n_notes.each do |n| %>
-              <p class = "name"> Name: <%= HelperDisplay.nnote_nametry(n) %> </p>
-              <p class = "message"> Message: <%= HelperDisplay.nnote_msgtry(n) %> </p>
-
-              <% if current_user.medical_role %>
-              <%-# Edit nurse notes %>
-              <%end%>
-            <%end%>
-          </div>
-        <%end%>
-
-        <%if @patient.treatment.nil? %>
-          <p>Add Treatment Info <%= link_to "Create Treatment", new_treatment_path(@patient)  %></p>
-        <%end%>   
-      </div>
-      <%end%>
-        
-      <% if current_user.office_role  %>
-        <div class = "boxes insurance">
-          <div class="show-card">
-            <h2>Insurance</h2>
-            <% if !(@patient.insurance.nil?)%>
-              <p class = "policynum_para"> Policy Number: <%= HelperDisplay.p_numtry(@patient.insurance) %> </p>
-              <p class = "policy_para"> Policy Name: <%= HelperDisplay.p_nametry(@patient.insurance) %>  </p>
-              <p class = "group_para"> Group Number: <%= HelperDisplay.grouptry(@patient.insurance) %>  </p>
-
-              <p>Edit Insurance Info <%= link_to "Edit", edit_insurance_path(@patient, :pointer => "insurance")  %></p>
-
-              <% if current_user.office_role %>
-                <%-# Edit Insurance %>
-              <%end%>
-            <%end%>
-
-            <% if @patient.insurance.nil?%>
-              <p>Add Insurance Info <%= link_to "Create Insurance", new_insurance_path(@patient)  %></p>
-            <%end%>
-          </div>
-        </div>
-      <%end%>
-
-      <% if current_user.office_role || current_user.doctor_role || current_user.medical_role %>
-        <div class = "boxes emergency">
-          <div class="show-card">
-            <h2>Emergency Contacts</h2>
-            <% if !(@patient.emergency_contact.nil?)%>
-              <h5><b>Contact 1</b></h5>
-                <p class = "e1_para"> Name: <%= HelperDisplay.e1_try(@patient.emergency_contact) %> </p>
-                <p class = "e1num_para"> Number: <%= HelperDisplay.e1p_try(@patient.emergency_contact) %>  </p>
-              <h5><b>Contact 2</b></h5>
-                <p class = "e2_para"> Name: <%= HelperDisplay.e2_try(@patient.emergency_contact) %>  </p>
-                <p class = "e2num_para"> Number: <%= HelperDisplay.e2p_try(@patient.emergency_contact) %>  </p>
-
-              <% if current_user.office_role %>
-                <p>Edit Emergency Contact Info <%= link_to "Edit", edit_emergency_contact_path(@patient, :pointer => "emergency_contact")  %></p>
-              <%end%>
-            <%end%>
-
-            <% if @patient.emergency_contact.nil? && current_user.office_role%>
-              <p>Add Emergency Contact Info <%= link_to "Create Emergency Contact", new_emergency_contact_path(@patient)  %></p>
-            <%end%>
-          </div>
-        </div>
-      <%end%>
-      </div>
     </div>
   </div>
-</div>
+
+<script type="text/javascript">
+$(document).ready(function($) {
+  $('.tab_content').hide();
+  $('#tab1').show();
+  $('.tabs').find('li').on('click', function(event){
+    $this_li = $(this);
+    event.preventDefault();
+    $this_li.addClass('show_div');
+    $('.tab_content').hide();
+    $($(this).find('a').attr("href")).fadeIn();
+  });
+});
+</script>
