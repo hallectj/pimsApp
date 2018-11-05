@@ -33,6 +33,7 @@ GEM
       activemodel (= 5.1.6)
       activesupport (= 5.1.6)
       arel (~> 8.0)
+    activerecord-reset-pk-sequence (0.2.1)
     activesupport (5.1.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
@@ -41,7 +42,7 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
-    autoprefixer-rails (9.1.4)
+    autoprefixer-rails (9.3.1)
       execjs
     bcrypt (3.1.12)
     bcrypt (3.1.12-x86-mingw32)
@@ -63,6 +64,7 @@ GEM
       xpath (>= 2.0, < 4.0)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
+    chronic (0.10.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -90,7 +92,7 @@ GEM
       temple (>= 0.8.0)
       tilt
     hirb (0.7.3)
-    i18n (1.1.0)
+    i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -115,10 +117,10 @@ GEM
     kaminari-core (1.1.1)
     load_and_authorize_resource (0.4.1)
       rails (>= 4.0)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.0)
+    mail (2.7.1)
       mini_mime (>= 0.1.1)
     method_source (0.9.0)
     mini_mime (1.0.1)
@@ -129,11 +131,19 @@ GEM
     multi_json (1.13.1)
     nested_form (0.3.2)
     nio4r (2.3.1)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.4-x86-mingw32)
+    nokogiri (1.8.5-x86-mingw32)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
+    pdf-core (0.7.0)
+    pg (1.1.3)
+    pg (1.1.3-x86-mingw32)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
+    prawn-table (0.2.2)
+      prawn (>= 1.3.0, < 3.0.0)
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.5)
@@ -163,7 +173,7 @@ GEM
       activemodel (>= 4.0)
     rails-ujs (0.1.0)
       railties (>= 3.1)
-    rails_admin (1.4.1)
+    rails_admin (1.4.2)
       builder (~> 3.1)
       coffee-rails (~> 4.0)
       font-awesome-rails (>= 3.0, < 5)
@@ -202,9 +212,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    selenium-webdriver (3.14.0)
+    selenium-webdriver (3.14.1)
       childprocess (~> 0.5)
-      rubyzip (~> 1.2)
+      rubyzip (~> 1.2, >= 1.2.2)
     simple_form (4.0.1)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -215,20 +225,19 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.13)
-    sqlite3 (1.3.13-x86-mingw32)
     temple (0.8.0)
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
     toastr-rails (1.0.3)
       railties (>= 3.1.0)
+    ttfunk (1.5.1)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2018.5)
+    tzinfo-data (1.2018.7)
       tzinfo (>= 1.0.0)
     uglifier (4.1.19)
       execjs (>= 0.3.0, < 3)
@@ -242,7 +251,9 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
-    xpath (3.1.0)
+    whenever (0.10.0)
+      chronic (>= 0.6.3)
+    xpath (3.2.0)
       nokogiri (~> 1.8)
 
 PLATFORMS
@@ -250,6 +261,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-reset-pk-sequence
   bootstrap-datepicker-rails
   bootstrap-sass (~> 3.3, >= 3.3.7)
   byebug
@@ -261,7 +273,11 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3, >= 4.3.3)
   load_and_authorize_resource
+  minitest
   momentjs-rails (>= 2.9.0)
+  pg
+  prawn (~> 2.2, >= 2.2.2)
+  prawn-table (~> 0.2.2)
   puma (~> 3.7)
   rails (~> 5.1.6)
   rails-observers
@@ -271,12 +287,12 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form (~> 4.0, >= 4.0.1)
-  sqlite3
   toastr-rails
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
+  whenever
 
 BUNDLED WITH
    1.16.2

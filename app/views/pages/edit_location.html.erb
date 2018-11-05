@@ -1,0 +1,41 @@
+<div class="container">
+  <% if @recordLocation == "location" %>
+  <form action="/pages/<%= @patient.id %>/update/update_location" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      
+    <div class="form-group">
+      <p><%= debug @location %></p>
+      <label>Facility</label>
+       <input type="text" class="form-control" name="location[facility]" value="<%= @patient.location.facility %>">
+    </div>
+    
+    <div class="form-group">
+      <label>Room</label>
+       <input type="text" class="form-control" name="location[room]" value="<%= @patient.location.room %>">
+    </div>
+      
+    <div class="form-group">
+      <label>Bed</label>
+       <input type="text" class="form-control" name="location[bed]" value="<%= @patient.location.bed %>">
+    </div>
+      
+    <div class="form-group">
+      <label>Visitor Limit</label>
+       <input type="text" class="form-control" name="location[visitor_limit]" value="<%= @patient.location.visitor_limit %>">
+    </div>
+      
+    <div class="form-group">
+      <label>Approved Visitors</label>
+       <input type="text" class="form-control" name="location[approved_visitors]" value="<%= @patient.location.approved_visitors %>">
+    </div>
+    
+    <div class="form-group">
+      <div class="button_choose_show_action">
+        <p><input type="submit" class="btn btn-primary" style="margin-right: 10px;" value="Update"></p>
+        <p><%= link_to "Back", page_path(@patient), html_options = {class: "btn btn-success"} %></p>
+      </div>
+    </div>
+  </form>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<h2>Create a Prescription:</h2>
+<%= form_with(model: [@patient, @patient.build_treatment.prescriptions.build], url: create_prescription_path, local: true) do |form| %>
+  <p>
+    <%= form.label :Name %><br>         
+    <%= form.text_field :name %>        
+  </p>
+  <p>
+    <%= form.label :Amount %><br>
+    <%= form.text_field :amount %>
+  </p>
+    <p>
+        <%= form.label :Schedule %><br>         
+        <%= form.text_area :schedule %>        
+    </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

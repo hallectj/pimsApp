@@ -1,0 +1,14 @@
+<h2>New Contact Information</h2>
+<div class = "container">
+  <%= simple_form_for @patient.build_contact, url: new_contact_path do |f| %>
+    <%= f.input :home_phone %>
+    <%= f.input :work_phone %>
+    <%= f.input :mobile_phone %>
+    <%= f.input :street %>
+    <%= f.input :city %>
+    <%= f.input :state %>
+    <%= f.input :zip %>
+    <%= f.submit :submit %>
+  <% end %>
+</div>
+

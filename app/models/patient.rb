@@ -10,14 +10,14 @@ class Patient < ApplicationRecord
     has_one :treatment, dependent: :destroy
     accepts_nested_attributes_for :physician, update_only: true
     accepts_nested_attributes_for :emergency_contact, update_only: true
-    accepts_nested_attributes_for :contact, update_only: true
+    accepts_nested_attributes_for :contact
     accepts_nested_attributes_for :physician, update_only: true
     accepts_nested_attributes_for :location, update_only: true
     accepts_nested_attributes_for :admittance, update_only: true
     accepts_nested_attributes_for :insurance, update_only: true
     accepts_nested_attributes_for :discharge, update_only: true
     accepts_nested_attributes_for :treatment, update_only: true
-    
+  
     def build_a_admittance
        if admittance
            admittance
