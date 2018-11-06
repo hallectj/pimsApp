@@ -1,8 +1,8 @@
 require 'date'
 require 'time'
+require 'bigdecimal'
 
 module HelperDisplay 
-
     def self.datetry(input)
         if (input.try(:date))
             return input.date
@@ -14,10 +14,10 @@ module HelperDisplay
 
     def self.timetry(input)
         if (input.try(:time))
-            return input.time.strftime("%H:%M:%S")
+            return input.time.to_s(:time) 
         else
             d = Time.new(01, 01, 01, 01)
-            return d.strftime("%H:%M:%S")
+            return d.strftime("%H:%M %p")
         end
     end
 
@@ -26,6 +26,33 @@ module HelperDisplay
             return input.name 
         else  
             a = String.new("None")
+            return a
+        end
+    end
+    
+    def self.amount_paid_try(input)
+        if (input != nil) 
+            return input.amount_paid
+        else  
+            a = BigDecimal.new("0")
+            return a
+        end
+    end
+    
+    def self.amount_owed_try(input)
+        if (input != nil) 
+            return input.amount_owed
+        else  
+            a = BigDecimal.new("0")
+            return a
+        end
+    end
+    
+    def self.amount_insurance_try(input)
+        if (input != nil) 
+            return input.amount_insurance
+        else  
+            a = BigDecimal.new("0")
             return a
         end
     end
@@ -281,4 +308,95 @@ module HelperDisplay
             return a
         end
     end
+
+    def self.pres_nametry(input)
+        if (input != nil)
+            return input.name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.pres_amounttry(input)
+        if (input != nil)
+            return input.amount
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.pres_scheduletry(input)
+        if (input != nil)
+            return input.schedule
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.schedule_datetry(input)
+        if (input != nil)
+            return input.date
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.schedule_timetry(input)
+        if (input != nil)
+            return input.time
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.schedule_msgtry(input)
+        if (input != nil)
+            return input.schedule_msg
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.drnote_nametry(input)
+        if (input != nil)
+            return input.name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.drnote_msgtry(input)
+        if (input != nil)
+            return input.message
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.nnote_nametry(input)
+        if (input != nil)
+            return input.name
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.nnote_msgtry(input)
+        if (input != nil)
+            return input.message
+        else
+            a = String.new("None")
+            return a
+        end
+    end
+
 end

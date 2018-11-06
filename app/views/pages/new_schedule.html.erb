@@ -1,0 +1,18 @@
+<h2>Create a Schedule:</h2>
+<%= form_with(model: [@patient, @patient.build_treatment.schedules.build], url: create_schedule_path, local: true) do |form| %>
+  <p>
+    <%= form.label :Date %><br>         
+    <%= form.text_field :date %>        
+  </p>
+  <p>
+    <%= form.label :Time %><br>
+    <%= form.text_field :time %>
+  </p>
+    <p>
+        <%= form.label :Message %><br>         
+        <%= form.text_area :schedule_msg %>        
+    </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

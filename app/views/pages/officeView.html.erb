@@ -1,3 +1,5 @@
+<% require_relative('./HelperDisplayFunctions') 
+%>
 <h1>Welcome to Office Page</h1>
 <div class="container">
     <h2>Patient Listing</h2>
@@ -16,13 +18,14 @@
     <tbody>
 <% @patients.each do |patient|%>
     <tr>
-        <td><%= patient.last_name %></td>
-        <td><%= patient.first_name %></td>
-        <td><%= patient.middle_name %></td>
-        <td><%= @admittance.date %></td>
-        <td><%= @location.facility %></td>
-        <td><%= @location.room %></td>
-        <td><%= @discharge.date %></td>
+        <td><%= HelperDisplay.nametry(patient.last_name) %></td>
+        <td><%= HelperDisplay.nametry(patient.first_name) %></td>
+        <td><%= HelperDisplay.nametry(patient.middle_name) %></td>
+        <td><%= HelperDisplay.datetry(patient.admittance) %></td>
+        <td><%= HelperDisplay.facilitytry(patient.location) %></td>
+        <td><%= HelperDisplay.roomtry(patient.location) %></td>
+        <td><%= HelperDisplay.datetry(patient.discharge) %></td>
+        <td><%= link_to "View", page_path(patient) %></td>
     </tr>
 <%end%>     
     </tbody>
