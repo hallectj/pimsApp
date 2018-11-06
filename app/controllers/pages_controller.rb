@@ -356,6 +356,26 @@ class PagesController < ApplicationController
     @dr_note.update if @dr_note.nil?
   end
 
+  def edit_charge
+    @patient = Patient.find(params[:patient_id])
+    @discharge = @patient.discharge
+    @charge = @patient.discharge.bill.charges.find(params[:charge_id])
+    @charge.update if @charge.nil? 
+  end
+
+  def update_charge
+    @patient = Patient.find(params[:patient_id])
+    @charge = @patient.discharge.bill.charges.find(params[:charge_id])
+    if @charge.update(charge_params)
+        redirect_to page_path(@patient)
+    else
+        flash.now[:error] = "Cannot update charge"
+        render 'edit_charge'
+    end
+  end
+
+
+
   def update_schedule
     @patient = Patient.find(params[:patient_id])
     @schedule = @patient.treatment.schedules.find(params[:schedule_id])

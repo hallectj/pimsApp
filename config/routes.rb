@@ -68,13 +68,10 @@ Rails.application.routes.draw do
     #/treatments/:treatment_id/schedules/:id(.:format)
 
     #Nested edits and updates (schedule, prescriptions, doctor notes, nurse notes)
-<<<<<<< HEAD
-=======
     #get '/pages/treatment/:treatment_id/edit/schedule/:id/edit_schedule', to: 'pages#edit_schedule', as: :edit_schedule
     #match "/pages/treatment/:treatment_id/update/schedule/:id/update_schedule" => "pages#update_schedule", as: :update_schedule, via: [:patch, :post]
     
 
->>>>>>> 3a6e8ef25489c0c6abc6d7876895e2b2c8d5ee01
     get '/pages/:patient_id/treatment/:treatment_id/edit_schedule/:schedule_id', to: 'pages#edit_schedule', as: :edit_schedule
     match "pages/:patient_id/treatment/:treatment_id/update_schedule/:schedule_id" => "pages#update_schedule", as: :update_schedule, via: [:patch, :post]
 
@@ -93,8 +90,8 @@ Rails.application.routes.draw do
 
 
 
-    get '/pages/bill/:bill_id/edit/charge/:id/edit_charge', to: 'pages#edit_charge', as: :edit_charge
-    match "/pages/bill/:bill_id/update/charge/:id/update_charge" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
+    get '/pages/:discharge/bill/:bill_id/edit_charge/:charge_id', to: 'pages#edit_charge', as: :edit_charge
+    match "/pages/:discharge/bill/:bill_id/update_charge/:charge_id" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
         
     #end of nested edits and updates
 

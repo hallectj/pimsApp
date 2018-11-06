@@ -1,25 +1,7 @@
-<h2>Edit Charge:</h2>
+ <h2>Edit Charge:</h2>
 
-
-
-<%= simple_form_for([@bill, @charge], url: :update_charge) do |f| %>
-  <%# f.simple_fields_for :schedules do |p| %>
-    <%= f.input :charge_name %>
-    <%= f.input :charge_amount %>
-    <%= f.button :submit %>
-  <%# end %>
-<%#= simple_form_for([@patient.update_treatment, @schedule]) do |f| %>
-<%#= form_with(model: [@treatment, @schedule], url: edit_schedule_path, local: true) do |f| %>
-
-  <%#= f.error_notification %>
-
-  <div class="form-inputs">
-    <%#= f.association :user %>
-    
-    <%#= f.association :node %>
-  </div>
-
-  <div class="form-actions">
-    <%#= f.button :submit %>
-  </div>
+<%= simple_form_for [:pages, @discharge, @bill, @charge], url: update_charge_path do |charge| %>
+  <%= charge.input :charge_name %>
+  <%= charge.input :charge_amount, as: :decimal %>
+  <%= charge.button :submit %>
 <% end %>
