@@ -1,43 +1,14 @@
  <h2>Edit Schedule:</h2>
 
-
-
-<%#= simple_form_for([@treatment, @schedule], url: :update_schedule) do |f| %>
-  <%# f.simple_fields_for :schedules do |p| %>
-    <%#= f.input :schedule_msg %>
-    <%#= f.button :submit %>
-  <%# end %>
-<%#= simple_form_for([@patient.update_treatment, @schedule]) do |f| %>
-<%#= form_with(model: [@treatment, @schedule], url: edit_schedule_path, local: true) do |f| %>
-
-  <%#= f.error_notification %>
-
-  <div class="form-inputs">
-    <%#= f.association :user %>
-    
-    <%#= f.association :node %>
-  </div>
-
-  <div class="form-actions">
-    <%#= f.button :submit %>
-  </div>
-<%# end %>
-
-
-
-<%= form_for [:pages, @patient, @treatment, @schedule], url: update_schedule_path do |schedule| %>
-  Name: <%= schedule.text_field :schedule_msg %>
-  <p>
-    <%= schedule.submit %>
-  </p>
+<%= simple_form_for [:pages, @patient, @treatment, @schedule], url: update_schedule_path do |schedule| %>
+  <%= schedule.input :date, as: :string, required: true, input_html: {class: "datepicker"} %>
+  <%= schedule.input :time, as: :string, required: true, input_html: {class: "timepicker"} %>
+  <%= schedule.input :schedule_msg %>
+  <%= schedule.button :submit %>
 <% end %>
 
-
-
-<%#= simple_form_for @treatment do |f| %>
-  <%#= f.input :email %>
-  <%#= f.simple_fields_for :schedule do |p| %>
-    <%#= p.input :schedule_msg %>
-  <%# end %>
-  <%#= f.submit %>
-<%# end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>

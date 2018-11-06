@@ -526,10 +526,6 @@ private
   def prescription_params
     params.fetch(:prescription, {}).permit!
   end
-
-  def look_prescriptions
-    
-  end
   
   def look_physicians
       @physician = Physician.find_by(patient_id: params[:patient_id])
