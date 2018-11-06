@@ -1,6 +1,6 @@
-<h2>Dr Note:</h2>
+<h2>Doctor's Note:</h2>
 
-<%= simple_form_for [:pages, @patient, @treatment, @dr_note], url: update_schedule_path do |dr_note| %>
+<%= simple_form_for [:pages, @patient, @treatment, @dr_note], url: update_dr_note_path do |dr_note| %>
   <%= dr_note.input :name %>
   <%= dr_note.input :message %>
   <%= dr_note.button :submit %>

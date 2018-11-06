@@ -1,0 +1,13 @@
+<h2>Nurse's Note:</h2>
+
+<%= simple_form_for [:pages, @patient, @treatment, @n_note], url: update_n_note_path do |n_note| %>
+  <%= n_note.input :name %>
+  <%= n_note.input :message %>
+  <%= n_note.button :submit %>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>

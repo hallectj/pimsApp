@@ -83,6 +83,8 @@ Rails.application.routes.draw do
     get '/pages/:patient_id/treatment/:treatment_id/edit_dr_note/:dr_id', to: 'pages#edit_dr_note', as: :edit_dr_note
     match "pages/:patient_id/treatment/:treatment_id/update_dr_note/:dr_id" => "pages#update_dr_note", as: :update_dr_note, via: [:patch, :post]
 
+    get '/pages/:patient_id/treatment/:treatment_id/edit_n_note/:n_id', to: 'pages#edit_n_note', as: :edit_n_note
+    match "pages/:patient_id/treatment/:treatment_id/update_n_note/:n_id" => "pages#update_n_note", as: :update_n_note, via: [:patch, :post]
 
 
 
@@ -124,6 +126,9 @@ Rails.application.routes.draw do
     
     get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :create_dr_note
     match "/pages/:id//treatment/:id/new_dr_note" => "pages#create_dr_note", as: :new_dr_note, :via => [:patch, :post]
+    
+    get '/pages/:id/treatment/:id/new_n_note', to: 'pages#new_n_note', as: :create_n_note
+    match "/pages/:id/treatment/:id/new_n_note" => "pages#create_n_note", as: :new_n_note, :via => [:patch, :post]
     
     get '/pages/:id/treatment/:id/new_prescription', to: 'pages#new_prescription', as: :create_prescription
     match "/pages/:id//treatment/:id/new_prescription" => "pages#create_prescription", as: :new_prescription, :via => [:patch, :post]

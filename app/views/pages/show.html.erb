@@ -185,6 +185,7 @@
                   <li class="clickedTabs" data-name="tab1"><a href="#tab1">Prescriptions</a></li>
                   <li class="clickedTabs" data-name="tab2"><a href="#tab2">Schedule</a></li>
                   <li class="clickedTabs" data-name="tab3"><a href="#tab3">Doctor Notes</a></li>
+                  <li class="clickedTabs" data-name="tab4"><a href="#tab4">Nurse Notes</a></li>
                 </ul>
 
                 <div class="tab_container">
@@ -260,6 +261,7 @@
                   
                   
                   </div>
+                    
                   <div id="tab3" class="tab_content">
                   
                   
@@ -284,21 +286,32 @@
                   
                   
                   </div>
-                </div>
-
-
-                <% if !(@patient.treatment.nil?)%>
-                  <div class="show-card">
+                    
+                <div id="tab4" class="tab_content">
+                    
+                  <% if !(@patient.treatment.nil?)%>
+                  <div class="inner-card">
                     <b>Nurse Notes</b>
+                    <% if current_user.medical_role %>
+                      <p><%= link_to "Create a new Nurse's note", new_n_note_path(@patient, :pointer => "n_notes"), class: "btn btn-small btn-default" %></p>
+                    <%end%>
                     <% @patient.treatment.n_notes.each do |n| %>
                       <p class="name"> Name:<%= HelperDisplay.nnote_nametry(n) %></p>
                       <p class="message"> Message:<%= HelperDisplay.nnote_msgtry(n) %></p>
                       <% if current_user.medical_role %>
-                        <%-# Edit nurse notes %>
+                        <% if current_user.medical_role %>
+                          <p><%= link_to "edit nurse note", edit_n_note_path(@patient, @patient.treatment, n) %></p>
+                        <%end%>
                       <%end%>
                     <%end%>
                   </div>
                 <%end%>
+              </div>
+                    
+                    
+                </div>
+
+
 
                 <%if @patient.treatment.nil? %>
                   <p><%= link_to "Create Treatment", new_treatment_path(@patient), class: "btn btn-small btn-default"  %></p>
