@@ -98,18 +98,7 @@ class PagesController < ApplicationController
   end
     
   def new_schedule
-      @patient = Patient.new
-      @patient.build_treatment.schedules.build
-  end
-
-  def new_prescription
-    @patient = Patient.new
-    @patient.build_treatment.prescriptions.build
-  end
-
-  def new_dr_note
-    @patient = Patient.new
-    @patient.build_treatment.dr_notes.build
+    @patient = Patient.find(params[:id])
   end
 
   def new_contact
@@ -138,9 +127,25 @@ class PagesController < ApplicationController
 
   def new_treatment
     @patient = Patient.find(params[:id])
-  end 
+  end
 
-  
+  def new_prescription
+    @patient = Patient.find(params[:id])
+  end
+
+  def new_dr_note
+    @patient = Patient.find(params[:id])
+  end
+
+  def new_bill
+    @patient = Patient.find(params[:id])
+  end    
+
+  def new_charge
+    @patient = Patient.find(params[:id])
+  end    
+
+#create functions
 
   def create_emergency_contact
       @patient = Patient.find(params[:id])
@@ -265,21 +270,34 @@ class PagesController < ApplicationController
     end
   end 
 
-  def new_dr_note
-      @patient = Patient.new
-      @patient.build_treatment.dr_notes.build
-  end
+  def create_bill
+    @patient = Patient.find(params[:id])
+    @discharge = @patient.discharge
+    @bill = @discharge.build_bill(bill_params)
+    if @bill.save
+        render 'show'
+    else
+        render 'new_bill'
+    end
+  end 
 
-  def create_dr_note
-      @patient = Patient.find(params[:id])
-      @schedule = @patient.treatment.dr_notes.create(dr_note_params)
-      if @schedule.save
-          render 'show'
-      else
-          render 'create_schedule'
-      end
-  end
 
+  def create_charge
+    @patient = Patient.find(params[:id])
+    @discharge = @patient.discharge
+    @bill = @discharge.bill
+    @charges = @bill.charges.build(charge_params)
+    if @charges.save
+        render 'show'
+    else
+        render 'new_charge'
+    end
+  end   
+
+
+
+
+#edit functions
 
   def edit_patient
     @patient = Patient.find(params[:id])
@@ -297,8 +315,9 @@ class PagesController < ApplicationController
   end
 
   def edit_treatment
-    @patient = Patient.find(params[:id])
-    @treatment = @patient.update_treatment if @patient.treatment.nil?
+    @patient = Patient.find(params[:patient_id])
+    @schedule = @patient.treatment.schedules.find(params[:dr_id])
+    @schedule.update if @schedule.nil?
   end
     
   def edit_contact
@@ -623,13 +642,11 @@ private
   end
   
   def treatment_params
-      if(params.has_key?(:treatment))
-          params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
-      else
-          params.fetch(:treatment, {}).permit!
-      end  
+    params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
   end
-
+  def prescription_params
+    params.require(:prescription).permit(:name, :amount, :schedule)
+  end
   def schedule_params
       #if(params.has_key?(:schedule))
           #params.require(:patient).permit(:id, treatment_attributes: [:id, schedules_attributes: [:date, :time, :schedule_msg]])
@@ -639,7 +656,6 @@ private
           params.fetch(:schedule, {}).permit!
       #end 
   end
-
   def dr_note_params
       #if(params.has_key?(:dr_note))
          #params.require(:dr_note).permit(:name, :message)
@@ -655,6 +671,24 @@ private
           params.fetch(:n_note, {}).permit!
       #end         
   end
+
+
+  def bill_params
+    if(params.has_key?(:bill))
+        params.require(:bill).permit(:amount_paid, :amount_owed, :amount_insurance)
+    else
+        params.fetch(:bill, {}).permit!
+    end         
+  end  
+
+  def charge_params
+    if(params.has_key?(:charge))
+        params.require(:charge).permit(:charge_name, :charge_amount)
+    else
+        params.fetch(:charge, {}).permit!
+    end         
+  end  
+
 
   def getPointerParam
     @recordLocation = params[:pointer] ||= " "

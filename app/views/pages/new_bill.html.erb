@@ -1,0 +1,12 @@
+<h2>New Bill Information</h2>
+<%= simple_form_for @patient.discharge.build_bill, url: new_bill_path do |f| %>
+  Bill Information:
+  <ul>
+        <%= f.input :amount_paid %>
+        <%= f.input :amount_owed %>
+        <%= f.input :amount_insurance %>             
+        <%= f.submit :submit %>
+  </ul>
+<% end %>
+
+
