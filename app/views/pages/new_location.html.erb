@@ -1,0 +1,12 @@
+<h2>New Location Information</h2>
+<%= simple_form_for @patient.build_location, url: new_location_path do |f| %>
+  Location Information:
+  <ul>
+        <%= f.input :facility %>
+        <%= f.input :room %>
+        <%= f.input :visitor_limit %>
+        <%= f.input :approved_visitors %>                
+        <%= f.submit :submit %>
+  </ul>
+<% end %>
+

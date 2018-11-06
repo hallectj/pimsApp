@@ -9,9 +9,9 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w( login_in_styles.css.scss )
-Rails.application.config.assets.precompile += %w( patient_find_styles.css.scss )
+#Rails.application.config.assets.precompile += %w( patient_find_styles.css.scss )
 #Rails.application.config.assets.precompile += %w( results.css.scss )
-Rails.application.config.assets.precompile += %w( pagesPatientResults.css.scss )
+#Rails.application.config.assets.precompile += %w( pagesPatientResults.css.scss )
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets

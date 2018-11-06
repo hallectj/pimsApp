@@ -1,8 +1,8 @@
 require 'date'
 require 'time'
+require 'bigdecimal'
 
 module HelperDisplay 
-
     def self.datetry(input)
         if (input.try(:date))
             return input.date
@@ -14,10 +14,10 @@ module HelperDisplay
 
     def self.timetry(input)
         if (input.try(:time))
-            return input.time.strftime("%H:%M:%S")
+            return input.time.to_s(:time) 
         else
             d = Time.new(01, 01, 01, 01)
-            return d.strftime("%H:%M:%S")
+            return d.strftime("%H:%M %p")
         end
     end
 
@@ -26,6 +26,33 @@ module HelperDisplay
             return input.name 
         else  
             a = String.new("None")
+            return a
+        end
+    end
+    
+    def self.amount_paid_try(input)
+        if (input != nil) 
+            return input.amount_paid
+        else  
+            a = BigDecimal.new("0")
+            return a
+        end
+    end
+    
+    def self.amount_owed_try(input)
+        if (input != nil) 
+            return input.amount_owed
+        else  
+            a = BigDecimal.new("0")
+            return a
+        end
+    end
+    
+    def self.amount_insurance_try(input)
+        if (input != nil) 
+            return input.amount_insurance
+        else  
+            a = BigDecimal.new("0")
             return a
         end
     end

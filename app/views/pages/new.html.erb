@@ -1,2 +1,16 @@
 <h1>New Patient</h1>
-<%= render 'patientForm'%>
+
+<%= simple_form_for @patient, url: {action: "create"} do |f| %>
+  <%= f.input :last_name, label: "Last Name" %>
+  <%= f.input :first_name, label: "First Name" %>
+  <%= f.input :middle_name, label: "Middle Name" %>
+  <%= f.input :birthday, as: :string, label: "birthday", required: false, input_html: {class: "datepicker", value: Date::strptime("1990-01-20", "%Y-%m-%d")} %>
+  <%= f.submit :submit %>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>
+
