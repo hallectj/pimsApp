@@ -1,0 +1,6 @@
+<%= form_for [:pages, @patient, @treatment, @prescription], url: update_prescription_path do |prescription| %>
+  Name: <%= prescription.text_field :name %>
+  <p>
+    <%= prescription.submit %>
+  </p>
+<% end %>

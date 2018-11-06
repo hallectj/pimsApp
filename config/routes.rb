@@ -17,7 +17,19 @@ Rails.application.routes.draw do
   
   #let the pass controller do the necessary route directing
   root :to => 'pass#index'  
-  resources :pages
+  resources :pages 
+  #resources :pages do
+    #resources :treatment do 
+       #resources :schedules
+    #end 
+  #end
+
+
+  #new   /pages/:page_id/treatment/:treatment_id/schedules(.:format)
+  #create /pages/:page_id/treatment(.:format)
+  
+
+
   
   #PATIENT CUSTOM ROUTES EDIT UPDATE
     get '/pages/:id/edit/edit_patient', to: 'pages#edit_patient', as: :edit_patient
@@ -56,8 +68,31 @@ Rails.application.routes.draw do
     #/treatments/:treatment_id/schedules/:id(.:format)
 
     #Nested edits and updates (schedule, prescriptions, doctor notes, nurse notes)
-    get '/pages/treatment/:treatment_id/edit/schedule/:id/edit_schedule', to: 'pages#edit_schedule', as: :edit_schedule
-    match "/pages/treatment/:treatment_id/update/schedule/:id/update_schedule" => "pages#update_schedule", as: :update_schedule, via: [:patch, :post]
+    #get '/pages/treatment/:treatment_id/edit/schedule/:id/edit_schedule', to: 'pages#edit_schedule', as: :edit_schedule
+    #match "/pages/treatment/:treatment_id/update/schedule/:id/update_schedule" => "pages#update_schedule", as: :update_schedule, via: [:patch, :post]
+    
+
+    get '/pages/:patient_id/treatment/:treatment_id/edit_schedule/:schedule_id', to: 'pages#edit_schedule', as: :edit_schedule
+    match "pages/:patient_id/treatment/:treatment_id/update_schedule/:schedule_id" => "pages#update_schedule", as: :update_schedule, via: [:patch, :post]
+
+    
+    get '/pages/:patient_id/treatment/:treatment_id/edit_prescription/:prescription_id', to: 'pages#edit_prescription', as: :edit_prescription
+    match "pages/:patient_id/treatment/:treatment_id/update_prescription/:prescription_id" => "pages#update_prescription", as: :update_prescription, via: [:patch, :post]
+
+
+    get '/pages/:patient_id/treatment/:treatment_id/edit_dr_note/:dr_id', to: 'pages#edit_dr_note', as: :edit_dr_note
+    match "pages/:patient_id/treatment/:treatment_id/update_dr_note/:dr_id" => "pages#update_dr_note", as: :update_dr_note, via: [:patch, :post]
+
+
+
+
+
+
+
+
+    get '/pages/bill/:bill_id/edit/charge/:id/edit_charge', to: 'pages#edit_charge', as: :edit_charge
+    match "/pages/bill/:bill_id/update/charge/:id/update_charge" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
+        
     #end of nested edits and updates
 
     #Adding new records
@@ -84,18 +119,22 @@ Rails.application.routes.draw do
     match "/pages/:id/new_treatment" => "pages#create_treatment", as: :new_treatment, :via => [:patch, :post]
 
     
-    get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :new_schedule
-    get '/pages/:id/treatment/:id/create/create_schedule', to: 'pages#create_schedule'
-    match "/pages/:id/treatment/:id/create/create_schedule" => "pages#create_schedule", :via => :post, :as => :create_schedule
+    get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :create_schedule
+    match "/pages/:id//treatment/:id/new_schedule" => "pages#create_schedule", as: :new_schedule, :via => [:patch, :post]
     
-    get '/pages/:id/treatment/:id/new_prescription', to: 'pages#new_prescription', as: :new_prescription
-    get '/pages/:id/treatment/:id/create/create_prescription', to: 'pages#create_prescription'
-    match "/pages/:id/treatment/:id/create/create_prescription" => "pages#create_prescription", :via => :post, :as => :create_prescription
+    get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :create_dr_note
+    match "/pages/:id//treatment/:id/new_dr_note" => "pages#create_dr_note", as: :new_dr_note, :via => [:patch, :post]
     
-    get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :new_dr_note
-    get '/pages/:id/treatment/:id/create/create_dr_note', to: 'pages#create_dr_note'
-    match "/pages/:id/treatment/:id/create/create_dr_note" => "pages#create_dr_note", :via => :post, :as => :create_dr_note
+    get '/pages/:id/treatment/:id/new_prescription', to: 'pages#new_prescription', as: :create_prescription
+    match "/pages/:id//treatment/:id/new_prescription" => "pages#create_prescription", as: :new_prescription, :via => [:patch, :post]
     
+    get '/pages/:id/discharge/:id/new_bill', to: 'pages#new_bill', as: :create_bill
+    match "/pages/:id//discharge/:id/new_bill" => "pages#create_bill", as: :new_bill, :via => [:patch, :post]
+    
+    get '/pages/:id/discharge/:id/new_charge', to: 'pages#new_charge', as: :create_charge
+    match "/pages/:id//discharge/:id/new_charge" => "pages#create_charge", as: :new_charge, :via => [:patch, :post]
+    
+
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
-  get '*path' => 'error_routes#routing'
+    get '*path' => 'error_routes#routing'
 end
