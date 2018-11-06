@@ -237,7 +237,7 @@
                           <p class="schedule_msg"> Schedule Message:<%= HelperDisplay.schedule_msgtry(s) %></p>
 
                           <% if current_user.doctor_role %>
-                            <p><%= link_to "edit schedule", edit_schedule_path(s)  %></p>
+                            <p><%= link_to "edit schedule", edit_schedule_path(@patient, @patient.treatment, s)  %></p>
                           <%end%>
                         <%end%>
                       </div>

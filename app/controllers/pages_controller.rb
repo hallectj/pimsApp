@@ -302,8 +302,9 @@ class PagesController < ApplicationController
   end
 
   def edit_treatment
-    @patient = Patient.find(params[:id])
-    @treatment = @patient.update_treatment if @patient.treatment.nil?
+    @patient = Patient.find(params[:patient_id])
+    @schedule = @patient.treatment.schedules.find(params[:dr_id])
+    @schedule.update if @schedule.nil?
   end
     
   def edit_contact
@@ -332,28 +333,59 @@ class PagesController < ApplicationController
 
   #nested edits and updates
   def edit_schedule
-    @patient = Patient.find(params[:id])
-    #@treatment = Treatment.find(params[:id])
-    @schedule = @patient.treatment.schedules.first
-    
-    
-    #@schedule = @treatment.schedules.build if @patient.treatment.schedules.nil?
-    #@schedule = @patient.treatment.update_schedule if @patient.treatment.schedule.nil?
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @schedule = @patient.treatment.schedules.find(params[:schedule_id])
+    @schedule.update if @schedule.nil?
+  end
+
+  def edit_prescription
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @prescription = @patient.treatment.prescriptions.find(params[:prescription_id])
+    @prescription.update if @prescription.nil?
+  end
+
+  def edit_dr_note
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @dr_note = @patient.treatment.dr_notes.find(params[:dr_id])
+    @dr_note.update if @dr_note.nil?
   end
 
   def update_schedule
-    @patient = Patient.find(params[:id])
-    @treatment = Treatment.find(params[:id])
-    #@schedule = Schedule.find(params[:treatment_id])
-    #@schedule = @treatment.schedule
-    @schedule = @treatment.schedules
-
+    @patient = Patient.find(params[:patient_id])
+    @schedule = @patient.treatment.schedules.find(params[:schedule_id])
     if @schedule.update(schedule_params)
-        render 'show'
+        redirect_to page_path(@patient)
     else
+        flash.now[:error] = "Cannot update Schedule"
         render 'edit_schedule'
     end
   end
+
+  def update_dr_note
+    @patient = Patient.find(params[:patient_id])
+    @dr_note = @patient.treatment.dr_notes.find(params[:dr_id])
+    if @dr_note.update(dr_note_params)
+        redirect_to page_path(@patient)
+    else
+        flash.now[:error] = "Cannot update Dr note"
+        render 'edit_dr_note'
+    end
+  end
+
+  def update_prescription
+    @patient = Patient.find(params[:patient_id])
+    @prescription = @patient.treatment.prescriptions.find(params[:prescription_id])
+    if @prescription.update(prescription_params)
+        redirect_to page_path(@patient)
+    else
+        flash.now[:error] = "Cannot update Prescription"
+        render 'edit_prescription'
+    end
+  end
+
   #end of nested edits and updates
   
   def update_patient
@@ -587,27 +619,17 @@ private
   end
   
   def treatment_params
-      if(params.has_key?(:treatment))
-          params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
-      else
-          params.fetch(:treatment, {}).permit!
-      end  
+    params.require(:treatment).permit(:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message] )
   end
-
+  def prescription_params
+    params.require(:prescription).permit(:name, :amount, :schedule)
+  end
   def schedule_params
-      if(params.has_key?(:schedule))
-          params.require(:schedule).permit(:date, :time, :schedule_msg)
-      else
-          params.fetch(:schedule, {}).permit!
-      end 
+    params.require(:schedule).permit(:date, :time, :schedule_msg)
   end
-
   def dr_note_params
-      if(params.has_key?(:dr_note))
-          params.require(:dr_note).permit(:name, :message)
-      else
-          params.fetch(:dr_note, {}).permit!
-      end         
+    params.require(:dr_note).permit(:id, :name, :message)
+    #params.fetch(:dr_note, {}).permit!
   end
   
   def n_note_params
@@ -618,13 +640,6 @@ private
       end         
   end
 
-  def prescription_params
-    if(params.has_key?(:prescription))
-        params.require(:prescription).permit(:name, :amount, :schedule)
-    else
-        params.fetch(:prescription, {}).permit!
-    end         
-  end
 
   def bill_params
     if(params.has_key?(:bill))
