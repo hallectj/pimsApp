@@ -21,6 +21,8 @@ class PagesController < ApplicationController
   before_action :look_insurances, only: [:show, :edit, :update, :destroy]
   before_action :look_treatments, only: [:show, :edit_treatment, :update_treatment, :destroy]
   before_action :look_schedules, only: [:show, :edit_schedule, :update_schedule, :destroy]
+  before_action :look_prescriptions, only: [:show, :edit_prescription, :update_prescription, :destroy]
+  before_action :look_dr_notes, only: [:show, :edit_dr_note, :update_dr_note, :destroy]
   
   def index
   end
@@ -100,6 +102,16 @@ class PagesController < ApplicationController
       @patient.build_treatment.schedules.build
   end
 
+  def new_prescription
+    @patient = Patient.new
+    @patient.build_treatment.prescriptions.build
+  end
+
+  def new_dr_note
+    @patient = Patient.new
+    @patient.build_treatment.dr_notes.build
+  end
+
   def new_contact
       @patient = Patient.find(params[:id])
   end
@@ -127,6 +139,8 @@ class PagesController < ApplicationController
   def new_treatment
     @patient = Patient.find(params[:id])
   end 
+
+  
 
   def create_emergency_contact
       @patient = Patient.find(params[:id])
@@ -199,14 +213,47 @@ class PagesController < ApplicationController
   end     
       
   def create_schedule
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @schedule = @treatment.schedules.build(schedule_params)
+    if @schedule.save
+        render 'show'
+    else
+        render 'new_schedule'
+    end
+  end
+
+  def create_prescription
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @prescription = @treatment.prescriptions.build(prescription_params)
+    if @prescription.save
+        render 'show'
+    else
+        render 'new_prescription'
+    end
+  end
+
+  def create_dr_note
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @dr_note = @treatment.dr_notes.build(dr_notes)
+    if @dr_note.save
+        render 'show'
+    else
+        render 'new_dr_note'
+    end
+  end
+
+  def create_contact
       @patient = Patient.find(params[:id])
-      @schedule = @patient.treatment.schedules.create(schedule_params)
-      if @schedule.save
+      @contact = @patient.build_contact(contact_params)
+      if @contact.save
           render 'show'
       else
-          render 'new_schedule'
+          render 'new_contact'
       end
-  end     
+  end        
 
   def create_treatment
     @patient = Patient.find(params[:id])
@@ -225,7 +272,7 @@ class PagesController < ApplicationController
 
   def create_dr_note
       @patient = Patient.find(params[:id])
-      @schedule = @patient.treatment.dr_notes.create(note_params)
+      @schedule = @patient.treatment.dr_notes.create(dr_note_params)
       if @schedule.save
           render 'show'
       else
@@ -280,28 +327,61 @@ class PagesController < ApplicationController
 
   #nested edits and updates
   def edit_schedule
-    @patient = Patient.find(params[:id])
-    #@treatment = Treatment.find(params[:id])
-    @schedule = @patient.treatment.schedules.first
-    
-    
-    #@schedule = @treatment.schedules.build if @patient.treatment.schedules.nil?
-    #@schedule = @patient.treatment.update_schedule if @patient.treatment.schedule.nil?
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @schedule = @patient.treatment.schedules.find(params[:schedule_id])
+    @schedule.update if @schedule.nil?
+  end
+
+  def edit_prescription
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @prescription = @patient.treatment.prescriptions.find(params[:prescription_id])
+    @prescription.update if @prescription.nil?
+  end
+
+  def edit_dr_note
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @dr_note = @patient.treatment.dr_notes.find(params[:dr_id])
+    @dr_note.update if @dr_note.nil?
   end
 
   def update_schedule
-    @patient = Patient.find(params[:id])
-    @treatment = Treatment.find(params[:id])
-    #@schedule = Schedule.find(params[:treatment_id])
-    #@schedule = @treatment.schedule
-    @schedule = @treatment.schedules
-
+    @patient = Patient.find(params[:patient_id])
+    @schedule = @patient.treatment.schedules.find(params[:schedule_id])
     if @schedule.update(schedule_params)
-        render 'show'
+        redirect_to page_path(@patient)
     else
+        flash.now[:error] = "Cannot update Schedule"
         render 'edit_schedule'
     end
   end
+
+  def update_dr_note
+    @patient = Patient.find(params[:patient_id])
+    @dr_note = @patient.treatment.dr_notes.find(params[:dr_id])
+    if @dr_note.update(dr_note_params)
+        redirect_to page_path(@patient)
+    else
+        flash.now[:error] = "Cannot update Dr note"
+        render 'edit_dr_note'
+    end
+  end
+
+  def update_prescription
+    @patient = Patient.find(params[:patient_id])
+    @prescription = @patient.treatment.prescriptions.find(params[:prescription_id])
+    if @prescription.update(prescription_params)
+        redirect_to page_path(@patient)
+    else
+        flash.now[:error] = "Cannot update Prescription"
+        render 'edit_prescription'
+    end
+  end
+
+  
+
   #end of nested edits and updates
   
   def update_patient
@@ -447,6 +527,14 @@ private
     @schedule = Schedule.find_by(treatment_id: params[:treatment_id])
   end
 
+  def look_prescriptions
+    @prescription = Prescription.find_by(treatment_id: params[:treatment_id])
+  end
+
+  def look_dr_notes
+    @dr_note = DrNote.find_by(treatment_id: params[:treatment_id])
+  end
+
   def look_treatments
     @treatment = Treatment.find_by(patient_id: params[:patient_id])
   end
@@ -455,9 +543,9 @@ private
     params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :birthday, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
   end
 
-  #def patient_params
-    #params.fetch(:patient, {}).permit!
-  #end
+  def prescription_params
+    params.fetch(:prescription, {}).permit!
+  end
   
   def look_physicians
       @physician = Physician.find_by(patient_id: params[:patient_id])
@@ -543,27 +631,29 @@ private
   end
 
   def schedule_params
-      if(params.has_key?(:schedule))
-          params.require(:schedule).permit(:date, :time, :schedule_msg)
-      else
+      #if(params.has_key?(:schedule))
+          #params.require(:patient).permit(:id, treatment_attributes: [:id, schedules_attributes: [:date, :time, :schedule_msg]])
+          #params.require(:patient).permit!  
+          #params.require(:schedule).permit(:patient_id, :date, :time, :schedule_msg)
+      #else
           params.fetch(:schedule, {}).permit!
-      end 
+      #end 
   end
 
   def dr_note_params
-      if(params.has_key?(:dr_note))
-          params.require(:dr_note).permit(:name, :message)
-      else
+      #if(params.has_key?(:dr_note))
+         #params.require(:dr_note).permit(:name, :message)
+      #else
           params.fetch(:dr_note, {}).permit!
-      end         
+      #end         
   end
   
   def n_note_params
-      if(params.has_key?(:n_note))
-          params.require(:n_note).permit(:name, :message)
-      else
+      #if(params.has_key?(:n_note))
+          #params.require(:n_note).permit(:name, :message)
+      #else
           params.fetch(:n_note, {}).permit!
-      end         
+      #end         
   end
 
   def getPointerParam

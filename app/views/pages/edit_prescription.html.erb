@@ -1,0 +1,14 @@
+<h2>Edit prescription</h2>
+
+<%= simple_form_for [:pages, @patient, @treatment, @prescription], url: update_prescription_path do |prescription| %>
+  <%= prescription.input :name %>
+  <%= prescription.input :amount %>
+  <%= prescription.input :schedule %>
+  <%= prescription.button :submit %>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>
