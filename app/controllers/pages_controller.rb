@@ -524,7 +524,7 @@ private
   end
 
   def prescription_params
-    params.fetch(:schedule, {}).permit!
+    params.fetch(:prescription, {}).permit!
   end
 
   def look_prescriptions
