@@ -365,7 +365,7 @@ module HelperDisplay
 
     def self.schedule_timetry(input)
         if (input != nil)
-            return input.time
+            return input.time.to_s(:time) 
         else
             a = String.new("None")
             return a

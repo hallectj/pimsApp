@@ -198,17 +198,20 @@
                         <% if current_user.doctor_role %>
                           <p><%= link_to "Create a new prescription", new_prescription_path(@patient, :pointer => "prescriptions"), class: "btn btn-small btn-default" %></p>
                         <%end%>
+                        
                         <% @patient.treatment.prescriptions.each do |p| %>
-                          <p class="name"> Name:<%= HelperDisplay.pres_nametry(p) %></p>
-                          <p class="amount"> Amount:<%= HelperDisplay.pres_amounttry(p) %></p>
-                          <p class="schedule"> Schedule:<%= HelperDisplay.pres_scheduletry(p) %></p>
-                          <% if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
-                            <p class="divider"> ------------------- </p>
+                          <p> Name:<%= HelperDisplay.pres_nametry(p) %></p>
+                          <p> Amount:<%= HelperDisplay.pres_amounttry(p) %></p>
+                          <p> Schedule:<%= HelperDisplay.pres_scheduletry(p) %></p>
+                          <%# if @patient.treatment.prescriptions.index(p) + 1 < @patient.treatment.prescriptions.count %>
+                            
                             <% if current_user.doctor_role %>
-                              <%-# Edit prescriptions %>
+                              <p><%= link_to "edit prescription", edit_prescription_path(@patient, @patient.treatment, p) %></p>
                             <%end%>
-                          <%end%>
+                          <%# end %>
                         <%end%>
+
+
                       </div>
                     <%end%>                  
                   
@@ -224,13 +227,14 @@
 
                   <div id="tab2" class="tab_content">
                   
-                  
+                   
                     <% if !(@patient.treatment.nil?)%>
                       <div class="inner-card">
                         <b>Schedule</b>
                         <% if current_user.doctor_role %>
-                          <p><%= link_to "Create a new schedule", new_schedule_path(@patient, :pointer => "schedules"), class: "btn btn-small btn-default" %></p>
+                          <p><%= link_to "Create a new schedule", create_schedule_path(@patient, :pointer => "schedules"), class: "btn btn-small btn-default" %></p>
                         <%end%>
+
                         <% @patient.treatment.schedules.each do |s| %>
                           <p class="date"> Date:<%= HelperDisplay.schedule_datetry(s) %></p>
                           <p class="time"> Time:<%= HelperDisplay.schedule_timetry(s) %></p>
@@ -239,7 +243,17 @@
                           <% if current_user.doctor_role %>
                             <p><%= link_to "edit schedule", edit_schedule_path(@patient, @patient.treatment, s)  %></p>
                           <%end%>
-                        <%end%>
+                        <% end %>
+
+
+
+                        <%# @patient.treatment.schedules.each do |s| %>
+
+                        <%#end%>
+
+
+
+
                       </div>
                     <%end%>                  
                   
@@ -259,7 +273,9 @@
                       <p class="name"> Name:<%= HelperDisplay.drnote_nametry(d) %></p>
                       <p class="message"> Message:<%= HelperDisplay.drnote_msgtry(d) %></p>
                       <% if current_user.doctor_role %>
-                        <%-# Edit doctor notes %>
+                        <% if current_user.doctor_role %>
+                          <p><%= link_to "edit dr note", edit_dr_note_path(@patient, @patient.treatment, d) %></p>
+                        <%end%>
                       <%end%>
                     <%end%>
                   </div>

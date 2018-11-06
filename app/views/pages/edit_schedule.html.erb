@@ -1,6 +1,14 @@
-<%= form_for [:pages, @patient, @treatment, @schedule], url: update_schedule_path do |schedule| %>
-  Name: <%= schedule.text_field :schedule_msg %>
-  <p>
-    <%= schedule.submit %>
-  </p>
+ <h2>Edit Schedule:</h2>
+
+<%= simple_form_for [:pages, @patient, @treatment, @schedule], url: update_schedule_path do |schedule| %>
+  <%= schedule.input :date, as: :string, required: true, input_html: {class: "datepicker"} %>
+  <%= schedule.input :time, as: :string, required: true, input_html: {class: "timepicker"} %>
+  <%= schedule.input :schedule_msg %>
+  <%= schedule.button :submit %>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>

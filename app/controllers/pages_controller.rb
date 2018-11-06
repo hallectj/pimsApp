@@ -21,6 +21,8 @@ class PagesController < ApplicationController
   before_action :look_insurances, only: [:show, :edit, :update, :destroy]
   before_action :look_treatments, only: [:show, :edit_treatment, :update_treatment, :destroy]
   before_action :look_schedules, only: [:show, :edit_schedule, :update_schedule, :destroy]
+  before_action :look_prescriptions, only: [:show, :edit_prescription, :update_prescription, :destroy]
+  before_action :look_dr_notes, only: [:show, :edit_dr_note, :update_dr_note, :destroy]
   
   def index
   end
@@ -216,14 +218,36 @@ class PagesController < ApplicationController
   end     
       
   def create_schedule
-      @patient = Patient.find(params[:id])
-      @treatment = @patient.treatment
-      @schedule = @treatment.schedules.build(schedule_params)
-      if @schedule.save
-          render 'show'
-      else
-          render 'new_schedule'
-      end
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @schedule = @treatment.schedules.build(schedule_params)
+    if @schedule.save
+        render 'show'
+    else
+        render 'new_schedule'
+    end
+  end
+
+  def create_prescription
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @prescription = @treatment.prescriptions.build(prescription_params)
+    if @prescription.save
+        render 'show'
+    else
+        render 'new_prescription'
+    end
+  end
+
+  def create_dr_note
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @dr_note = @treatment.dr_notes.build(dr_notes)
+    if @dr_note.save
+        render 'show'
+    else
+        render 'new_dr_note'
+    end
   end
 
   def create_treatment
@@ -247,27 +271,6 @@ class PagesController < ApplicationController
     end
   end 
 
-  def create_dr_note
-      @patient = Patient.find(params[:id])
-      @treatment = @patient.treatment
-      @notes = @treatment.dr_notes.build(dr_note_params)
-      if @notes.save
-          render 'show'
-      else
-          render 'new_dr_note'
-      end
-  end
-
-  def create_prescription
-    @patient = Patient.find(params[:id])
-    @treatment = @patient.treatment
-    @prescriptions = @treatment.prescriptions.build(prescription_params)
-    if @prescriptions.save
-        render 'show'
-    else
-        render 'new_prescription'
-    end
-   end  
 
   def create_charge
     @patient = Patient.find(params[:id])
@@ -385,6 +388,8 @@ class PagesController < ApplicationController
         render 'edit_prescription'
     end
   end
+
+  
 
   #end of nested edits and updates
   
@@ -531,6 +536,14 @@ private
     @schedule = Schedule.find_by(treatment_id: params[:treatment_id])
   end
 
+  def look_prescriptions
+    @prescription = Prescription.find_by(treatment_id: params[:treatment_id])
+  end
+
+  def look_dr_notes
+    @dr_note = DrNote.find_by(treatment_id: params[:treatment_id])
+  end
+
   def look_treatments
     @treatment = Treatment.find_by(patient_id: params[:patient_id])
   end
@@ -539,9 +552,9 @@ private
     params.require(:patient).permit(:id, :first_name, :middle_name, :last_name, :birthday, :search, admittance_attributes: [:date, :time, :reason], treatment_attributes: [:name, schedules_attributes: [:date, :time, :schedule_msg], prescriptions_attributes: [:name, :amount, :schedule], dr_notes_attributes: [:name, :message], n_notes_attributes: [:name, :message]], discharge_attributes: [:date, :time, bill_attributes: [:amount_paid, :amount_owed, :amount_insurance, charges_attributes: [:charge_name, :charge_amount]]])
   end
 
-  #def patient_params
-    #params.fetch(:patient, {}).permit!
-  #end
+  def prescription_params
+    params.fetch(:prescription, {}).permit!
+  end
   
   def look_physicians
       @physician = Physician.find_by(patient_id: params[:patient_id])
@@ -625,19 +638,28 @@ private
     params.require(:prescription).permit(:name, :amount, :schedule)
   end
   def schedule_params
-    params.require(:schedule).permit(:date, :time, :schedule_msg)
+      #if(params.has_key?(:schedule))
+          #params.require(:patient).permit(:id, treatment_attributes: [:id, schedules_attributes: [:date, :time, :schedule_msg]])
+          #params.require(:patient).permit!  
+          #params.require(:schedule).permit(:patient_id, :date, :time, :schedule_msg)
+      #else
+          params.fetch(:schedule, {}).permit!
+      #end 
   end
   def dr_note_params
-    params.require(:dr_note).permit(:id, :name, :message)
-    #params.fetch(:dr_note, {}).permit!
+      #if(params.has_key?(:dr_note))
+         #params.require(:dr_note).permit(:name, :message)
+      #else
+          params.fetch(:dr_note, {}).permit!
+      #end         
   end
   
   def n_note_params
-      if(params.has_key?(:n_note))
-          params.require(:n_note).permit(:name, :message)
-      else
+      #if(params.has_key?(:n_note))
+          #params.require(:n_note).permit(:name, :message)
+      #else
           params.fetch(:n_note, {}).permit!
-      end         
+      #end         
   end
 
 
