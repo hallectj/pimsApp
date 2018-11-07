@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   #before_action :look_patients, only: [:show, :edit, :update, :destroy]
 
 
-  layout 'pagesPatientResults', only: [:pagesPatientResults]
+  #layout 'pagesPatientResults', only: [:pagesPatientResults]
 
   before_action :isAdmin?
   before_action :determineRollCustomAction, only: [:index]  
@@ -143,9 +143,13 @@ class PagesController < ApplicationController
 
   def new_treatment
     @patient = Patient.find(params[:id])
+<<<<<<< HEAD
   end
 
   
+=======
+  end 
+>>>>>>> 4abafb0f70c95adb817ebd9447003793413313ed
 
   def create_emergency_contact
       @patient = Patient.find(params[:id])
@@ -157,6 +161,15 @@ class PagesController < ApplicationController
       end
   end  
 
+  def create_treatment
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.build_treatment(treatment_params)
+    if @treatment.save
+        render 'show'
+    else
+        render 'new_treatment'
+    end
+  end   
 
   def create_insurance
       @patient = Patient.find(params[:id])
@@ -196,9 +209,20 @@ class PagesController < ApplicationController
       else
           render 'new_discharge'
       end
-  end  
+  end
+  
+  def create_contact
+    @patient = Patient.find(params[:id])
+    @contact = @patient.build_contact(contact_params)
+    if @contact.save
+        render 'show'
+    else
+        render 'new_contact'
+    end
+  end     
       
   def create_schedule
+<<<<<<< HEAD
     @patient = Patient.find(params[:id])
     @treatment = @patient.treatment
     @schedule = @treatment.schedules.build(schedule_params)
@@ -251,6 +275,16 @@ class PagesController < ApplicationController
           render 'new_contact'
       end
   end        
+=======
+      @patient = Patient.find(params[:id])
+      @schedule = @patient.treatment.schedules.create(schedule_params)
+      if @schedule.save
+          render 'show'
+      else
+          render 'new_schedule'
+      end
+  end     
+>>>>>>> 4abafb0f70c95adb817ebd9447003793413313ed
 
   def create_treatment
     @patient = Patient.find(params[:id])
@@ -271,6 +305,7 @@ class PagesController < ApplicationController
   def edit_patient
     @patient = Patient.find(params[:id])
   end
+
 
   def edit_admittance
       @patient = Patient.find(params[:id])
@@ -501,7 +536,7 @@ class PagesController < ApplicationController
     #replace wild cards and whitespace with regex wildcards
     searchString = params[:search].gsub("*", "%")
     #adapted from https://stackoverflow.com/questions/21470782/concat-inside-rails-query-conditions
-    @patients = Patient.where("last_name like ? OR first_name like ? OR (first_name || ' ' || last_name) like ? OR (last_name || ' ' || first_name) like ?", "#{searchString}", "#{searchString}", "#{searchString}", "#{searchString}")
+    @patients = Patient.where("lower(last_name) like lower(?) OR lower(first_name) like lower(?) OR lower(first_name || ' ' || last_name) like lower(?) OR lower(last_name || ' ' || first_name) like lower(?)", "#{searchString}", "#{searchString}", "#{searchString}", "#{searchString}")
     #@patients = Patient.where("(first_name || ' ' || last_name) like ? OR (last_name || ' ' || first_name) like ?", "%#{searchString}%", "%#{searchString}%")
   end
 
@@ -585,10 +620,13 @@ private
       end
   end
 
+<<<<<<< HEAD
   #def new_contact_params
       #params.permit(:patient_id, :home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
   #end
 
+=======
+>>>>>>> 4abafb0f70c95adb817ebd9447003793413313ed
   def look_locations
       @location = Location.find_by(patient_id: params[:patient_id])
   end

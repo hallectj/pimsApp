@@ -120,6 +120,9 @@ Rails.application.routes.draw do
     get '/pages/:id/new_treatment', to: 'pages#new_treatment', as: :create_treatment
     match "/pages/:id/new_treatment" => "pages#create_treatment", as: :new_treatment, :via => [:patch, :post]
 
+    get '/patient/:id/new_treatment', to: 'pages#new_treatment', as: :create_treatment
+    match "/patient/:id/new_treatment" => "pages#create_treatment", as: :new_treatment, :via => [:patch, :post]
+
     
     get '/pages/:id/treatment/:id/new_schedule', to: 'pages#new_schedule', as: :create_schedule
     match "/pages/:id//treatment/:id/new_schedule" => "pages#create_schedule", as: :new_schedule, :via => [:patch, :post]
