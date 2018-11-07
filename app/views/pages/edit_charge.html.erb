@@ -1,7 +1,7 @@
  <h2>Edit Charge:</h2>
 
-<%= simple_form_for [:pages, @discharge, @bill, @charge], url: update_charge_path do |charge| %>
+<%= simple_form_for [:pages, @patient, @bill, @charge], url: update_charge_path do |charge| %>
   <%= charge.input :charge_name %>
-  <%= charge.input :charge_amount, as: :decimal %>
+  <%= charge.input :charge_amount %>
   <%= charge.button :submit %>
 <% end %>

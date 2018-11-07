@@ -67,7 +67,7 @@
                                 <p class="charge_amount"> Time:<%= HelperDisplay.charge_amount_try(s) %></p>
 
                                 <% if current_user.office_role %>
-                                  <p><%= link_to "edit bill", edit_bill_path(s)  %></p>
+                                  <p><%= link_to "Edit Charge", edit_charge_path(@patient, @patient.discharge.bill, s)  %></p>
                                 <%end%>
                               <%end%>
                             </div>

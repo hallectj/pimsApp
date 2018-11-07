@@ -90,8 +90,8 @@ Rails.application.routes.draw do
 
 
 
-    get '/pages/:discharge/bill/:bill_id/edit_charge/:charge_id', to: 'pages#edit_charge', as: :edit_charge
-    match "/pages/:discharge/bill/:bill_id/update_charge/:charge_id" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
+    get 'pages/:patient_id/bill/:bill_id/edit_charge/:charge_id', to: 'pages#edit_charge', as: :edit_charge
+    match "pages/:patient_id/bill/:bill_id/update_charge/:charge_id" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
         
     #end of nested edits and updates
 
