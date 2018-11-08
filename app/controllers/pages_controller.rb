@@ -377,6 +377,26 @@ class PagesController < ApplicationController
     end
   end
 
+  def edit_insurance
+    @patient = Patient.find(params[:id])
+    if (@patient.contact.nil?)
+        @insurance = Insurance.new(patient_id: @patient.id)
+    else
+        @insurance = @patient.update_insurance if @patient.insurance.nil?
+    end
+  end
+
+  def update_insurance 
+    @patient = Patient.find(params[:id])
+    @insurance = @patient.insurance
+    if @insurance.update(insurance_params)
+        render 'show'
+    else
+        flash.now[:error] = "Cannot update Contact Information"
+        render 'edit_insurance'
+    end
+  end
+
   def update_dr_note
     @patient = Patient.find(params[:patient_id])
     @dr_note = @patient.treatment.dr_notes.find(params[:dr_id])
