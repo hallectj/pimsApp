@@ -242,7 +242,7 @@ class PagesController < ApplicationController
   def create_dr_note
     @patient = Patient.find(params[:id])
     @treatment = @patient.treatment
-    @dr_note = @treatment.dr_notes.build(dr_notes)
+    @dr_note = @treatment.dr_notes.build(dr_note_params)
     if @dr_note.save
         render 'show'
     else
