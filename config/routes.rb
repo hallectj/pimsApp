@@ -28,9 +28,7 @@ Rails.application.routes.draw do
   #new   /pages/:page_id/treatment/:treatment_id/schedules(.:format)
   #create /pages/:page_id/treatment(.:format)
   
-
-
-  
+#=begin  
   #PATIENT CUSTOM ROUTES EDIT UPDATE
     get '/pages/:id/edit/edit_patient', to: 'pages#edit_patient', as: :edit_patient
     match "pages/:id/update/update_patient" => "pages#update_patient", as: :update_patient, via: [:patch, :post]
@@ -138,6 +136,7 @@ Rails.application.routes.draw do
     get '/pages/:id/discharge/:id/new_charge', to: 'pages#new_charge', as: :create_charge
     match "/pages/:id//discharge/:id/new_charge" => "pages#create_charge", as: :new_charge, :via => [:patch, :post]
     
+#=end
 
   #If a route isn't recognized then let error controller handle it, this needs to be on the last line
     get '*path' => 'error_routes#routing'
