@@ -1,18 +1,15 @@
-<h2>Create a Schedule:</h2>
-<%= form_with(model: [@patient, @patient.build_treatment.schedules.build], url: create_schedule_path, local: true) do |form| %>
-  <p>
-    <%= form.label :Date %><br>         
-    <%= form.text_field :date %>        
-  </p>
-  <p>
-    <%= form.label :Time %><br>
-    <%= form.text_field :time %>
-  </p>
-    <p>
-        <%= form.label :Message %><br>         
-        <%= form.text_area :schedule_msg %>        
-    </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+<h2>New Schedule Information</h2>
+<div class = "container">
+  <%= simple_form_for @patient.treatment.schedules.build, url: new_schedule_path do |f| %>
+      <%= f.input :date, as: :string, required: true, input_html: {class: "datepicker"} %>
+      <%= f.input :time, as: :string, required: true, input_html: {class: "timepicker"}%>     
+      <%= f.input :schedule_msg %>
+      <%= f.submit %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>
