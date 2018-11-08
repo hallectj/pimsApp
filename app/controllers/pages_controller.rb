@@ -100,6 +100,11 @@ class PagesController < ApplicationController
   def new_schedule
     @patient = Patient.find(params[:id])
   end
+    
+    def new_n_note
+        @patient = Patient.new
+        @patient.build_treatment.n_notes.build
+    end
 
   def new_contact
       @patient = Patient.find(params[:id])
@@ -242,11 +247,22 @@ class PagesController < ApplicationController
   def create_dr_note
     @patient = Patient.find(params[:id])
     @treatment = @patient.treatment
-    @dr_note = @treatment.dr_notes.build(dr_notes)
+    @dr_note = @treatment.dr_notes.build(dr_note_params)
     if @dr_note.save
         render 'show'
     else
         render 'new_dr_note'
+    end
+  end
+    
+    def create_n_note
+    @patient = Patient.find(params[:id])
+    @treatment = @patient.treatment
+    @n_note = @treatment.n_notes.build(n_note_params)
+    if @n_note.save
+        render 'show'
+    else
+        render 'new_n_note'
     end
   end
 
@@ -293,9 +309,6 @@ class PagesController < ApplicationController
         render 'new_charge'
     end
   end   
-
-
-
 
 #edit functions
 
@@ -365,6 +378,13 @@ class PagesController < ApplicationController
     @dr_note = @patient.treatment.dr_notes.find(params[:dr_id])
     @dr_note.update if @dr_note.nil?
   end
+    
+    def edit_n_note
+    @patient = Patient.find(params[:patient_id])
+    @treatment = @patient.treatment
+    @n_note = @patient.treatment.n_notes.find(params[:n_id])
+    @n_note.update if @n_note.nil?
+  end
 
   def edit_charge
     @patient = Patient.find(params[:patient_id])
@@ -405,6 +425,17 @@ class PagesController < ApplicationController
     else
         flash.now[:error] = "Cannot update Dr note"
         render 'edit_dr_note'
+    end
+  end
+    
+    def update_n_note
+    @patient = Patient.find(params[:patient_id])
+    @n_note = @patient.treatment.n_notes.find(params[:n_id])
+    if @n_note.update(n_note_params)
+        redirect_to page_path(@patient)
+    else
+        flash.now[:error] = "Cannot update Nurse note"
+        render 'edit_n_note'
     end
   end
 
@@ -619,6 +650,10 @@ private
           params.fetch(:contact, {}).permit!
       end
   end
+
+  #def new_contact_params
+      #params.permit(:patient_id, :home_phone, :work_phone, :mobile_phone, :street, :city, :state, :zip)
+  #end
 
   def look_locations
       @location = Location.find_by(patient_id: params[:patient_id])
