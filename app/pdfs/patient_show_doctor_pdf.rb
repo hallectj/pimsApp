@@ -20,6 +20,7 @@ class PatientShowDoctorPdf < Prawn::Document
     table location_data_rows
     table admittance_rows
     table discharge_rows
+    detailed_report
   end
   
   def general_data_rows
@@ -30,7 +31,7 @@ class PatientShowDoctorPdf < Prawn::Document
   end
   
   def admittance_data_rows
-    move_down 20
+    move_down 60
     text "Admittance Data:", size: 16, style: :bold
     [["admittance date", "admittance time", "admittance reason"]] +
     [[HelperDisplay.datetry(@patient.admittance), HelperDisplay.timetry(@patient.admittance), HelperDisplay.reasontry(@patient.admittance)]]
@@ -85,7 +86,14 @@ class PatientShowDoctorPdf < Prawn::Document
   end
 
   def detailed_report
-    #treatment
-    #schedule, prescriptions, Dr note will go here
+    move_down 20
+    bounding_box([0, cursor], width: 540, height: cursor) do
+       stroke_bounds
+       move_down 20
+       text "Prescriptions, Schedules and Doctor Notes", size: 16, style: :bold 
+       
+       #stuff goes here
+    end
   end
+
 end
