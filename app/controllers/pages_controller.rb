@@ -327,6 +327,11 @@ class PagesController < ApplicationController
     @discharge = @patient.update_discharge if @patient.discharge.nil?
   end
 
+    def edit_bill
+        @patient = Patient.find(params[:patient_id])
+        @bill = @patient.discharge.update_bill if @patient.discharge.bill.nil?
+    end
+
   def edit_treatment
     @patient = Patient.find(params[:patient_id])
     @schedule = @patient.treatment.schedules.find(params[:dr_id])
@@ -504,6 +509,17 @@ class PagesController < ApplicationController
         else
           flash.now[:error] = "Cannot update your Discharge"
           render 'edit_discharge'
+        end
+     end
+
+     def update_bill
+        @patient = Patient.find(params[:patient_id])
+        @bill = @patient.discharge.bill
+        if @bill.update(bill_params)
+          redirect_to page_path(@patient)
+        else
+          flash.now[:error] = "Cannot update billing information"
+          render 'edit_bill'
         end
      end
     
