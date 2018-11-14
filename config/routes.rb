@@ -39,8 +39,8 @@ Rails.application.routes.draw do
     get '/pages/:id/edit/edit_discharge', to: 'pages#edit_discharge', as: :edit_discharge
     match "pages/:id/update/update_discharge" => "pages#update_discharge", as: :update_discharge, via: [:patch, :post]
 
-    get '/pages/:id/discharge/:id/edit/edit_bill', to: 'pages#edit_bill', as: :edit_bill
-    match "pages/:id/discharge/:id/update/update_bill" => "pages#update_bill", as: :update_bill, via: [:patch, :post]
+    get '/pages/:patient_id/discharge/:id/edit/edit_bill', to: 'pages#edit_bill', as: :edit_bill
+    match "pages/:patient_id/discharge/:id/update/update_bill" => "pages#update_bill", as: :update_bill, via: [:patch, :post]
 
     get '/pages/:id/edit/edit_contact', to: 'pages#edit_contact', as: :edit_contact
     match "pages/:id/update/update_contact" => "pages#update_contact", as: :update_contact, via: [:patch, :post]
@@ -81,6 +81,8 @@ Rails.application.routes.draw do
     get '/pages/:patient_id/treatment/:treatment_id/edit_dr_note/:dr_id', to: 'pages#edit_dr_note', as: :edit_dr_note
     match "pages/:patient_id/treatment/:treatment_id/update_dr_note/:dr_id" => "pages#update_dr_note", as: :update_dr_note, via: [:patch, :post]
 
+    get '/pages/:patient_id/treatment/:treatment_id/edit_n_note/:n_id', to: 'pages#edit_n_note', as: :edit_n_note
+    match "pages/:patient_id/treatment/:treatment_id/update_n_note/:n_id" => "pages#update_n_note", as: :update_n_note, via: [:patch, :post]
 
 
 
@@ -88,8 +90,8 @@ Rails.application.routes.draw do
 
 
 
-    get '/pages/bill/:bill_id/edit/charge/:id/edit_charge', to: 'pages#edit_charge', as: :edit_charge
-    match "/pages/bill/:bill_id/update/charge/:id/update_charge" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
+    get 'pages/:patient_id/bill/:bill_id/edit_charge/:charge_id', to: 'pages#edit_charge', as: :edit_charge
+    match "pages/:patient_id/bill/:bill_id/update_charge/:charge_id" => "pages#update_charge", as: :update_charge, via: [:patch, :post]
         
     #end of nested edits and updates
 
@@ -121,6 +123,9 @@ Rails.application.routes.draw do
     
     get '/pages/:id/treatment/:id/new_dr_note', to: 'pages#new_dr_note', as: :create_dr_note
     match "/pages/:id//treatment/:id/new_dr_note" => "pages#create_dr_note", as: :new_dr_note, :via => [:patch, :post]
+    
+    get '/pages/:id/treatment/:id/new_n_note', to: 'pages#new_n_note', as: :create_n_note
+    match "/pages/:id/treatment/:id/new_n_note" => "pages#create_n_note", as: :new_n_note, :via => [:patch, :post]
     
     get '/pages/:id/treatment/:id/new_prescription', to: 'pages#new_prescription', as: :create_prescription
     match "/pages/:id//treatment/:id/new_prescription" => "pages#create_prescription", as: :new_prescription, :via => [:patch, :post]

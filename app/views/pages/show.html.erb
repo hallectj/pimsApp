@@ -44,36 +44,36 @@
 
                   <% if current_user.office_role %>
                     <p><%= link_to "Edit Discharge", edit_discharge_path(@patient, :pointer => "discharge"), class: "btn btn-small btn-default" %></p>
-                  <%end%>
-                  <% if @patient.discharge.bill.nil?%> 
-                    <p><%= link_to "Create Bill", new_bill_path(@patient), class: "btn btn-small btn-default"  %></p>
-                  <%end%>
-                  <% if !(@patient.discharge.bill.nil?)%>
-                    <b>Bill</b>
-                    <p class="amount_paid"> Amount Paid:<%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %></p>
-                    <p class="amount_owed"> Amount Owed:<%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %></p>
-                    <p class="amount_insurance"> Amount Paid by Insurance:<%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %></p>
-                    <% if current_user.office_role %>
-                      <p><%= link_to "Edit Billing", edit_bill_path(@patient, :pointer => "bill"), class: "btn btn-small btn-default" %></p>
+                    <% if @patient.discharge.bill.nil?%> 
+                      <p><%= link_to "Create Bill", new_bill_path(@patient), class: "btn btn-small btn-default"  %></p>
                     <%end%>
-                    
-                        <% if !(@patient.discharge.bill.charges.nil?)%>
-                          <div class="inner-card">
-                            <b>Charges</b>
-                            <% if current_user.office_role %>
-                              <p><%= link_to "Create a Charge", new_charge_path(@patient, :pointer => "charges"), class: "btn btn-small btn-default" %></p>
-                            <%end%>
-                            <% @patient.discharge.bill.charges.each do |s| %>
-                              <p class="charge_name"> Date:<%= HelperDisplay.charge_name_try(s) %></p>
-                              <p class="charge_amount"> Time:<%= HelperDisplay.charge_amount_try(s) %></p>
-
+                    <% if !(@patient.discharge.bill.nil?)%>
+                      <b>Bill</b>
+                      <p class="amount_paid"> Amount Paid:<%= HelperDisplay.amount_paid_try(@patient.discharge.bill) %></p>
+                      <p class="amount_owed"> Amount Owed:<%= HelperDisplay.amount_owed_try(@patient.discharge.bill) %></p>
+                      <p class="amount_insurance"> Amount Paid by Insurance:<%= HelperDisplay.amount_insurance_try(@patient.discharge.bill) %></p>
+                      <% if current_user.office_role %>
+                        <p><%= link_to "Edit Billing", edit_bill_path(@patient, :pointer => "bill"), class: "btn btn-small btn-default" %></p>
+                      <%end%>
+                      
+                          <% if !(@patient.discharge.bill.charges.nil?)%>
+                            <div class="inner-card">
+                              <b>Charges</b>
                               <% if current_user.office_role %>
-                                <p><%= link_to "edit bill", edit_bill_path(s)  %></p>
+                                <p><%= link_to "Create a Charge", new_charge_path(@patient, :pointer => "charges"), class: "btn btn-small btn-default" %></p>
                               <%end%>
-                            <%end%>
-                          </div>
-                        <%end%> 
+                              <% @patient.discharge.bill.charges.each do |s| %>
+                                <p class="charge_name"> Date:<%= HelperDisplay.charge_name_try(s) %></p>
+                                <p class="charge_amount"> Time:<%= HelperDisplay.charge_amount_try(s) %></p>
 
+                                <% if current_user.office_role %>
+                                  <p><%= link_to "Edit Charge", edit_charge_path(@patient, @patient.discharge.bill, s)  %></p>
+                                <%end%>
+                              <%end%>
+                            </div>
+                          <%end%> 
+
+                    <%end%>
                   <%end%>
                 <%end%>
 
@@ -185,6 +185,7 @@
                   <li class="clickedTabs" data-name="tab1"><a href="#tab1">Prescriptions</a></li>
                   <li class="clickedTabs" data-name="tab2"><a href="#tab2">Schedule</a></li>
                   <li class="clickedTabs" data-name="tab3"><a href="#tab3">Doctor Notes</a></li>
+                  <li class="clickedTabs" data-name="tab4"><a href="#tab4">Nurse Notes</a></li>
                 </ul>
 
                 <div class="tab_container">
@@ -260,6 +261,7 @@
                   
                   
                   </div>
+                    
                   <div id="tab3" class="tab_content">
                   
                   
@@ -284,21 +286,32 @@
                   
                   
                   </div>
-                </div>
-
-
-                <% if !(@patient.treatment.nil?)%>
-                  <div class="show-card">
+                    
+                <div id="tab4" class="tab_content">
+                    
+                  <% if !(@patient.treatment.nil?)%>
+                  <div class="inner-card">
                     <b>Nurse Notes</b>
+                    <% if current_user.medical_role %>
+                      <p><%= link_to "Create a new Nurse's note", new_n_note_path(@patient, :pointer => "n_notes"), class: "btn btn-small btn-default" %></p>
+                    <%end%>
                     <% @patient.treatment.n_notes.each do |n| %>
                       <p class="name"> Name:<%= HelperDisplay.nnote_nametry(n) %></p>
                       <p class="message"> Message:<%= HelperDisplay.nnote_msgtry(n) %></p>
                       <% if current_user.medical_role %>
-                        <%-# Edit nurse notes %>
+                        <% if current_user.medical_role %>
+                          <p><%= link_to "edit nurse note", edit_n_note_path(@patient, @patient.treatment, n) %></p>
+                        <%end%>
                       <%end%>
                     <%end%>
                   </div>
                 <%end%>
+              </div>
+                    
+                    
+                </div>
+
+
 
                 <%if @patient.treatment.nil? %>
                   <p><%= link_to "Create Treatment", new_treatment_path(@patient), class: "btn btn-small btn-default"  %></p>
