@@ -62,8 +62,8 @@ class PagesController < ApplicationController
           send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.office_role
           #not created yet
-          #pdf = PatientShowOfficePdf.new(@patient)
-          #send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
+          pdf = PatientShowOfficePdf.new(@patient)
+          send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.medical_role
           #not created yet
           #pdf = PatientShowMedicalPdf.new(@patient)
