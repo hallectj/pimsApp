@@ -57,6 +57,24 @@ module HelperDisplay
         end
     end
 
+    def self.charge_name_try(input)
+        if (input != nil) 
+            return input.charge_name 
+        else  
+            a = String.new("None")
+            return a
+        end
+    end
+
+    def self.charge_amount_try(input)
+        if (input != nil) 
+            return input.charge_amount
+        else  
+            a = BigDecimal.new("0")
+            return a
+        end
+    end    
+
     def self.facilitytry(input)
         if (input != nil) 
             return input.facility 
@@ -347,7 +365,7 @@ module HelperDisplay
 
     def self.schedule_timetry(input)
         if (input != nil)
-            return input.time
+            return input.time.to_s(:time) 
         else
             a = String.new("None")
             return a

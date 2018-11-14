@@ -33,6 +33,13 @@ class Patient < ApplicationRecord
         order('id DESC') 
       end
     end
+
+    def self.update_a_admit(params)
+      if !(self.admittance.nil?)
+        self.admittance.update(params)
+      end
+    end
+
     
     
 end
