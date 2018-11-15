@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby version 2.3.3
+Rails version 5.1.6
 
-Things you may want to cover:
+This was a project our team of 4 developers were desginated to do for our capstone project at the University of Alabama in Huntsville.  
 
-* Ruby version
+For future employers, I did most of the GUI design for just about everything you see since I have extensive experience in HTML / CSS and JavaScript.  Connecting devise and assigning roles to users was done by me, connecting the users with authentication using devise and roles was done by myself.  Dashboard for superuser was done by me using the cancancan gem and rails admin gem.  Hooking everything together so the database talks to the inputs was done by myself as well.  If you are interested in a live demo, you can go to https://pims-2018.herokuapp.com/ and mess around.  This is obviously a fictious app, but to see everything in action, the login credintials are below.  Obviously in real life, I wouldn't use such an easy password, but for demonstration purposes here they are.
 
-* System dependencies
+Doctor
+username: doctor@example.com
+password: password
 
-* Configuration
+Medical personnel (ie a nurse)
+username: medical@example.com
+password: password
 
-* Database creation
+Office personnel 
+username: office@example.com
+password: password
 
-* Database initialization
+Volunteer personnel
+username: volunteer@example.com
+password: password
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The database used in postgres.  If you have any questions you can email me hallectj@gmail.com.  Be sure to look at my other projects here on Github.  Thanks and happy coding.
