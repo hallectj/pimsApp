@@ -89,10 +89,57 @@ class PatientShowDoctorPdf < Prawn::Document
     move_down 20
     bounding_box([0, cursor], width: 540, height: cursor) do
        stroke_bounds
+       move_down 5
+       text "Treating for #{HelperDisplay.treatmenttry(@patient.treatment)}", size: 16, style: :bold 
+
        move_down 20
-       text "Prescriptions, Schedules and Doctor Notes", size: 16, style: :bold 
+       text "Prescriptions Information on Patient", size: 16, style: :bold
+       @patient.treatment.prescriptions.each do |p|
+         data = [
+           [{content: "prescription name "}, {:content => "#{HelperDisplay.pres_nametry(p)}"}],
+           [{content: "amount prescribed "}, {:content => "#{HelperDisplay.pres_amounttry(p)}"}],
+           [{content: "prescription schedule "}, {:content => "#{HelperDisplay.pres_scheduletry(p)}"}]
+         ]
+
+         table(data, :cell_style => {:border_width => 0, :padding_left => 5, :padding_bottom => 0})
+         move_down 4 
+         custom_horizontal_rule(8, 532)             
+       end
        
-       #stuff goes here
+       move_down 20
+       text "Schedule Information on Patient", size: 16, style: :bold       
+       @patient.treatment.schedules.each do |s|
+         data = [
+           [{content: "date and time "}, {:content => "#{(HelperDisplay.schedule_datetry(s)).strftime("%Y-%m-%d")}  #{HelperDisplay.schedule_timetry(s)}"}],
+           [{content: "schedule message "}, {:content => HelperDisplay.schedule_msgtry(s)}] 
+         ]
+         table(data, :cell_style => {:border_width => 0})
+         move_down 4
+         stroke_horizontal_rule
+       end
+
+       move_down 20
+       text "Doctor Notes Conerning the Patient", size: 16, style: :bold       
+       @patient.treatment.dr_notes.each do |s|
+         data = [
+           [{content: "name "}, {:content => "#{(HelperDisplay.drnote_nametry(s))}"}],
+           [{content: "message "}, {:content => HelperDisplay.drnote_msgtry(s)}] 
+         ]
+         table(data, :cell_style => {:border_width => 0})
+         move_down 4
+         custom_horizontal_rule(8, 532)
+       end
+    end
+  end
+
+  
+
+  private 
+  def custom_horizontal_rule(boundLeft, boundRight)
+    stroke do 
+      dash(4, space: 2, phase: 0)
+      line_width 2
+      horizontal_line(boundLeft, boundRight)
     end
   end
 

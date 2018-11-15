@@ -101,9 +101,12 @@
   .tab_content {
 	padding: 20px;
 	font-size: 16px;
-  }
+	}
 
-
+	#dischargeDiv{
+		width: 50%;
+		min-width: 350px;
+	}
 
 @media only screen and (max-width: 800px) {
 	.div_parent_divider{
