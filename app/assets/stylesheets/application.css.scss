@@ -12,10 +12,10 @@
  *
  *= require_tree .
  *= require_self
- *= stub 'pagesPatientResults'
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datepicker';
 
 #date-nav{
   display: block;
@@ -23,4 +23,10 @@
   margin-left: 15px;
   color: #fff;
   font-size: 1.0em;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Goudy Bookletter 1911', serif;
+  font-weight: bold;
+  line-height: normal;
 }

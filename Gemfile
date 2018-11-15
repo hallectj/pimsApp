@@ -7,7 +7,7 @@ end
 
 #default gems
 gem 'rails', '~> 5.1.6'
-gem 'sqlite3'
+gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -26,12 +26,25 @@ gem 'rails_admin', '~> 1.4', '>= 1.4.1'
 gem 'cancancan'
 gem 'load_and_authorize_resource'
 gem 'simple_form', '~> 4.0', '>= 4.0.1'
+gem 'rails-observers'
 
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap-datepicker-rails'
+gem 'whenever'
+
+#to print reports
+gem 'prawn', '~> 2.2', '>= 2.2.2'
+gem 'prawn-table', '~> 0.2.2'
+
+#to make console pretty for development purposes and readibility
+gem 'hirb', '~> 0.7.3'
+gem 'activerecord-reset-pk-sequence'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'minitest'
 end
 
 group :development do

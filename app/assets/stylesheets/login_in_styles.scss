@@ -1,3 +1,19 @@
+.nav-custom li:first-child{
+	background-color: #9bb2a3;
+	cursor: pointer;
+	color: #fff !important;
+
+	a{
+		color: #fff !important;
+		text-transform: uppercase !important;
+		font-size: 1.3em !important;
+
+		&:hover{
+			color: gold !important;
+		}
+	}
+}
+
 .login_wrapper{
 	position: relative;
 	display: flex;

@@ -1,26 +1,33 @@
-<h1>Welcome to Volunteer Page</h1>
-<div class="container">
-    <h2>Patient Listing</h2>
-    <table class="table table-striped">
-<thead>
-      <tr>
-        <th>Lastname</th>
-        <th>Firstname</th>
-        <th>Middlename</th>
-        <th>Faciliity</th>  
-        <th>Room</th> 
-      </tr>
-    </thead>
-    <tbody>
-<% @patients.each do |patient|%>
-    <tr>
-        <td><%= patient.last_name %></td>
-        <td><%= patient.first_name %></td>
-        <td><%= patient.middle_name %></td>
-        <td><%= patient.location.facility %></td>
-        <td><%= patient.location.room %></td>
-    </tr>
-<%end%>     
-    </tbody>
-  </table>
+<% require_relative('./HelperDisplayFunctions') %>
+<div class="all-patients">
+    <h1 class="header">Welcome to Volunteer Page</h1>
+
+    <hr class="divLine">
+
+    <div class="container">
+        <h2>Patient Listing</h2>
+        <table class="table table-stripe">
+    <thead>
+        <tr>
+            <th>Lastname</th>
+            <th>Firstname</th>
+            <th>Middlename</th>
+            <th>Faciliity</th>  
+            <th>Room</th> 
+        </tr>
+        </thead>
+        <tbody>
+    <% @patients.each do |patient|%>
+        <tr>
+            <td><%= HelperDisplay.nametry(patient.last_name) %></td>
+            <td><%= HelperDisplay.nametry(patient.first_name) %></td>
+            <td><%= HelperDisplay.nametry(patient.middle_name) %></td>
+            <td><%= HelperDisplay.facilitytry(patient.location) %></td>
+            <td><%= HelperDisplay.roomtry(patient.location) %></td>
+            <td><%= link_to "View", page_path(patient) %></td>
+        </tr>
+    <%end%>     
+        </tbody>
+    </table>
+    </div>
 </div>

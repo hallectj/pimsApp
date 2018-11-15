@@ -1,0 +1,40 @@
+<div class="container">
+  <% if @recordLocation == "admittance" %>
+  <form action="/pages/<%= @patient.id %>/update/update_admittance" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group">
+      <p><%= debug @admittance %></p>
+      <label>Date</label>
+       <input type="text" class="form-control datepicker" name="admittance[date]" value="<%= @patient.admittance.date %>">
+    </div>
+    
+    <div class="form-group">
+      <label>Time</label>
+        <div class='input-group date' id="datetimepicker3">
+            <input type="text" class="form-control timepicker" name="admittance[time]" value="<%= @patient.admittance.time.strftime("%I:%M%p") %>">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+            </span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Reason</label>
+      <input type="text" class="form-control" name="admittance[reason]" value="<%= @patient.admittance.reason %>">
+    </div>
+    
+    <div class="form-group">
+      <div class="button_choose_show_action">
+        <p><input type="submit" class="btn btn-primary" style="margin-right: 10px;" value="Update"></p>
+        <p><%= link_to "Back", page_path(@patient), html_options = {class: "btn btn-success"} %></p>
+      </div>
+    </div>
+  </form>
+  <% end %>
+</div>
+
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+</script>

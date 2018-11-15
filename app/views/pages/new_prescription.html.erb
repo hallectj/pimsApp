@@ -1,0 +1,7 @@
+<h2>Create a Prescription:</h2>
+<%= simple_form_for @patient.treatment.prescriptions.build, url: new_prescription_path do |f| %>
+    <%= f.input :name %>
+    <%= f.input :amount %>
+    <%= f.input :schedule %>
+    <%= f.submit :submit %>
+<% end %>

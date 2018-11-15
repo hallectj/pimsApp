@@ -4,7 +4,7 @@ class CreatePrescriptions < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :amount
       t.text :schedule
-
+      t.references :treatment
       t.timestamps
     end
   end

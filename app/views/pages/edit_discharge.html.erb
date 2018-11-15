@@ -1,0 +1,36 @@
+<div class="container">
+  <% if @recordLocation == "discharge" %>
+  <form action="/pages/<%= @patient.id %>/update/update_discharge" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group">
+      <p><%= debug @discharge %></p>
+      <label>Date</label>
+       <input type="text" class="form-control datepicker" name="discharge[date]" value="<%= @patient.discharge.date %>">
+    </div>
+    
+    <div class="form-group">
+      <label>Time</label>
+        <div class='input-group date' id="datetimepicker3">
+            <input type="text" class="form-control timepicker" name="discharge[time]" value="<%= @patient.discharge.time.strftime("%I:%M%p")%>">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+            </span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="button_choose_show_action">
+        <p><input type="submit" class="btn btn-primary" style="margin-right: 10px;" value="Update"></p>
+        <p><%= link_to "Back", page_path(@patient), html_options = {class: "btn btn-success"} %></p>
+      </div>
+    </div>
+  </form>
+  <% end %>
+</div>
+
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  $('.timepicker').datetimepicker({format: 'LT'});
+</script>

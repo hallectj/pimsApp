@@ -1,10 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-inverse" style="margin: 0;">
       <div class="container-fluid">
         <div class="navbar-header">
-          <%= link_to "Hospital Home", new_user_session_path, class: "navbar-brand"%>
+          <ul class = "navbar-ul">
+            <li><%= link_to "Hospital Home", search_path, class: "navbar-brand"%></li>
+          </ul>
         </div>
 	  <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav nav-custom">
+          <li><%= link_to "Help", "http://www.google.com"%></li>
           <li id="date-nav"></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

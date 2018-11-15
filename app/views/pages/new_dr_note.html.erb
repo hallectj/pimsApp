@@ -1,0 +1,6 @@
+<h2>Create a Doctor's Note:</h2>
+<%= simple_form_for @patient.treatment.dr_notes.build, url: new_dr_note_path do |f| %>
+    <%= f.input :name %>
+    <%= f.input :message %>
+    <%= f.submit :submit %>
+<% end %>

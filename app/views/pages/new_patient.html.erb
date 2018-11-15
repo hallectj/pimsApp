@@ -1,0 +1,21 @@
+<h2>New Patient Light</h2>
+
+<%= simple_form_for @patient, url: new_patient_path do |f| %>
+  <%= f.input :last_name, label: "Last Name" %>
+  <%= f.input :first_name, label: "First Name" %>
+  <%= f.input :middle_name, label: "Middle Name" %>
+  <%= f.input :birthday, as: :string, required: false,
+    :placeholder => 'Select date', input_html: {class: "datepicker"},
+    label: "birthday: " %>
+<% end %>
+
+<script type="text/javascript">
+  
+  $(document).on("page:load ready", function(){
+    
+  });
+
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  });
+</script>
