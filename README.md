@@ -23,4 +23,8 @@ Volunteer personnel
 username: volunteer@example.com
 password: password
 
-The database used in postgres.  If you have any questions you can email me hallectj@gmail.com.  Be sure to look at my other projects here on Github.  Thanks and happy coding.
+The database used in postgres.  If you have any questions you can email me hallectj@gmail.com.  Be sure to look at my other projects here on Github.
+
+Special note:  All features are ot fully implemented yet on Heroku, we are planning on doiing a massive update Friday afternoon or Friday Evening 11/16/2018, so if you see any errors, they will proably be resolved by then. 
+
+Thank you and happy coding
