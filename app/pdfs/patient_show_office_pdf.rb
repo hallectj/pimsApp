@@ -1,6 +1,7 @@
 class PatientShowOfficePdf < Prawn::Document
-    def initialize(patient)
+    def initialize(patient, discharge)
       @patient = patient
+      @discharge = discharge
       
       super(top_margin: 50)
       patient_name
@@ -82,27 +83,32 @@ class PatientShowOfficePdf < Prawn::Document
 
 
     def detailed_report
-      move_down 20
-      text "Discharge Information", size: 16, style: :bold 
-      text "Discharge date #{HelperDisplay.datetry(@patient.discharge)}  Discharge time #{HelperDisplay.timetry(@patient.discharge)}"
+      if (!@patient.discharge.nil?)
+        move_down 20
+        text "Discharge Information", size: 16, style: :bold 
+        text "Discharge date #{HelperDisplay.datetry(@patient.discharge)}  Discharge time #{HelperDisplay.timetry(@patient.discharge)}"
   
-      move_down 10
-      text "Billing Information", size: 16, style: :bold 
-      text "Amount Paid  #{HelperDisplay.amount_paid_try(@patient.discharge.bill)}" 
-      text "Amount Owed #{HelperDisplay.amount_owed_try(@patient.discharge.bill)}"
-      text "Amount Insurance Owes #{HelperDisplay.amount_insurance_try(@patient.discharge.bill)}"
+        move_down 10
+        text "Billing Information", size: 16, style: :bold 
+        if (!@patient.discharge.bill.nil?)
+          text "Amount Paid  #{HelperDisplay.amount_paid_try(@patient.discharge.bill)}" 
+          text "Amount Owed #{HelperDisplay.amount_owed_try(@patient.discharge.bill)}"
+          text "Amount Insurance Owes #{HelperDisplay.amount_insurance_try(@patient.discharge.bill)}"
        
-      move_down 20
-      text "Itemized Charges for Patient Care", size: 16, style: :bold
-      @patient.discharge.bill.charges.each do |c|
-        data = [
-          [{content: "Charge Name "}, {:content => "#{HelperDisplay.charge_name_try(c)}"}],
-          [{content: "Charge Amount "}, {:content => "#{HelperDisplay.charge_amount_try(c)}"}],
-        ]
+          move_down 20
+          text "Itemized Charges for Patient Care", size: 16, style: :bold
+
+          @patient.discharge.bill.charges.each do |c|
+            data = [
+              [{content: "Charge Name "}, {:content => "#{HelperDisplay.charge_name_try(c)}"}],
+              [{content: "Charge Amount "}, {:content => "#{HelperDisplay.charge_amount_try(c)}"}],
+            ]
   
-        table(data, :cell_style => {:border_width => 0, :padding_left => 5, :padding_bottom => 0})
-        move_down 4 
-        custom_horizontal_rule(8, 532)             
+            table(data, :cell_style => {:border_width => 0, :padding_left => 5, :padding_bottom => 0})
+            move_down 4 
+            custom_horizontal_rule(8, 532)             
+          end
+        end
       end
     end
 

@@ -45,6 +45,7 @@ class PagesController < ApplicationController
 
   def show
     @patient = Patient.find(params[:id])
+    @discharge = Discharge.find_by(patient_id: params[:patient_id])
     @admittance = Admittance.find_by(patient_id: params[:patient_id]) 
     
     #@treatment = @patient.build_treatment
@@ -53,6 +54,11 @@ class PagesController < ApplicationController
     #@n_notes = @treatment.n_notes.build
     #@dr_notes = @treatment.dr_notes.build
     #@bills = @discharge.build_bill
+
+    #@schedules = @patient.treatment.schedules
+    #@prescriptions = @patient.treatment.prescriptions 
+    #@dr_notes = @patient.treatment.dr_notes 
+    #@n_notes = @patient.treatment.n_notes
     
     respond_to do |format|
       format.html
@@ -61,17 +67,14 @@ class PagesController < ApplicationController
           pdf = PatientShowDoctorPdf.new(@patient)
           send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.office_role
-          #not created yet
-          pdf = PatientShowOfficePdf.new(@patient)
+          pdf = PatientShowOfficePdf.new(@patient, @discharge)
           send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.medical_role
-          #not created yet
-          #pdf = PatientShowMedicalPdf.new(@patient)
-          #send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
+          pdf = PatientShowMedicalPdf.new(@patient)
+          send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         elsif current_user.volunteer_role
-          #not created yet
-          #pdf = PatientShowVolunteerPdf.new(@patient)
-          #send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
+          pdf = PatientShowVolunteerPdf.new(@patient)
+          send_data pdf.render, filename: "patient name: #{@patient.last_name}.pdf", type: "application/pdf", dispostion: "inline"
         end
       end
     end

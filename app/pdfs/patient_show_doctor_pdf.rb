@@ -86,6 +86,7 @@ class PatientShowDoctorPdf < Prawn::Document
   end
 
   def detailed_report
+    if (!@patient.treatment.nil?)
     move_down 20
     bounding_box([0, cursor], width: 540, height: cursor) do
        stroke_bounds
@@ -94,42 +95,63 @@ class PatientShowDoctorPdf < Prawn::Document
 
        move_down 20
        text "Prescriptions Information on Patient", size: 16, style: :bold
-       @patient.treatment.prescriptions.each do |p|
-         data = [
-           [{content: "prescription name "}, {:content => "#{HelperDisplay.pres_nametry(p)}"}],
-           [{content: "amount prescribed "}, {:content => "#{HelperDisplay.pres_amounttry(p)}"}],
-           [{content: "prescription schedule "}, {:content => "#{HelperDisplay.pres_scheduletry(p)}"}]
-         ]
+       if(!@patient.treatment.prescriptions.nil?)
+         @patient.treatment.prescriptions.each do |p|
+           data = [
+             [{content: "prescription name "}, {:content => "#{HelperDisplay.pres_nametry(p)}"}],
+             [{content: "amount prescribed "}, {:content => "#{HelperDisplay.pres_amounttry(p)}"}],
+             [{content: "prescription schedule "}, {:content => "#{HelperDisplay.pres_scheduletry(p)}"}]
+           ]
 
-         table(data, :cell_style => {:border_width => 0, :padding_left => 5, :padding_bottom => 0})
-         move_down 4 
-         custom_horizontal_rule(8, 532)             
+           table(data, :cell_style => {:border_width => 0, :padding_left => 5, :padding_bottom => 0})
+           move_down 4 
+           custom_horizontal_rule(8, 532)             
+         end
        end
        
        move_down 20
-       text "Schedule Information on Patient", size: 16, style: :bold       
-       @patient.treatment.schedules.each do |s|
-         data = [
-           [{content: "date and time "}, {:content => "#{(HelperDisplay.schedule_datetry(s)).strftime("%Y-%m-%d")}  #{HelperDisplay.schedule_timetry(s)}"}],
-           [{content: "schedule message "}, {:content => HelperDisplay.schedule_msgtry(s)}] 
-         ]
-         table(data, :cell_style => {:border_width => 0})
-         move_down 4
-         stroke_horizontal_rule
+       text "Schedule Information on Patient", size: 16, style: :bold  
+       if(!@patient.treatment.schedules.nil?)     
+         @patient.treatment.schedules.each do |s|
+           data = [
+             [{content: "date and time "}, {:content => "#{(HelperDisplay.schedule_datetry(s)).strftime("%Y-%m-%d")}  #{HelperDisplay.schedule_timetry(s)}"}],
+             [{content: "schedule message "}, {:content => HelperDisplay.schedule_msgtry(s)}] 
+           ]
+           table(data, :cell_style => {:border_width => 0})
+           move_down 4
+           stroke_horizontal_rule
+         end
        end
 
        move_down 20
-       text "Doctor Notes Conerning the Patient", size: 16, style: :bold       
-       @patient.treatment.dr_notes.each do |s|
-         data = [
-           [{content: "name "}, {:content => "#{(HelperDisplay.drnote_nametry(s))}"}],
-           [{content: "message "}, {:content => HelperDisplay.drnote_msgtry(s)}] 
-         ]
-         table(data, :cell_style => {:border_width => 0})
-         move_down 4
-         custom_horizontal_rule(8, 532)
+       text "Doctor Notes Conerning the Patient", size: 16, style: :bold
+       if(!@patient.treatment.dr_notes.nil?)       
+         @patient.treatment.dr_notes.each do |s|
+           data = [
+             [{content: "name "}, {:content => "#{(HelperDisplay.drnote_nametry(s))}"}],
+             [{content: "message "}, {:content => HelperDisplay.drnote_msgtry(s)}] 
+           ]
+           table(data, :cell_style => {:border_width => 0})
+           move_down 4
+           custom_horizontal_rule(8, 532)
+         end
+       end
+
+       move_down 20
+       text "Nurse Notes Concerning the Patient", size: 16, style: :bold 
+       if(!@patient.treatment.n_notes.nil?)
+         @patient.treatment.n_notes.each do |n|
+            data = [
+                [{content: "name "}, {:content => "#{(HelperDisplay.nnote_nametry(n))}"}],
+                [{content: "message "}, {:content => HelperDisplay.nnote_msgtry(n)}]
+            ]
+            table(data, :cell_style => {:border_width => 0})
+            move_down 4
+            custom_horizontal_rule(8, 532)
+         end
        end
     end
+  end
   end
 
   
